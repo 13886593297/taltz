@@ -1,8 +1,6 @@
-
 class Scene extends eui.UILayer {
-
     private isRemove: boolean = true
-    public btn_bg: any = false  // 关闭按钮
+    public close_btn: any = 'close_png'  // 关闭按钮
     public isnSpecialReturn: any = false
     public navColor
     public name
@@ -17,15 +15,14 @@ class Scene extends eui.UILayer {
         if (this.isRemove) { //防止多次加载
             this.init()
             this.isRemove = false
-            if (this.btn_bg != false) {
-                this.crteateNavButton(this.btn_bg)
+            if (this.close_btn != false) {
+                this.crteateNavButton(this.close_btn)
             }
         }
     }
 
     public crteateNavButton(bg) {
         let nav_bg = Util.createBitmapByName(bg)
-        nav_bg.width = 62
         nav_bg.x = 650
         nav_bg.y = 40
         this.addChild(nav_bg)

@@ -69,7 +69,6 @@
 		"bin-debug/AssetAdapter.js",
 		"bin-debug/scene/ScoreScene.js",
 		"bin-debug/scene/TeamRankScene.js",
-		"bin-debug/scene/TestScene.js",
 		"bin-debug/scene/TrainLevelScene.js",
 		"bin-debug/scene/TrainScene.js",
 		"bin-debug/scene/UserScene.js",

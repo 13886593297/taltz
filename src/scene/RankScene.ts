@@ -10,7 +10,7 @@ class RankScene extends Scene {
 
     public init() {
         super.setBackground()
-        this.btn_bg = 'close_png'
+        this.close_btn = 'close_png'
         Util.setTitle('排行榜')
 
         this.initTitle()

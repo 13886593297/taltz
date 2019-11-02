@@ -9,7 +9,6 @@ class UserScene extends Scene {
 
     public init() {
         super.setBackground()
-        this.btn_bg = 'close_png'
         Util.setTitle('个人中心')
 
         let shareGroup = new eui.Group()
@@ -28,13 +27,6 @@ class UserScene extends Scene {
 
         // 玩家数据
         let userData = DataManager.getInstance().getUser()
-        // // 调试代码开始
-        // var x = 0.1
-        // userData.attrInfo.map(item => {
-        //     item.rate = x
-        //     x += 0.15
-        // })
-        // // 调试代码结束
         let radar = new Radar(userData.attrInfo, userData.attrName, 450, 450)
         radar.x = 140
         radar.y = 580

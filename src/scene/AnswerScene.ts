@@ -36,83 +36,43 @@ class AnswerScene extends Scene {
         this.levelData = levelData
     }
 
-    private trainTitle(flag: string, name: string): any {
-        let group = new eui.Group()
-
-        // 名称
-        let flagName = new egret.TextField()
-        flagName.text = name
-        flagName.verticalAlign = egret.VerticalAlign.MIDDLE
-        flagName.textAlign = egret.HorizontalAlign.CENTER
-
-        if (this.type == 1) {
-            let flagBg = Util.createBitmapByName('flagBg_png')
-            group.addChild(flagBg)
-
-            // 等级
-            let flagText = new egret.TextField()
-            flagText.text = flag
-            flagText.width = flagBg.width
-            flagText.height = flagBg.height + 10
-            flagText.textAlign = egret.HorizontalAlign.CENTER
-            flagText.verticalAlign = egret.VerticalAlign.MIDDLE
-            flagText.size = 28
-            group.addChild(flagText)
-
-            flagName.stroke = 6
-            flagName.strokeColor = 0x0d793b
-            flagName.size = 80
-            flagName.x = flagBg.width - 20
-            flagName.height = flagBg.height + 10
-        } else {
-            let flagBg = Util.createBitmapByName('flagBg_blank_png')
-            group.addChild(flagBg)
-
-            flagName.size = 60
-            flagName.width = flagBg.width
-            flagName.height = flagBg.height
-        }
-        group.addChild(flagName)
-        return group
-    }
-
     public init() {
+        this.close_btn = false
         super.setBackground()
         this.start = +new Date()
         let y = 25
 
         let title = this.trainTitle(this.levelData.flag, this.levelData.name)
         title.x = 170
-        title.y = y
+        title.y = 25
         this.addChild(title)
 
         y += 145
         //进度条
         if (this.type == 1) {
+            // 进度条
             let pBar = new eui.ProgressBar()
             pBar.maximum = 10//设置进度条的最大值
             pBar.minimum = 1//设置进度条的最小值
             pBar.width = 400
             pBar.height = 40
-
             this.addChild(pBar)
-            pBar.y = y
             pBar.x = 150
+            pBar.y = 170
             pBar.value = this.curIdx//设置进度条的初始值
             this._progress = pBar
-        }
 
-        y += 7
-        // 第几题
-        if (this.type == 1) {
+            y += 7
+            // Q1
             let number = new egret.TextField()
             number.text = "Q" + this.curIdx
             number.textColor = 0x35af38
             number.x = 85
-            number.y = y
+            number.y = 177
             this.numberText = number
             this.addChild(number)
         }
+
         y += 100
 
         let trainid = this.answers.questions[this.curIdx - 1].qid
@@ -133,26 +93,26 @@ class AnswerScene extends Scene {
         let topic = new Topic(subject)
         // topic.y = y
         this.topic = topic
-        this.topicY = y
+        this.topicY = 277
         group.addChild(topic)
+
+
         var myScroller: eui.Scroller = new eui.Scroller()
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-        myScroller.width = 635//this.stage.stageWidth
+        myScroller.width = this.stage.stageWidth
         myScroller.x = 60
         myScroller.height = 700
-        myScroller.y = y
-
-
+        myScroller.y = 277
         //设置viewport
         myScroller.viewport = group
         this.addChild(myScroller)
         this.scroller = myScroller
-        y = 1120
+
+
         if (this.type == 1) {
             let favorButton = new XButton('加入收藏')
-            favorButton.y = y
             favorButton.x = this.stage.stageWidth / 2 - favorButton.width - 10
-            let favor = false
+            favorButton.y = 1120
 
             let isFavor = this.answers.questions[this.curIdx - 1].isCollect
             let resource = 'favor_png'
@@ -188,8 +148,8 @@ class AnswerScene extends Scene {
             this.addChild(favorButton)
         } else {
             let favorButton = new XButton('删除')
-            favorButton.y = y
             favorButton.x = this.stage.stageWidth / 2 - favorButton.width - 10
+            favorButton.y = 1120
             this.addChild(favorButton)
 
             let favorIcon = Util.createBitmapByName('icon_err_png')
@@ -219,7 +179,7 @@ class AnswerScene extends Scene {
 
         let subButton = new XButton('提交', ButtonType.YELLOW)
         this.commitButton = subButton
-        subButton.y = y
+        subButton.y = 1120
         subButton.x = this.stage.stageWidth / 2 + 10
         this.addChild(subButton)
         subButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
@@ -313,6 +273,46 @@ class AnswerScene extends Scene {
         if (this.type == 1) {
             analysisButton.visible = false
         }
+    }
+
+    private trainTitle(flag: string, name: string): any {
+        let group = new eui.Group()
+
+        // 名称
+        let flagName = new egret.TextField()
+        flagName.text = name
+        flagName.verticalAlign = egret.VerticalAlign.MIDDLE
+        flagName.textAlign = egret.HorizontalAlign.CENTER
+
+        if (this.type == 1) {
+            let flagBg = Util.createBitmapByName('flagBg_png')
+            group.addChild(flagBg)
+
+            // 等级
+            let flagText = new egret.TextField()
+            flagText.text = flag
+            flagText.width = flagBg.width
+            flagText.height = flagBg.height + 10
+            flagText.textAlign = egret.HorizontalAlign.CENTER
+            flagText.verticalAlign = egret.VerticalAlign.MIDDLE
+            flagText.size = 28
+            group.addChild(flagText)
+
+            flagName.stroke = 6
+            flagName.strokeColor = 0x0d793b
+            flagName.size = 80
+            flagName.x = flagBg.width - 20
+            flagName.height = flagBg.height + 10
+        } else {
+            let flagBg = Util.createBitmapByName('flagBg_blank_png')
+            group.addChild(flagBg)
+
+            flagName.size = 60
+            flagName.width = flagBg.width
+            flagName.height = flagBg.height
+        }
+        group.addChild(flagName)
+        return group
     }
 
     /**

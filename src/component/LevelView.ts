@@ -19,7 +19,8 @@ class LevelView extends eui.Group {
         
         let bg = Util.createBitmapByName(this.IMGS[this.levelData.status])
         group.addChild(bg)
-        //入门新兵
+
+        // 每关的名称
         let text = new egret.TextField()
         text.width = bg.width
         text.height = bg.height - 30
@@ -34,10 +35,4 @@ class LevelView extends eui.Group {
         text.size = 32
         group.addChild(text)
     }
-}
-
-enum LevelStatus {
-    Pass = 0,
-    Cur = 1,
-    No = 2,
 }

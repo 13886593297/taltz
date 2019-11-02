@@ -9,7 +9,7 @@ class EquipmentScene extends Scene {
     constructor() {
         super()
         Util.setTitle('装备库')
-        this.btn_bg = "close_png"
+        this.close_btn = "close_png"
     }
 
     public init() {

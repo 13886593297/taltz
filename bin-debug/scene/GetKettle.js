@@ -18,7 +18,7 @@ var GetKettle = (function (_super) {
     GetKettle.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this, 'taltz_bg_png');
-        this.btn_bg = 'close_white_png';
+        this.close_btn = 'close_white_png';
         Util.setTitle('桃子森林');
         var stage = ViewManager.getInstance().stage;
         var userInfo = DataManager.getInstance().getUser();

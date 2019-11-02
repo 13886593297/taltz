@@ -10,7 +10,7 @@ class GetKettle extends Scene implements egret.DisplayObjectContainer {
 
   public init() {
     super.setBackground('taltz_bg_png')
-    this.btn_bg = 'close_white_png'
+    this.close_btn = 'close_white_png'
     Util.setTitle('桃子森林')
 
     let stage = ViewManager.getInstance().stage

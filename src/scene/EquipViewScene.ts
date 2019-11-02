@@ -10,7 +10,7 @@ class EquipViewScene extends Scene {
     public init() {
         super.setBackground();
         Util.setTitle('装备库');
-        this.btn_bg = "close_png";
+        this.close_btn = "close_png";
 
         Http.getInstance().post(Url.HTTP_EQUIP_DETAIL,{conid:this.contentId},(data)=>{
 

@@ -5,7 +5,7 @@ class EquipList extends Scene {
     constructor(config) {
         super()
         this.config = config
-        this.btn_bg = "close_png"
+        this.close_btn = "close_png"
     }
 
     public init() {

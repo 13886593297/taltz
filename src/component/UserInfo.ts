@@ -1,12 +1,9 @@
 class UserInfo extends eui.Group {
-
 	private group
-
 	/**
 	 * [type 类型]
 	 */
 	private type: any
-
 	private userinfo
 	private isinit = false
 	private timer = null

@@ -18,7 +18,8 @@ var IndexScene = (function (_super) {
     }
     IndexScene.prototype.init = function () {
         var _this = this;
-        _super.prototype.setBackground.call(this, 'bg_png');
+        this.close_btn = false;
+        _super.prototype.setBackground.call(this);
         Http.getInstance().post(Url.HTTP_USER_INFO, "", function (data) {
             DataManager.getInstance().setUser(data.data);
             Util.setTitle("艾乐明-" + data.data.teamName);
@@ -155,10 +156,6 @@ var IndexScene = (function (_super) {
         this._bitmapText.y = 200;
         this._bitmapText.text = "每日战队排行表彰 训练场";
         this.addChild(this._bitmapText);
-    };
-    IndexScene.prototype.onButtonClick = function () {
-        var testScene = new TestScene();
-        ViewManager.getInstance().changeScene(testScene);
     };
     return IndexScene;
 }(Scene));

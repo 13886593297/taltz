@@ -23,7 +23,6 @@ var TeamRankScene = (function (_super) {
         _super.prototype.setBackground.call(this);
         var bg = Util.createBitmapByName("blue_small_bg_png");
         bg.width = 590;
-        // bg.height = 1080;
         bg.x = (this.stage.width - bg.width) / 2;
         bg.y = 80;
         this.addChild(bg);
@@ -60,11 +59,11 @@ var TeamRankScene = (function (_super) {
         for (var _i = 0, rankDatas_1 = rankDatas; _i < rankDatas_1.length; _i++) {
             var rank = rankDatas_1[_i];
             rank.type = 1;
-            // let rankItem = new RankItemTemplate(rank);
-            // rankItem.x = (this.stage.stageWidth - 555) / 2;
-            // rankItem.y = y;
-            // group.addChild(rankItem);
-            // y += 210;
+            // let rankItem = new RankItemTemplate(rank)
+            // rankItem.x = (this.stage.stageWidth - 555) / 2
+            // rankItem.y = y
+            // group.addChild(rankItem)
+            // y += 210
         }
         var myScroller = new eui.Scroller();
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面

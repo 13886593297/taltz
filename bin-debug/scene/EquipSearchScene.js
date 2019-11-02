@@ -12,7 +12,7 @@ var EquipSearch = (function (_super) {
     __extends(EquipSearch, _super);
     function EquipSearch(keywords) {
         var _this = _super.call(this) || this;
-        _this.btn_bg = "close_png";
+        _this.close_btn = "close_png";
         _this.isnSpecialReturn = true;
         _this.keywords = keywords;
         return _this;

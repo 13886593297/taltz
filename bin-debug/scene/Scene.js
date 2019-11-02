@@ -13,7 +13,7 @@ var Scene = (function (_super) {
     function Scene() {
         var _this = _super.call(this) || this;
         _this.isRemove = true;
-        _this.btn_bg = false; // 关闭按钮
+        _this.close_btn = 'close_png'; // 关闭按钮
         _this.isnSpecialReturn = false;
         _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.initScene, _this);
         _this.addEventListener(egret.Event.REMOVED_FROM_STAGE, _this.release, _this);
@@ -23,15 +23,14 @@ var Scene = (function (_super) {
         if (this.isRemove) {
             this.init();
             this.isRemove = false;
-            if (this.btn_bg != false) {
-                this.crteateNavButton(this.btn_bg);
+            if (this.close_btn != false) {
+                this.crteateNavButton(this.close_btn);
             }
         }
     };
     Scene.prototype.crteateNavButton = function (bg) {
         var _this = this;
         var nav_bg = Util.createBitmapByName(bg);
-        nav_bg.width = 62;
         nav_bg.x = 650;
         nav_bg.y = 40;
         this.addChild(nav_bg);

@@ -18,7 +18,6 @@ var UserScene = (function (_super) {
     }
     UserScene.prototype.init = function () {
         _super.prototype.setBackground.call(this);
-        this.btn_bg = 'close_png';
         Util.setTitle('个人中心');
         var shareGroup = new eui.Group();
         this.addChild(shareGroup);
@@ -33,13 +32,6 @@ var UserScene = (function (_super) {
         shareGroup.addChild(radarPanel);
         // 玩家数据
         var userData = DataManager.getInstance().getUser();
-        // // 调试代码开始
-        // var x = 0.1
-        // userData.attrInfo.map(item => {
-        //     item.rate = x
-        //     x += 0.15
-        // })
-        // // 调试代码结束
         var radar = new Radar(userData.attrInfo, userData.attrName, 450, 450);
         radar.x = 140;
         radar.y = 580;

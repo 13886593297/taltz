@@ -11,12 +11,11 @@ class IndexScene extends Scene {
     }
 
     public init() {
-        super.setBackground('bg_png')
+        this.close_btn = false
+        super.setBackground()
         Http.getInstance().post(Url.HTTP_USER_INFO, "", (data) => {
             DataManager.getInstance().setUser(data.data)
-
             Util.setTitle("艾乐明-" + data.data.teamName)
-
             let user = new UserInfo('home')
             user.touchEnabled = true
             user.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
@@ -140,7 +139,6 @@ class IndexScene extends Scene {
      * 更新页面信息 
      */
     public updateScene() {
-
         this.userView.refresh()
         Util.setTitle("艾乐明-" + DataManager.getInstance().getUser()['teamName'])
     }
@@ -154,10 +152,5 @@ class IndexScene extends Scene {
         this._bitmapText.y = 200
         this._bitmapText.text = "每日战队排行表彰 训练场"
         this.addChild(this._bitmapText)
-    }
-
-    private onButtonClick() {
-        let testScene = new TestScene()
-        ViewManager.getInstance().changeScene(testScene)
     }
 }

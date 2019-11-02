@@ -18,7 +18,7 @@ var PeachTree = (function (_super) {
     }
     PeachTree.prototype.init = function () {
         _super.prototype.setBackground.call(this, 'taltz_bg_png');
-        this.btn_bg = 'close_white_png';
+        this.close_btn = 'close_white_png';
         Util.setTitle('桃子森林');
         this.initTitle();
         // 获取用户信息

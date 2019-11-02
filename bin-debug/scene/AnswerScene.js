@@ -26,72 +26,37 @@ var AnswerScene = (function (_super) {
         _this.levelData = levelData;
         return _this;
     }
-    AnswerScene.prototype.trainTitle = function (flag, name) {
-        var group = new eui.Group();
-        // 名称
-        var flagName = new egret.TextField();
-        flagName.text = name;
-        flagName.verticalAlign = egret.VerticalAlign.MIDDLE;
-        flagName.textAlign = egret.HorizontalAlign.CENTER;
-        if (this.type == 1) {
-            var flagBg = Util.createBitmapByName('flagBg_png');
-            group.addChild(flagBg);
-            // 等级
-            var flagText = new egret.TextField();
-            flagText.text = flag;
-            flagText.width = flagBg.width;
-            flagText.height = flagBg.height + 10;
-            flagText.textAlign = egret.HorizontalAlign.CENTER;
-            flagText.verticalAlign = egret.VerticalAlign.MIDDLE;
-            flagText.size = 28;
-            group.addChild(flagText);
-            flagName.stroke = 6;
-            flagName.strokeColor = 0x0d793b;
-            flagName.size = 80;
-            flagName.x = flagBg.width - 20;
-            flagName.height = flagBg.height + 10;
-        }
-        else {
-            var flagBg = Util.createBitmapByName('flagBg_blank_png');
-            group.addChild(flagBg);
-            flagName.size = 60;
-            flagName.width = flagBg.width;
-            flagName.height = flagBg.height;
-        }
-        group.addChild(flagName);
-        return group;
-    };
     AnswerScene.prototype.init = function () {
         var _this = this;
+        this.close_btn = false;
         _super.prototype.setBackground.call(this);
         this.start = +new Date();
         var y = 25;
         var title = this.trainTitle(this.levelData.flag, this.levelData.name);
         title.x = 170;
-        title.y = y;
+        title.y = 25;
         this.addChild(title);
         y += 145;
         //进度条
         if (this.type == 1) {
+            // 进度条
             var pBar = new eui.ProgressBar();
             pBar.maximum = 10; //设置进度条的最大值
             pBar.minimum = 1; //设置进度条的最小值
             pBar.width = 400;
             pBar.height = 40;
             this.addChild(pBar);
-            pBar.y = y;
             pBar.x = 150;
+            pBar.y = 170;
             pBar.value = this.curIdx; //设置进度条的初始值
             this._progress = pBar;
-        }
-        y += 7;
-        // 第几题
-        if (this.type == 1) {
+            y += 7;
+            // Q1
             var number = new egret.TextField();
             number.text = "Q" + this.curIdx;
             number.textColor = 0x35af38;
             number.x = 85;
-            number.y = y;
+            number.y = 177;
             this.numberText = number;
             this.addChild(number);
         }
@@ -112,24 +77,22 @@ var AnswerScene = (function (_super) {
         var topic = new Topic(subject);
         // topic.y = y
         this.topic = topic;
-        this.topicY = y;
+        this.topicY = 277;
         group.addChild(topic);
         var myScroller = new eui.Scroller();
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-        myScroller.width = 635; //this.stage.stageWidth
+        myScroller.width = this.stage.stageWidth;
         myScroller.x = 60;
         myScroller.height = 700;
-        myScroller.y = y;
+        myScroller.y = 277;
         //设置viewport
         myScroller.viewport = group;
         this.addChild(myScroller);
         this.scroller = myScroller;
-        y = 1120;
         if (this.type == 1) {
             var favorButton = new XButton('加入收藏');
-            favorButton.y = y;
             favorButton.x = this.stage.stageWidth / 2 - favorButton.width - 10;
-            var favor = false;
+            favorButton.y = 1120;
             var isFavor = this.answers.questions[this.curIdx - 1].isCollect;
             var resource_1 = 'favor_png';
             if (isFavor)
@@ -165,8 +128,8 @@ var AnswerScene = (function (_super) {
         }
         else {
             var favorButton = new XButton('删除');
-            favorButton.y = y;
             favorButton.x = this.stage.stageWidth / 2 - favorButton.width - 10;
+            favorButton.y = 1120;
             this.addChild(favorButton);
             var favorIcon = Util.createBitmapByName('icon_err_png');
             favorIcon.width = 60;
@@ -192,7 +155,7 @@ var AnswerScene = (function (_super) {
         }
         var subButton = new XButton('提交', ButtonType.YELLOW);
         this.commitButton = subButton;
-        subButton.y = y;
+        subButton.y = 1120;
         subButton.x = this.stage.stageWidth / 2 + 10;
         this.addChild(subButton);
         subButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
@@ -283,6 +246,41 @@ var AnswerScene = (function (_super) {
         if (this.type == 1) {
             analysisButton.visible = false;
         }
+    };
+    AnswerScene.prototype.trainTitle = function (flag, name) {
+        var group = new eui.Group();
+        // 名称
+        var flagName = new egret.TextField();
+        flagName.text = name;
+        flagName.verticalAlign = egret.VerticalAlign.MIDDLE;
+        flagName.textAlign = egret.HorizontalAlign.CENTER;
+        if (this.type == 1) {
+            var flagBg = Util.createBitmapByName('flagBg_png');
+            group.addChild(flagBg);
+            // 等级
+            var flagText = new egret.TextField();
+            flagText.text = flag;
+            flagText.width = flagBg.width;
+            flagText.height = flagBg.height + 10;
+            flagText.textAlign = egret.HorizontalAlign.CENTER;
+            flagText.verticalAlign = egret.VerticalAlign.MIDDLE;
+            flagText.size = 28;
+            group.addChild(flagText);
+            flagName.stroke = 6;
+            flagName.strokeColor = 0x0d793b;
+            flagName.size = 80;
+            flagName.x = flagBg.width - 20;
+            flagName.height = flagBg.height + 10;
+        }
+        else {
+            var flagBg = Util.createBitmapByName('flagBg_blank_png');
+            group.addChild(flagBg);
+            flagName.size = 60;
+            flagName.width = flagBg.width;
+            flagName.height = flagBg.height;
+        }
+        group.addChild(flagName);
+        return group;
     };
     /**
      * 下一题

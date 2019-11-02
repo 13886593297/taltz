@@ -12,9 +12,8 @@ var TrainLevelScene = (function (_super) {
     __extends(TrainLevelScene, _super);
     function TrainLevelScene(bandge) {
         var _this = _super.call(this) || this;
-        _this.levelViews = [];
         /**
-         * 配置关卡位置，中心点
+         * 配置关卡位置
          */
         _this.POINTS = [
             { x: 100, y: 70 },
@@ -44,11 +43,10 @@ var TrainLevelScene = (function (_super) {
     TrainLevelScene.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this);
-        this.btn_bg = 'close_png';
         // 标题
         var title = Util.createBitmapByName('train_title_png');
         this.addChild(title);
-        this.currentLevel = DataManager.getInstance().getUser().lv;
+        var currentLevel = DataManager.getInstance().getUser().lv;
         //创建一个容器，里面包含一张图片
         var group = new eui.Group();
         group.height = 5000;
@@ -57,29 +55,33 @@ var TrainLevelScene = (function (_super) {
         var lineGroup = new eui.Group();
         lineGroup.height = 4100;
         group.addChild(lineGroup);
-        var i = 0;
-        var _loop_1 = function (k) {
-            var point = this_1.POINTS[k];
-            var data = this_1.bandge.levels[k];
-            if (this_1.currentLevel < data.key) {
-                data.status = LevelStatus.No;
+        var _loop_1 = function (i) {
+            // 每个关卡的位置
+            var point = this_1.POINTS[i];
+            // 每关的信息
+            var data = this_1.bandge.levels[i];
+            // 判断是否通关
+            if (currentLevel < data.key) {
+                // 未解锁
+                data.status = 2;
             }
-            else if (this_1.currentLevel == data.key) {
-                data.status = LevelStatus.Cur;
+            else if (currentLevel == data.key) {
+                // 当前关卡
+                data.status = 1;
             }
             else {
-                data.status = LevelStatus.Pass;
+                // 已通关
+                data.status = 0;
             }
             var level = new LevelView(data);
             level.x = point.x;
             level.y = point.y;
-            this_1.levelViews[k] = level;
             group.addChild(level);
             level.touchEnabled = true;
             level.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
                 //请求数据
                 Util.playMusic('model_select_mp3');
-                if (_this.currentLevel >= data.key) {
+                if (currentLevel >= data.key) {
                     Http.getInstance().post(Url.HTTP_TRAIN_START, { type: 1, tid: level.levelData.levelid }, function (data) {
                         if (data.data.questions.length > 0) {
                             var answer = new Answers();
@@ -99,6 +101,7 @@ var TrainLevelScene = (function (_super) {
                     _this.addChild(alert_2);
                 }
             }, this_1);
+            // 关卡之间的连接线条
             var linePic = void 0;
             if (i < 19) {
                 if (i % 2 == 1) {
@@ -111,11 +114,10 @@ var TrainLevelScene = (function (_super) {
                 }
                 group.addChild(linePic);
             }
-            i++;
         };
         var this_1 = this;
-        for (var k in this.POINTS) {
-            _loop_1(k);
+        for (var i = 0; i < this.POINTS.length; i++) {
+            _loop_1(i);
         }
         //创建一个Scroller
         var myScroller = new eui.Scroller();
@@ -126,14 +128,6 @@ var TrainLevelScene = (function (_super) {
         //设置viewport
         myScroller.viewport = group;
         this.addChild(myScroller);
-    };
-    /**
-     * 更新页面信息
-     */
-    TrainLevelScene.prototype.updateScene = function () {
-        this.removeChildren();
-        this.init();
-        this.crteateNavButton("返回");
     };
     return TrainLevelScene;
 }(Scene));

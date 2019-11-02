@@ -17,7 +17,7 @@ var EquipViewScene = (function (_super) {
         var _this = this;
         _super.prototype.setBackground.call(this);
         Util.setTitle('装备库');
-        this.btn_bg = "close_png";
+        this.close_btn = "close_png";
         Http.getInstance().post(Url.HTTP_EQUIP_DETAIL, { conid: this.contentId }, function (data) {
             // Util.onStopMusic();
             // showIFrame('<div style="margin-top:50px">' + s1+'</div>', "返回列表");

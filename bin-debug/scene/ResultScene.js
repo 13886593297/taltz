@@ -24,7 +24,7 @@ var ResultScene = (function (_super) {
     ResultScene.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this);
-        this.btn_bg = 'close_png';
+        this.close_btn = 'close_png';
         var group = new eui.Group();
         group.x = 170;
         group.y = 25;

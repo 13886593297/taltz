@@ -26,7 +26,7 @@ var LevelView = (function (_super) {
         }
         var bg = Util.createBitmapByName(this.IMGS[this.levelData.status]);
         group.addChild(bg);
-        //入门新兵
+        // 每关的名称
         var text = new egret.TextField();
         text.width = bg.width;
         text.height = bg.height - 30;
@@ -44,9 +44,3 @@ var LevelView = (function (_super) {
     return LevelView;
 }(eui.Group));
 __reflect(LevelView.prototype, "LevelView");
-var LevelStatus;
-(function (LevelStatus) {
-    LevelStatus[LevelStatus["Pass"] = 0] = "Pass";
-    LevelStatus[LevelStatus["Cur"] = 1] = "Cur";
-    LevelStatus[LevelStatus["No"] = 2] = "No";
-})(LevelStatus || (LevelStatus = {}));
