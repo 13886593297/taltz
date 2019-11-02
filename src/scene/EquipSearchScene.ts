@@ -4,7 +4,6 @@ class EquipSearch extends Scene {
     private keywords
     constructor(keywords) {
         super()
-        this.close_btn = "close_png"
         this.isnSpecialReturn = true
         this.keywords = keywords
     }

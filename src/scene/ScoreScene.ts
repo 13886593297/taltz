@@ -6,8 +6,6 @@ class ScoreScene extends Scene {
 
     public init() {
         super.setBackground()
-        this.close_btn = 'close_png'
-
         let user = new UserInfo('score')
         user.y = 20
         this.addChild(user)

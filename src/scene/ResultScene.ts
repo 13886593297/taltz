@@ -20,7 +20,6 @@ class ResultScene extends Scene {
 
     public init() {
         super.setBackground()
-        this.close_btn = 'close_png'
 
         let group = new eui.Group()
         group.x = 170

@@ -18,7 +18,6 @@ var FavorScene = (function (_super) {
     FavorScene.prototype.init = function () {
         _super.prototype.setBackground.call(this);
         Util.setTitle('我的收藏');
-        this.close_btn = 'close_png';
         var y = 10;
         var title = Util.createBitmapByName('favor_title_png');
         this.addChild(title);

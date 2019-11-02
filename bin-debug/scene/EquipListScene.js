@@ -13,7 +13,6 @@ var EquipList = (function (_super) {
     function EquipList(config) {
         var _this = _super.call(this) || this;
         _this.config = config;
-        _this.close_btn = "close_png";
         return _this;
     }
     EquipList.prototype.init = function () {

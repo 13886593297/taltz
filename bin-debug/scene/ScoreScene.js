@@ -16,7 +16,6 @@ var ScoreScene = (function (_super) {
     ScoreScene.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this);
-        this.close_btn = 'close_png';
         var user = new UserInfo('score');
         user.y = 20;
         this.addChild(user);

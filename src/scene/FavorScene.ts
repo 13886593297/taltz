@@ -8,7 +8,6 @@ class FavorScene extends Scene {
     public init() {
         super.setBackground()
         Util.setTitle('我的收藏')
-        this.close_btn = 'close_png'
 
         let y = 10
         let title = Util.createBitmapByName('favor_title_png')

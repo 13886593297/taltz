@@ -23,7 +23,6 @@ var RankScene = (function (_super) {
     RankScene.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this);
-        this.close_btn = 'close_png';
         Util.setTitle('排行榜');
         this.initTitle();
         // 请求个人数据

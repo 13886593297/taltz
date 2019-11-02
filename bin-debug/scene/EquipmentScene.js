@@ -19,7 +19,6 @@ var EquipmentScene = (function (_super) {
             { icon: '', bg: 'equip_bg_3_png', name: '竞品分析', type: 14 },
         ];
         Util.setTitle('装备库');
-        _this.close_btn = "close_png";
         return _this;
     }
     EquipmentScene.prototype.init = function () {
