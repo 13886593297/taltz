@@ -160,6 +160,4 @@ class IndexScene extends Scene {
         let testScene = new TestScene()
         ViewManager.getInstance().changeScene(testScene)
     }
-
-
 }
