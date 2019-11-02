@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="RadarPanelSkin" width="660" height="580" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16cf76511a8" ></w:Config>
+	<e:Image source="" x="8" y="-10"/>
+	<e:Image id="savePic" source="button_small_1_png" x="0" y="505"/>
+	<e:Image id="share" source="button_small_2_png" x="344" y="505"/>
+</e:Skin>

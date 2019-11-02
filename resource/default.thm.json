@@ -1,0 +1,34 @@
+{
+	"skins": {
+		"eui.Button": "resource/eui_skins/ButtonSkin.exml",
+		"eui.HScrollBar": "resource/eui_skins/HScrollBarSkin.exml",
+		"eui.ProgressBar": "resource/eui_skins/ProgressBarSkin.exml",
+		"eui.RadioButton": "resource/eui_skins/RadioButtonSkin.exml",
+		"eui.Scroller": "resource/eui_skins/ScrollerSkin.exml",
+		"eui.ToggleSwitch": "resource/eui_skins/ToggleSwitchSkin.exml",
+		"eui.VScrollBar": "resource/eui_skins/VScrollBarSkin.exml",
+		"eui.VSlider": "resource/eui_skins/VSliderSkin.exml",
+		"eui.ItemRenderer": "resource/eui_skins/ItemRendererSkin.exml",
+		"CTitle": "resource/eui_skins/CTitle.exml",
+		"RadarPanel": "resource/eui_skins/RadarPanel.exml",
+		"TrainSummary": "resource/eui_skins/TrainSummary.exml",
+		"SearchInput": "resource/eui_skins/SearchInput.exml"
+	},
+	"autoGenerateExmlsList": true,
+	"exmls": [
+		"resource/eui_skins/AlertPanelSkin.exml",
+		"resource/eui_skins/Button.exml",
+		"resource/eui_skins/CTitle.exml",
+		"resource/eui_skins/HScrollBarSkin.exml",
+		"resource/eui_skins/ProgressBarSkin.exml",
+		"resource/eui_skins/RadarPanel.exml",
+		"resource/eui_skins/RadioButtonSkin.exml",
+		"resource/eui_skins/ScrollerSkin.exml",
+		"resource/eui_skins/SearchInput.exml",
+		"resource/eui_skins/ToggleSwitchSkin.exml",
+		"resource/eui_skins/TrainSummary.exml",
+		"resource/eui_skins/VScrollBarSkin.exml",
+		"resource/eui_skins/VSliderSkin.exml"
+	],
+	"path": "resource/default.thm.json"
+}

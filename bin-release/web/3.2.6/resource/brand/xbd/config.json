@@ -1,0 +1,432 @@
+{
+    "host": "http://127.0.0.1:8360",
+    "rule": [
+        [
+            {
+                "text": "人机对战 \n",
+                "style": {
+                    "size": 35
+                }
+            }
+        ]
+    ],
+    "share": {
+         "1": {
+            "title": "艾乐明战队题海点兵,该你上场了!",
+            "desc": "答题王者，快来挑战积分排位赛！ "
+        },
+        "2": {
+            "title": "艾乐明战队",
+            "desc": "太棒了！{0} 晋升为 {1} 了！快来挑战TA吧！ "
+        },
+        "3": {
+            "title": "艾乐明战队",
+            "desc": "训练场上练骁兵！{0}凭 {1} 的正确率成功过关啦！"
+        },
+        "4": {
+            "desc": "英雄争霸！{0} VS {1} 挑战赛，比分火热揭晓！ ",
+            "title": "艾乐明战队"
+        },
+        "5": {
+            "desc": "知识就是力量！{0} VS {1} 团战现场，胜者为王，不服来战！",
+            "title": "艾乐明战队"
+        },
+        "6": {
+            "title": "艾乐明战队",
+            "desc": "越抢答越强大！{0} VS {1} 战绩出炉！你敢组队挑战吗？"
+        },
+        "10": {
+            "title": "艾乐明战队",
+            "desc": "犀力世界，谁与争锋！{0} 邀请你加入职场竞技，愈战愈勇走向人生巅峰！"
+        }
+    },
+    "bandge": [
+        {
+            "name": "艾",
+            "id": 301,
+            "start": 1,
+            "levels": [
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.1",
+                    "key": 1,
+                    "levelid": 304
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.2",
+                    "key": 2,
+                    "levelid": 305
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.3",
+                    "key": 3,
+                    "levelid": 306
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.4",
+                    "key": 4,
+                    "levelid": 307
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.5",
+                    "key": 5,
+                    "levelid": 308
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.6",
+                    "key": 6,
+                    "levelid": 309
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.7",
+                    "key": 7,
+                    "levelid": 310
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.8",
+                    "key": 8,
+                    "levelid": 311
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.9",
+                    "key": 9,
+                    "levelid": 312
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.10",
+                    "key": 10,
+                    "levelid": 313
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.11",
+                    "key": 11,
+                    "levelid": 314
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.12",
+                    "key": 12,
+                    "levelid": 315
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.13",
+                    "key": 13,
+                    "levelid": 316
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.14",
+                    "key": 14,
+                    "levelid": 317
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.15",
+                    "key": 15,
+                    "levelid":318
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.16",
+                    "key": 16,
+                    "levelid": 319
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.17",
+                    "key": 17,
+                    "levelid":320
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.18",
+                    "key": 18,
+                    "levelid": 321
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.19",
+                    "key": 19,
+                    "levelid": 322
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.20",
+                    "key": 20,
+                    "levelid": 323
+                }
+            ],
+            "icon": "icon_xin_png",
+            "fontImg": "font_xin_png"
+        },
+        {
+            "name": "乐",
+            "id": 302,
+            "start": 21,
+            "levels": [
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.1",
+                    "key": 21,
+                    "levelid": 324
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.2",
+                    "key": 22,
+                    "levelid": 325
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.3",
+                    "key": 23,
+                    "levelid": 326
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.4",
+                    "key": 24,
+                    "levelid": 327
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.5",
+                    "key": 25,
+                    "levelid": 328
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.6",
+                    "key": 26,
+                    "levelid": 329
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.7",
+                    "key": 27,
+                    "levelid": 330
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.8",
+                    "key": 28,
+                    "levelid": 331
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.9",
+                    "key": 29,
+                    "levelid":332
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.10",
+                    "key": 30,
+                    "levelid": 333
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.11",
+                    "key": 31,
+                    "levelid": 334
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.12",
+                    "key": 32,
+                    "levelid": 335
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.13",
+                    "key": 33,
+                    "levelid": 336
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.14",
+                    "key": 34,
+                    "levelid": 337
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.15",
+                    "key": 35,
+                    "levelid": 338
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.16",
+                    "key": 36,
+                    "levelid": 339
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.17",
+                    "key": 37,
+                    "levelid": 340
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.18",
+                    "key": 38,
+                    "levelid": 341
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.19",
+                    "key": 39,
+                    "levelid":342
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.20",
+                    "key": 40,
+                    "levelid": 343
+                }
+            ],
+            "icon": "icon_bai_png",
+            "fontImg": "font_bai_png"
+        },
+        {
+            "name": "明",
+            "id": 303,
+            "start": 41,
+            "levels": [
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.1",
+                    "key": 41,
+                    "levelid": 344
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.2",
+                    "key": 42,
+                    "levelid": 345
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.3",
+                    "key": 43,
+                    "levelid": 346
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.4",
+                    "key": 44,
+                    "levelid": 347
+                },
+                {
+                    "name": "跟团小白",
+                    "flag": "LV.5",
+                    "key": 45,
+                    "levelid": 348
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.6",
+                    "key": 46,
+                    "levelid": 349
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.7",
+                    "key": 47,
+                    "levelid": 350
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.8",
+                    "key": 48,
+                    "levelid":251
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.9",
+                    "key": 49,
+                    "levelid": 352
+                },
+                {
+                    "name": "组队游客",
+                    "flag": "LV.10",
+                    "key": 50,
+                    "levelid": 353
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.11",
+                    "key": 51,
+                    "levelid": 354
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.12",
+                    "key": 52,
+                    "levelid": 355
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.13",
+                    "key": 53,
+                    "levelid": 356
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.14",
+                    "key": 54,
+                    "levelid": 357
+                },
+                {
+                    "name": "自驾驴友",
+                    "flag": "LV.15",
+                    "key": 55,
+                    "levelid": 358
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.16",
+                    "key": 56,
+                    "levelid": 359
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.17",
+                    "key": 57,
+                    "levelid": 360
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.18",
+                    "key": 58,
+                    "levelid": 361
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.19",
+                    "key": 59,
+                    "levelid": 362
+                },
+                {
+                    "name": "旅行达人",
+                    "flag": "LV.20",
+                    "key": 60,
+                    "levelid": 363
+                }
+            ],
+            "icon": "icon_da_png",
+            "fontImg": "font_da_png"
+        }
+    ]
+}

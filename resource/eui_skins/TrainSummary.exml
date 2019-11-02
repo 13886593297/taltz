@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TrainSummarySkin" width="564" height="108" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16cfd1ec6ee" ></w:Config>
+	<e:Image source="score_bg_png" x="0" y="0"/>
+	<e:Label text="累计训练：" x="14" y="39" textColor="0xf46c22"/>
+	<e:Label text="正确率:" x="361" y="39" textColor="0xf46c22"/>
+	<e:Label text="{t1}" x="150" y="34" textColor="0xf46c22" size="36"/>
+	<e:Label text="{t2}" x="464" y="34" textColor="0xf46c22" size="36"/>
+</e:Skin>

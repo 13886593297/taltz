@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="SearchInputSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16d017a4f6c" ></w:Config>
+	<e:Image source="search_border_png"/>
+	<e:EditableText id="txtInput" width="400" height="88" text="{keywords}" x="35" y="0" anchorOffsetX="0" anchorOffsetY="0" textColor="0x7fc871" verticalAlign="middle" size="36"/>
+	<e:Image id="btnSearch" source="search_png" x="440" y="18"/>
+</e:Skin>
