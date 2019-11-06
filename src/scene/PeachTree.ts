@@ -158,7 +158,7 @@ class PeachTree extends Scene {
     private drawTree() {
         // 树下阴影
         let treeShadow = Util.createBitmapByName('shadow_png')
-        treeShadow.y = 1190
+        treeShadow.y = this.stage.stageHeight - 144
         this.addChildAt(treeShadow, 1)
 
         // 叶子
@@ -171,7 +171,7 @@ class PeachTree extends Scene {
         leafArr.forEach(item => {
             let leaf = Util.createBitmapByName(item.bg)
             leaf.x = 0
-            leaf.y = 517
+            leaf.y = this.stage.stageHeight - 817
             this.addChildAt(leaf, item.zIndex)
         })
     }
@@ -186,7 +186,7 @@ class PeachTree extends Scene {
         // 水壶
         let kettle = new MyMovieClip('kettleMovie')
         kettle.x = 380
-        kettle.y = 450
+        kettle.y = this.stage.stageHeight - 884
         kettleGroup.addChild(kettle)
 
         // 左上角提示
@@ -209,7 +209,7 @@ class PeachTree extends Scene {
         // 右下角提示
         let right_tip = new eui.Group()
         kettleGroup.addChild(right_tip)
-        this.showTip(390, 1160, '为你的桃树浇水吧', right_tip)
+        this.showTip(390, this.stage.stageHeight - 174, '为你的桃树浇水吧', right_tip)
 
         egret.Tween.get(kettleGroup)
             .to({ alpha: 1 }, 500).wait(2000)
@@ -223,9 +223,9 @@ class PeachTree extends Scene {
      */
     private drawPeach() {
         let peachArr = [
-            { bg: 'peach1_png', x: 580, y: 810, zIndex: 3 },
-            { bg: 'peach2_png', x: 245, y: 870, zIndex: 4 },
-            { bg: 'peach3_png', x: 360, y: 730, zIndex: 8 },
+            { bg: 'peach1_png', x: 580, y: this.stage.stageHeight - 524, zIndex: 3 },
+            { bg: 'peach2_png', x: 245, y: this.stage.stageHeight - 464, zIndex: 4 },
+            { bg: 'peach3_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 8 },
         ]
 
         peachArr.forEach((item, i) => {
@@ -272,7 +272,7 @@ class PeachTree extends Scene {
         // 摘取你的功夫桃子文字
         let peachText = new eui.Group()
         this.addChild(peachText)
-        this.showTip(390, 1160, '摘取你的功夫桃子', peachText)
+        this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫桃子', peachText)
         if (this.count <= 0) {
             peachText.visible = false
         }

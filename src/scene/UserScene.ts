@@ -16,20 +16,19 @@ class UserScene extends Scene {
 
         // 玩家信息
         let user = new UserInfo('center')
-        user.y = 20
         shareGroup.addChild(user)
 
         // 保存图片和分享
         let radarPanel = new RadarPanel(this)
         radarPanel.x = (this.stage.stageWidth - 660) / 2
-        radarPanel.y = 590
+        radarPanel.y = 530
         shareGroup.addChild(radarPanel)
 
         // 玩家数据
         let userData = DataManager.getInstance().getUser()
         let radar = new Radar(userData.attrInfo, userData.attrName, 450, 450)
         radar.x = 140
-        radar.y = 580
+        radar.y = 550
         shareGroup.addChild(radar)
         // 注册微信分享
         Util.registerShare(shareGroup, ShareType.USER_INFO, userData.nickName, userData.lvName)

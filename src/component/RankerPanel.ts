@@ -198,7 +198,8 @@ class AlertPanel extends eui.Group {
 
     private init() {
         let stage = ViewManager.getInstance().stage
-
+        this.width = stage.stageWidth
+        
         let panel = new eui.Panel()
         panel.skinName = "resource/eui_skins/AlertPanelSkin.exml"
         panel.title = this.title

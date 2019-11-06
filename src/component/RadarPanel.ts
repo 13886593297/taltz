@@ -24,7 +24,7 @@ class RadarPanel extends eui.Component implements eui.UIComponent {
 
 	// 保存图片
 	public onSaveImg() {
-		let alert = new AlertPanel("提示:请自行截图保存图片", 1220)
+		let alert = new AlertPanel("提示:请自行截图保存图片", 1150)
 		this.pp.addChild(alert);
 	}
 }

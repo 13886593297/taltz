@@ -55,7 +55,7 @@ var LoadingUI = (function (_super) {
         this.addChild(bg);
         this.textField = new egret.TextField();
         this.addChild(this.textField);
-        this.textField.y = stage.stageHeight - 380;
+        this.textField.y = stage.stageHeight - 300;
         this.textField.width = stage.stageWidth;
         this.textField.x = 0;
         this.textField.height = 100;

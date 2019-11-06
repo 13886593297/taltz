@@ -15,7 +15,8 @@ var RuleScene = (function (_super) {
     }
     RuleScene.prototype.init = function () {
         var _this = this;
-        _super.prototype.setBackground.call(this, 'bg_png');
+        this.close_btn = false;
+        _super.prototype.setBackground.call(this);
         var rule = Util.createBitmapByName('rule_png');
         rule.x = this.stage.stageWidth / 2;
         rule.anchorOffsetX = rule.width / 2;

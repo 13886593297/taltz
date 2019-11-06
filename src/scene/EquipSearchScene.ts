@@ -37,7 +37,7 @@ class EquipSearch extends Scene {
             let title = new egret.TextField()
             title.text = '搜索结果列表'
             title.textColor = 0x7fc871
-            title.size = 36
+            title.size = 32
             title.x = 150
             title.y = 365
             this.addChild(title)

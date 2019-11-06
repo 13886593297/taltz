@@ -180,6 +180,7 @@ var AlertPanel = (function (_super) {
     AlertPanel.prototype.init = function () {
         var _this = this;
         var stage = ViewManager.getInstance().stage;
+        this.width = stage.stageWidth;
         var panel = new eui.Panel();
         panel.skinName = "resource/eui_skins/AlertPanelSkin.exml";
         panel.title = this.title;

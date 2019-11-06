@@ -32,7 +32,6 @@ var Topic = (function (_super) {
         var _this = this;
         //题目标题
         var qtitle = new egret.TextField();
-        qtitle.y = 5;
         qtitle.width = this.width;
         qtitle.textColor = 0x36b134;
         var titleText = this.subject.title;
@@ -41,11 +40,11 @@ var Topic = (function (_super) {
         }
         this.title = qtitle;
         qtitle.text = titleText;
-        qtitle.size = 40;
+        qtitle.size = 36;
         qtitle.lineSpacing = 10;
         qtitle.textAlign = egret.HorizontalAlign.CENTER;
         this.addChild(qtitle);
-        var y = qtitle.textHeight + 80;
+        var y = qtitle.textHeight + 40;
         var optionNumArr = ['A', 'B', 'C', 'D'];
         this.subject.options.forEach(function (item, i) {
             if (item.name && item.name.length >= 1) {
@@ -256,16 +255,15 @@ var TopicItem = (function (_super) {
         _this.ICON_RES = { 2: "icon_err_png", 3: "icon_ok_png" };
         _this.RECT = {
             width: 560,
-            height: 93,
+            height: 90,
         };
         _this.width = width;
         _this.option = option;
         _this.optionNum = optionNum;
         _this.status = TopicItem.STATUS_NORMAL;
         _this.touchEnabled = true;
-        var line = Math.ceil(_this.option.name.length / 10);
-        _this.line = line;
-        _this.height = _this.RECT.height + (line - 1) * 40;
+        var line = Math.ceil(_this.option.name.length / 11);
+        _this.height = _this.RECT.height + (line - 1) * 30;
         _this.init();
         return _this;
     }
@@ -276,9 +274,8 @@ var TopicItem = (function (_super) {
         text.text = this.option.name;
         text.width = 420;
         text.lineSpacing = 10;
-        text.size = 40;
+        text.size = 36;
         text.x = 150;
-        // text.y = 15
         text.height = this.height;
         text.textAlign = egret.HorizontalAlign.CENTER;
         text.verticalAlign = egret.VerticalAlign.MIDDLE;

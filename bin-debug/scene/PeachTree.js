@@ -156,7 +156,7 @@ var PeachTree = (function (_super) {
         var _this = this;
         // 树下阴影
         var treeShadow = Util.createBitmapByName('shadow_png');
-        treeShadow.y = 1190;
+        treeShadow.y = this.stage.stageHeight - 144;
         this.addChildAt(treeShadow, 1);
         // 叶子
         var leafArr = [
@@ -167,7 +167,7 @@ var PeachTree = (function (_super) {
         leafArr.forEach(function (item) {
             var leaf = Util.createBitmapByName(item.bg);
             leaf.x = 0;
-            leaf.y = 517;
+            leaf.y = _this.stage.stageHeight - 817;
             _this.addChildAt(leaf, item.zIndex);
         });
     };
@@ -182,7 +182,7 @@ var PeachTree = (function (_super) {
         // 水壶
         var kettle = new MyMovieClip('kettleMovie');
         kettle.x = 380;
-        kettle.y = 450;
+        kettle.y = this.stage.stageHeight - 884;
         kettleGroup.addChild(kettle);
         // 左上角提示
         var left_tip_bg = Util.createBitmapByName('water_success_png');
@@ -203,7 +203,7 @@ var PeachTree = (function (_super) {
         // 右下角提示
         var right_tip = new eui.Group();
         kettleGroup.addChild(right_tip);
-        this.showTip(390, 1160, '为你的桃树浇水吧', right_tip);
+        this.showTip(390, this.stage.stageHeight - 174, '为你的桃树浇水吧', right_tip);
         egret.Tween.get(kettleGroup)
             .to({ alpha: 1 }, 500).wait(2000)
             .to({ alpha: 0 }, 500).call(function () {
@@ -216,9 +216,9 @@ var PeachTree = (function (_super) {
     PeachTree.prototype.drawPeach = function () {
         var _this = this;
         var peachArr = [
-            { bg: 'peach1_png', x: 580, y: 810, zIndex: 3 },
-            { bg: 'peach2_png', x: 245, y: 870, zIndex: 4 },
-            { bg: 'peach3_png', x: 360, y: 730, zIndex: 8 },
+            { bg: 'peach1_png', x: 580, y: this.stage.stageHeight - 524, zIndex: 3 },
+            { bg: 'peach2_png', x: 245, y: this.stage.stageHeight - 464, zIndex: 4 },
+            { bg: 'peach3_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 8 },
         ];
         peachArr.forEach(function (item, i) {
             var peach = Util.createBitmapByName(item.bg);
@@ -261,7 +261,7 @@ var PeachTree = (function (_super) {
         // 摘取你的功夫桃子文字
         var peachText = new eui.Group();
         this.addChild(peachText);
-        this.showTip(390, 1160, '摘取你的功夫桃子', peachText);
+        this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫桃子', peachText);
         if (this.count <= 0) {
             peachText.visible = false;
         }

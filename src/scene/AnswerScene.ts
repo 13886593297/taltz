@@ -12,7 +12,6 @@ class AnswerScene extends Scene {
 
     private commitButton
     private topic
-    private topicY
     private numberText
 
     private answers: Answers
@@ -40,14 +39,12 @@ class AnswerScene extends Scene {
         this.close_btn = false
         super.setBackground()
         this.start = +new Date()
-        let y = 25
 
         let title = this.trainTitle(this.levelData.flag, this.levelData.name)
         title.x = 170
         title.y = 25
         this.addChild(title)
 
-        y += 145
         //进度条
         if (this.type == 1) {
             // 进度条
@@ -62,7 +59,6 @@ class AnswerScene extends Scene {
             pBar.value = this.curIdx//设置进度条的初始值
             this._progress = pBar
 
-            y += 7
             // Q1
             let number = new egret.TextField()
             number.text = "Q" + this.curIdx
@@ -72,8 +68,6 @@ class AnswerScene extends Scene {
             this.numberText = number
             this.addChild(number)
         }
-
-        y += 100
 
         let trainid = this.answers.questions[this.curIdx - 1].qid
         let subject: Subject = Util.getTrain(trainid)
@@ -85,34 +79,28 @@ class AnswerScene extends Scene {
         //选项 
         var group = new eui.Group()
         group.height = 5000
-        group.y = 10
-        // group.width = 600
-        // this.addChild(group)
         this.topicGroup = group
 
         let topic = new Topic(subject)
-        // topic.y = y
+        topic.x = (this.stage.stageWidth - topic.width) / 2
         this.topic = topic
-        this.topicY = 277
         group.addChild(topic)
 
 
         var myScroller: eui.Scroller = new eui.Scroller()
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
         myScroller.width = this.stage.stageWidth
-        myScroller.x = 60
-        myScroller.height = 700
-        myScroller.y = 277
+        myScroller.height = 650
+        myScroller.y = 250
         //设置viewport
         myScroller.viewport = group
         this.addChild(myScroller)
         this.scroller = myScroller
 
-
         if (this.type == 1) {
             let favorButton = new XButton('加入收藏')
             favorButton.x = this.stage.stageWidth / 2 - favorButton.width - 10
-            favorButton.y = 1120
+            favorButton.y = 1040
 
             let isFavor = this.answers.questions[this.curIdx - 1].isCollect
             let resource = 'favor_png'
@@ -149,7 +137,7 @@ class AnswerScene extends Scene {
         } else {
             let favorButton = new XButton('删除')
             favorButton.x = this.stage.stageWidth / 2 - favorButton.width - 10
-            favorButton.y = 1120
+            favorButton.y = 1040
             this.addChild(favorButton)
 
             let favorIcon = Util.createBitmapByName('icon_err_png')
@@ -179,7 +167,7 @@ class AnswerScene extends Scene {
 
         let subButton = new XButton('提交', ButtonType.YELLOW)
         this.commitButton = subButton
-        subButton.y = 1120
+        subButton.y = 1040
         subButton.x = this.stage.stageWidth / 2 + 10
         this.addChild(subButton)
         subButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
@@ -211,7 +199,7 @@ class AnswerScene extends Scene {
                     let selectOption = this.topic.getSelect()
                     if (!selectOption) {
                         //TODO 
-                        let alert = new AlertPanel("请选择答案！", 1240)
+                        let alert = new AlertPanel("请选择答案！", 1160)
                         this.addChild(alert)
                         return
                     }
@@ -257,10 +245,9 @@ class AnswerScene extends Scene {
         }, this)
 
 
-        y += 90
         // 题目分析
         let analysisButton = Util.createBitmapByName('icon_tmfx_png')
-        analysisButton.y = 1000
+        analysisButton.y = 920
         analysisButton.x = this.stage.stageWidth / 2
         analysisButton.anchorOffsetX = analysisButton.width / 2
         analysisButton.touchEnabled = true
@@ -342,7 +329,7 @@ class AnswerScene extends Scene {
         this.topicGroup.removeChild(this.topic)
         //选项 
         let topic = new Topic(subject)
-        // topic.y = this.topicY
+        topic.x = (this.stage.stageWidth - topic.width) / 2
         this.topic = topic
         this.topicGroup.addChild(topic)
         if (this.type == 1) {

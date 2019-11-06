@@ -10,21 +10,20 @@ class ScoreScene extends Scene {
         user.y = 20
         this.addChild(user)
 
-
         let saveButton = Util.createBitmapByName('button_small_1_png')
         saveButton.x = this.stage.stageWidth / 2 - saveButton.width - 10
-        saveButton.y = 1060
+        saveButton.y = 1020
         saveButton.touchEnabled = true
         this.addChild(saveButton)
 
         saveButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            let alert = new AlertPanel("提示:请自行截图保存图片", 1200)
+            let alert = new AlertPanel("提示:请自行截图保存图片", 1150)
             this.addChild(alert)
         }, this)
 
         let shareButton = Util.createBitmapByName('button_small_2_png')
         shareButton.x = this.stage.stageWidth / 2 + 10
-        shareButton.y = 1060
+        shareButton.y = 1020
         shareButton.touchEnabled = true
         this.addChild(shareButton)
         shareButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {

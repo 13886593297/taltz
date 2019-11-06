@@ -1,6 +1,7 @@
 class RuleScene extends Scene {
     public init() {
-        super.setBackground('bg_png')
+        this.close_btn = false
+        super.setBackground()
 
         let rule = Util.createBitmapByName('rule_png')
         rule.x = this.stage.stageWidth / 2

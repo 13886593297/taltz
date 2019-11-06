@@ -34,7 +34,6 @@ class Topic extends eui.Group {
     private init() {
         //题目标题
         let qtitle = new egret.TextField()
-        qtitle.y = 5
         qtitle.width = this.width
         qtitle.textColor = 0x36b134
 
@@ -44,11 +43,11 @@ class Topic extends eui.Group {
         }
         this.title = qtitle
         qtitle.text = titleText
-        qtitle.size = 40
+        qtitle.size = 36
         qtitle.lineSpacing = 10
         qtitle.textAlign = egret.HorizontalAlign.CENTER
         this.addChild(qtitle)
-        let y = qtitle.textHeight + 80
+        let y = qtitle.textHeight + 40
 
         let optionNumArr = ['A', 'B', 'C', 'D']
         this.subject.options.forEach((item, i) => {
@@ -256,7 +255,6 @@ class TopicItem extends egret.DisplayObjectContainer {
     private text: egret.TextField
 
     private option
-    private line
     private readonly BG_RES = ['option_normal_png', 'option_select_png', 'option_error_png', 'option_ok_png', 'option_ok_png']
 
     private readonly ICON_RES = { 2: "icon_err_png", 3: "icon_ok_png" }
@@ -269,7 +267,7 @@ class TopicItem extends egret.DisplayObjectContainer {
 
     private readonly RECT = {
         width: 560,
-        height: 93,
+        height: 90,
     }
 
     private status
@@ -282,9 +280,8 @@ class TopicItem extends egret.DisplayObjectContainer {
         this.optionNum = optionNum
         this.status = TopicItem.STATUS_NORMAL
         this.touchEnabled = true
-        let line = Math.ceil(this.option.name.length / 10)
-        this.line = line
-        this.height = this.RECT.height + (line - 1) * 40
+        let line = Math.ceil(this.option.name.length / 11)
+        this.height = this.RECT.height + (line - 1) * 30
         this.init()
     }
 
@@ -295,9 +292,8 @@ class TopicItem extends egret.DisplayObjectContainer {
         text.text = this.option.name
         text.width = 420
         text.lineSpacing = 10
-        text.size = 40
+        text.size = 36
         text.x = 150
-        // text.y = 15
         text.height = this.height
         text.textAlign = egret.HorizontalAlign.CENTER
         text.verticalAlign = egret.VerticalAlign.MIDDLE

@@ -29,7 +29,6 @@ var IndexScene = (function (_super) {
                 var scene = new UserScene();
                 ViewManager.getInstance().changeScene(scene);
             }, _this);
-            user.y = 20;
             _this.userView = user;
             _this.addChild(user);
             _this.createLayout();
@@ -39,10 +38,10 @@ var IndexScene = (function (_super) {
         var _this = this;
         // 选项按钮
         var models = [
-            { bg: 'model_bg_1_png', y: 580, key: 1 },
-            { bg: 'model_bg_2_png', y: 730, key: 2 },
-            { bg: 'model_bg_3_png', y: 880, key: 3 },
-            { bg: 'model_bg_4_png', y: 1030, key: 4 },
+            { bg: 'model_bg_1_png', y: 550, key: 1 },
+            { bg: 'model_bg_2_png', y: 690, key: 2 },
+            { bg: 'model_bg_3_png', y: 830, key: 3 },
+            { bg: 'model_bg_4_png', y: 970, key: 4 },
         ];
         var grayFilter = Util.grayFliter();
         for (var _i = 0, models_1 = models; _i < models_1.length; _i++) {
@@ -50,8 +49,7 @@ var IndexScene = (function (_super) {
             var bg = Util.createBitmapByName(model.bg);
             if (model.key == 3)
                 bg.filters = [grayFilter];
-            bg.x = this.stage.stageWidth / 2;
-            bg.anchorOffsetX = bg.width / 2;
+            bg.x = (this.stage.stageWidth - bg.width) / 2;
             bg.y = model.y;
             this.addChild(bg);
             bg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouch(model.key), this);
@@ -60,7 +58,7 @@ var IndexScene = (function (_super) {
         // 底部通知消息
         Http.getInstance().post(Url.HTTP_NOTICE, {}, function (data) {
             var notice = new Notice(data.data);
-            notice.y = 1200;
+            notice.y = 1120;
             _this.addChild(notice);
             notice.touchEnabled = true;
             notice.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
@@ -117,7 +115,7 @@ var IndexScene = (function (_super) {
     // 页面跳转
     IndexScene.prototype.onTouch = function (key) {
         var _this = this;
-        return function (e) {
+        return function () {
             Util.playMusic('model_select_mp3');
             switch (key) {
                 case 1:
@@ -129,10 +127,8 @@ var IndexScene = (function (_super) {
                     ViewManager.getInstance().changeScene(rankscene);
                     break;
                 case 3:
-                    var alert_1 = new AlertPanel("该功能暂未开放", 1200);
+                    var alert_1 = new AlertPanel("该功能暂未开放", 1120);
                     _this.addChild(alert_1);
-                    // let pk = new PkListScene()
-                    // ViewManager.getInstance().changeScene(pk)
                     break;
                 case 4:
                     var escene = new EquipmentScene();
@@ -147,15 +143,6 @@ var IndexScene = (function (_super) {
     IndexScene.prototype.updateScene = function () {
         this.userView.refresh();
         Util.setTitle("艾乐明-" + DataManager.getInstance().getUser()['teamName']);
-    };
-    IndexScene.prototype.onLoadComplete = function (font) {
-        this._bitmapText = new egret.BitmapText();
-        this._bitmapText.font = font;
-        /*** 本示例关键代码段结束 ***/
-        this._bitmapText.x = 50;
-        this._bitmapText.y = 200;
-        this._bitmapText.text = "每日战队排行表彰 训练场";
-        this.addChild(this._bitmapText);
     };
     return IndexScene;
 }(Scene));
