@@ -32,7 +32,7 @@ var AnswerScene = (function (_super) {
         _super.prototype.setBackground.call(this);
         this.start = +new Date();
         var title = this.trainTitle(this.levelData.flag, this.levelData.name);
-        title.x = 170;
+        title.x = 180;
         title.y = 25;
         this.addChild(title);
         //进度条
@@ -202,7 +202,6 @@ var AnswerScene = (function (_super) {
                         _this.topic.setDisableSeleced();
                         _this.analysisButton.visible = true;
                         if (result_1) {
-                            //this.analysisButton.labelDisplay.text = "题目分析"
                             Util.playMusic('answer_ok_mp3');
                             _this.topic.setSelectedStatus(TopicItem.STATUS_OK);
                         }

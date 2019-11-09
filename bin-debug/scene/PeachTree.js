@@ -14,9 +14,11 @@ var PeachTree = (function (_super) {
         var _this = _super.call(this) || this;
         _this._myRotation = 5; // 旋转角度
         _this.count = 0; // 显示几个桃子
+        _this.peachText = new eui.Group();
         return _this;
     }
     PeachTree.prototype.init = function () {
+        var _this = this;
         _super.prototype.setBackground.call(this, 'taltz_bg_png');
         this.close_btn = 'close_white_png';
         Util.setTitle('桃子森林');
@@ -26,9 +28,11 @@ var PeachTree = (function (_super) {
         this.userInfo = userInfo;
         this.initAvatar();
         // 获取桃子信息
-        var info = RES.getRes('instruction_json');
-        this.info = info;
-        this.getKattle();
+        Http.getInstance().post(Url.HTTP_WATERING_INFO, null, function (data) {
+            _this.info = data.data;
+            console.log(_this.info);
+            _this.getKattle();
+        });
     };
     /**
      * 初始化标题
@@ -128,20 +132,11 @@ var PeachTree = (function (_super) {
             // 点击领取水壶，提交后台记录信息，浇水天数+1
             emptyKattle_1.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
                 _this.removeChild(group_1); // 删除空水壶
-                _this.info.isGetKattle = true;
-                _this.info.waterDays++;
-                // 如果到了5天的整数倍，新长出一颗桃子
-                if (_this.info.waterDays % 5 == 0) {
-                    for (var i = 0; i < _this.info.peach.length; i++) {
-                        if (!_this.info.peach[i].isGrowUp) {
-                            _this.info.peach[i].isGrowUp = true;
-                            _this.curPeachIndex = i;
-                            break;
-                        }
-                    }
-                }
-                _this.drawTree(); // 开始画树
-                _this.kettleAni(); // 开始浇水动画
+                Http.getInstance().post(Url.HTTP_WATERING_DO, null, function (json) {
+                    _this.curPeachInfo = json.data;
+                    _this.drawTree(); // 开始画树
+                    _this.kettleAni(); // 开始浇水动画
+                });
             }, this);
         }
         else {
@@ -162,7 +157,7 @@ var PeachTree = (function (_super) {
         var leafArr = [
             { bg: 'peachTree1_png', zIndex: 2 },
             { bg: 'peachTree2_png', zIndex: 5 },
-            { bg: 'peachTree3_png', zIndex: 7 },
+            { bg: 'peachTree3_png', zIndex: 6 },
         ];
         leafArr.forEach(function (item) {
             var leaf = Util.createBitmapByName(item.bg);
@@ -220,51 +215,64 @@ var PeachTree = (function (_super) {
             { bg: 'peach2_png', x: 245, y: this.stage.stageHeight - 464, zIndex: 4 },
             { bg: 'peach3_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 8 },
         ];
-        peachArr.forEach(function (item, i) {
+        var pArr = [];
+        peachArr.forEach(function (item) {
             var peach = Util.createBitmapByName(item.bg);
             peach.x = item.x;
             peach.y = item.y;
-            _this.addChildAt(peach, item.zIndex);
-            // 桃子是否显示
-            peach.visible = _this.info.peach[i].isGrowUp;
-            if (_this.info.peach[i].isGrowUp) {
-                _this.count++;
-            }
-            // 刚长出来的桃子
-            if (_this.curPeachIndex == i) {
-                peach.scaleX = 0;
-                peach.scaleY = 0;
-                egret.Tween.get(peach).to({ scaleX: 1, scaleY: 1 }, 1000);
-            }
-            peach.touchEnabled = true;
             peach.anchorOffsetX = peach.width / 2;
-            // 桃子晃动动画
-            peach.rotation = -_this._myRotation;
-            egret.Tween.get(peach, { loop: true })
-                .to({ rotation: _this._myRotation }, 1000, egret.Ease.quadInOut)
-                .to({ rotation: -_this._myRotation }, 1000, egret.Ease.quadInOut);
-            // 摘取桃子
-            peach.addEventListener(egret.TouchEvent.TOUCH_TAP, function (evt) {
-                egret.Tween.get(evt.target)
-                    .to({ x: 640, y: 310, scaleX: 0.2, scaleY: 0.2, visible: false }, 1500)
-                    .call(function () {
-                    _this.userInfo.score += 15;
-                    _this.showScore(_this.userInfo.score);
-                    _this.showScoreAni();
-                    _this.count--;
-                    if (_this.count <= 0) {
-                        peachText.visible = false;
+            peach.visible = false;
+            _this.addChildAt(peach, item.zIndex);
+            pArr.push(peach);
+        });
+        // 根据info显示对应的桃子
+        this.info.peach.forEach(function (item) {
+            var peach = pArr[item.position - 1];
+            _this.count++;
+            _this.peachAni(peach, item);
+        });
+        // 新成长的桃子
+        if (this.curPeachInfo) {
+            var curPeach = pArr[this.curPeachInfo.position - 1];
+            this.count++;
+            curPeach.scaleX = 0;
+            curPeach.scaleY = 0;
+            egret.Tween.get(curPeach).to({ scaleX: 1, scaleY: 1 }, 1000);
+            this.peachAni(curPeach, this.curPeachInfo);
+        }
+        // 摘取你的功夫桃子文字
+        this.addChild(this.peachText);
+        this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫桃子', this.peachText);
+        if (this.count <= 0) {
+            this.peachText.visible = false;
+        }
+    };
+    PeachTree.prototype.peachAni = function (peach, item) {
+        var _this = this;
+        peach.visible = true;
+        peach.touchEnabled = true;
+        // 桃子晃动动画
+        peach.rotation = -this._myRotation;
+        egret.Tween.get(peach, { loop: true })
+            .to({ rotation: this._myRotation }, 1000, egret.Ease.quadInOut)
+            .to({ rotation: -this._myRotation }, 1000, egret.Ease.quadInOut);
+        // 摘桃子
+        peach.addEventListener(egret.TouchEvent.TOUCH_TAP, function (evt) {
+            egret.Tween.get(evt.target)
+                .to({ x: 640, y: 310, scaleX: 0.2, scaleY: 0.2, visible: false }, 1500)
+                .call(function () {
+                Http.getInstance().post(Url.HTTP_WATERING_PICK + '?id=' + item.id, '', function (data) {
+                    if (data.data != -1) {
+                        _this.userInfo.score += 15;
+                        _this.showScore(_this.userInfo.score);
+                        _this.showScoreAni();
+                        if (--_this.count <= 0) {
+                            _this.peachText.visible = false;
+                        }
                     }
                 });
-            }, _this);
-        });
-        // 摘取你的功夫桃子文字
-        var peachText = new eui.Group();
-        this.addChild(peachText);
-        this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫桃子', peachText);
-        if (this.count <= 0) {
-            peachText.visible = false;
-        }
+            });
+        }, this);
     };
     // 积分
     PeachTree.prototype.showScore = function (num) {

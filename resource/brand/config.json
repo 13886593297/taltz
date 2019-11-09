@@ -42,391 +42,512 @@
     },
     "bandge": [
         {
-            "name": "艾",
+            "name": "净",
             "id": 301,
             "start": 1,
             "levels": [
                 {
-                    "name": "跟团小白",
+                    "name": "见习王者",
                     "flag": "LV.1",
                     "key": 1,
-                    "levelid": 304
+                    "levelid": 405
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "初登新净",
                     "flag": "LV.2",
                     "key": 2,
-                    "levelid": 305
+                    "levelid": 406
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "登堂入室",
                     "flag": "LV.3",
                     "key": 3,
-                    "levelid": 306
+                    "levelid": 407
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "了然於胸",
                     "flag": "LV.4",
                     "key": 4,
-                    "levelid": 307
+                    "levelid": 408
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "豁然贯通",
                     "flag": "LV.5",
                     "key": 5,
-                    "levelid": 308
+                    "levelid": 409
                 },
                 {
-                    "name": "组队游客",
+                    "name": "渐入佳净",
                     "flag": "LV.6",
                     "key": 6,
-                    "levelid": 309
+                    "levelid": 410
                 },
                 {
-                    "name": "组队游客",
+                    "name": "驾轻就熟",
                     "flag": "LV.7",
                     "key": 7,
-                    "levelid": 310
+                    "levelid": 411
                 },
                 {
-                    "name": "组队游客",
+                    "name": "略有小成",
                     "flag": "LV.8",
                     "key": 8,
-                    "levelid": 311
+                    "levelid": 412
                 },
                 {
-                    "name": "组队游客",
+                    "name": "出类拔萃",
                     "flag": "LV.9",
                     "key": 9,
-                    "levelid": 312
+                    "levelid": 413
                 },
                 {
-                    "name": "组队游客",
+                    "name": "心领神会",
                     "flag": "LV.10",
                     "key": 10,
-                    "levelid": 313
+                    "levelid": 414
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "净在掌握",
                     "flag": "LV.11",
                     "key": 11,
-                    "levelid": 314
+                    "levelid": 415
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "挥洒自如",
                     "flag": "LV.12",
                     "key": 12,
-                    "levelid": 315
+                    "levelid": 416
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "游刃有余",
                     "flag": "LV.13",
                     "key": 13,
-                    "levelid": 316
+                    "levelid": 417
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "举世无双",
                     "flag": "LV.14",
                     "key": 14,
-                    "levelid": 317
+                    "levelid": 418
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "已臻化净",
                     "flag": "LV.15",
                     "key": 15,
-                    "levelid":318
+                    "levelid":419
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "技冠群雄",
                     "flag": "LV.16",
                     "key": 16,
-                    "levelid": 319
+                    "levelid": 420
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "融会贯通",
                     "flag": "LV.17",
                     "key": 17,
-                    "levelid":320
+                    "levelid":421
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "炉火纯青",
                     "flag": "LV.18",
                     "key": 18,
-                    "levelid": 321
+                    "levelid": 422
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "出神入化",
                     "flag": "LV.19",
                     "key": 19,
-                    "levelid": 322
+                    "levelid": 423
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "净界王者",
                     "flag": "LV.20",
                     "key": 20,
-                    "levelid": 323
+                    "levelid": 424
                 }
-            ],
-            "icon": "icon_xin_png",
-            "fontImg": "font_xin_png"
+            ]
         },
         {
-            "name": "乐",
+            "name": "阶",
             "id": 302,
             "start": 21,
             "levels": [
                 {
-                    "name": "跟团小白",
+                    "name": "见习王者",
                     "flag": "LV.1",
                     "key": 21,
-                    "levelid": 324
+                    "levelid": 425
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "初登新净",
                     "flag": "LV.2",
                     "key": 22,
-                    "levelid": 325
+                    "levelid": 426
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "登堂入室",
                     "flag": "LV.3",
                     "key": 23,
-                    "levelid": 326
+                    "levelid": 427
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "了然於胸",
                     "flag": "LV.4",
                     "key": 24,
-                    "levelid": 327
+                    "levelid": 428
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "豁然贯通",
                     "flag": "LV.5",
                     "key": 25,
-                    "levelid": 328
+                    "levelid": 429
                 },
                 {
-                    "name": "组队游客",
+                    "name": "渐入佳净",
                     "flag": "LV.6",
                     "key": 26,
-                    "levelid": 329
+                    "levelid": 430
                 },
                 {
-                    "name": "组队游客",
+                    "name": "驾轻就熟",
                     "flag": "LV.7",
                     "key": 27,
-                    "levelid": 330
+                    "levelid": 431
                 },
                 {
-                    "name": "组队游客",
+                    "name": "略有小成",
                     "flag": "LV.8",
                     "key": 28,
-                    "levelid": 331
+                    "levelid": 432
                 },
                 {
-                    "name": "组队游客",
+                    "name": "出类拔萃",
                     "flag": "LV.9",
                     "key": 29,
-                    "levelid":332
+                    "levelid":433
                 },
                 {
-                    "name": "组队游客",
+                    "name": "心领神会",
                     "flag": "LV.10",
                     "key": 30,
-                    "levelid": 333
+                    "levelid": 434
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "净在掌握",
                     "flag": "LV.11",
                     "key": 31,
-                    "levelid": 334
+                    "levelid": 435
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "挥洒自如",
                     "flag": "LV.12",
                     "key": 32,
-                    "levelid": 335
+                    "levelid": 436
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "游刃有余",
                     "flag": "LV.13",
                     "key": 33,
-                    "levelid": 336
+                    "levelid": 437
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "举世无双",
                     "flag": "LV.14",
                     "key": 34,
-                    "levelid": 337
+                    "levelid": 438
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "已臻化净",
                     "flag": "LV.15",
                     "key": 35,
-                    "levelid": 338
+                    "levelid": 439
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "技冠群雄",
                     "flag": "LV.16",
                     "key": 36,
-                    "levelid": 339
+                    "levelid": 440
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "融会贯通",
                     "flag": "LV.17",
                     "key": 37,
-                    "levelid": 340
+                    "levelid": 441
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "炉火纯青",
                     "flag": "LV.18",
                     "key": 38,
-                    "levelid": 341
+                    "levelid": 442
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "出神入化",
                     "flag": "LV.19",
                     "key": 39,
-                    "levelid":342
+                    "levelid": 443
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "净界王者",
                     "flag": "LV.20",
                     "key": 40,
-                    "levelid": 343
+                    "levelid": 444
                 }
-            ],
-            "icon": "icon_bai_png",
-            "fontImg": "font_bai_png"
+            ]
         },
         {
-            "name": "明",
+            "name": "王",
             "id": 303,
             "start": 41,
             "levels": [
                 {
-                    "name": "跟团小白",
+                    "name": "见习王者",
                     "flag": "LV.1",
                     "key": 41,
-                    "levelid": 344
+                    "levelid": 445
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "初登新净",
                     "flag": "LV.2",
                     "key": 42,
-                    "levelid": 345
+                    "levelid": 446
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "登堂入室",
                     "flag": "LV.3",
                     "key": 43,
-                    "levelid": 346
+                    "levelid": 447
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "了然於胸",
                     "flag": "LV.4",
                     "key": 44,
-                    "levelid": 347
+                    "levelid": 448
                 },
                 {
-                    "name": "跟团小白",
+                    "name": "豁然贯通",
                     "flag": "LV.5",
                     "key": 45,
-                    "levelid": 348
+                    "levelid": 449
                 },
                 {
-                    "name": "组队游客",
+                    "name": "渐入佳净",
                     "flag": "LV.6",
                     "key": 46,
-                    "levelid": 349
+                    "levelid": 450
                 },
                 {
-                    "name": "组队游客",
+                    "name": "驾轻就熟",
                     "flag": "LV.7",
                     "key": 47,
-                    "levelid": 350
+                    "levelid": 451
                 },
                 {
-                    "name": "组队游客",
+                    "name": "略有小成",
                     "flag": "LV.8",
                     "key": 48,
-                    "levelid":251
+                    "levelid": 452
                 },
                 {
-                    "name": "组队游客",
+                    "name": "出类拔萃",
                     "flag": "LV.9",
                     "key": 49,
-                    "levelid": 352
+                    "levelid": 453
                 },
                 {
-                    "name": "组队游客",
+                    "name": "心领神会",
                     "flag": "LV.10",
                     "key": 50,
-                    "levelid": 353
+                    "levelid": 454
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "净在掌握",
                     "flag": "LV.11",
                     "key": 51,
-                    "levelid": 354
+                    "levelid": 455
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "挥洒自如",
                     "flag": "LV.12",
                     "key": 52,
-                    "levelid": 355
+                    "levelid": 456
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "游刃有余",
                     "flag": "LV.13",
                     "key": 53,
-                    "levelid": 356
+                    "levelid": 457
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "举世无双",
                     "flag": "LV.14",
                     "key": 54,
-                    "levelid": 357
+                    "levelid": 458
                 },
                 {
-                    "name": "自驾驴友",
+                    "name": "已臻化净",
                     "flag": "LV.15",
                     "key": 55,
-                    "levelid": 358
+                    "levelid": 459
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "技冠群雄",
                     "flag": "LV.16",
                     "key": 56,
-                    "levelid": 359
+                    "levelid": 460
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "融会贯通",
                     "flag": "LV.17",
                     "key": 57,
-                    "levelid": 360
+                    "levelid": 461
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "炉火纯青",
                     "flag": "LV.18",
                     "key": 58,
-                    "levelid": 361
+                    "levelid": 462
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "出神入化",
                     "flag": "LV.19",
                     "key": 59,
-                    "levelid": 362
+                    "levelid": 463
                 },
                 {
-                    "name": "旅行达人",
+                    "name": "净界王者",
                     "flag": "LV.20",
                     "key": 60,
-                    "levelid": 363
+                    "levelid": 464
                 }
-            ],
-            "icon": "icon_da_png",
-            "fontImg": "font_da_png"
+            ]
+        },
+        {
+            "name": "者",
+            "id": 304,
+            "start": 61,
+            "levels": [
+                {
+                    "name": "见习王者",
+                    "flag": "LV.1",
+                    "key": 61,
+                    "levelid": 465
+                },
+                {
+                    "name": "初登新净",
+                    "flag": "LV.2",
+                    "key": 62,
+                    "levelid": 466
+                },
+                {
+                    "name": "登堂入室",
+                    "flag": "LV.3",
+                    "key": 63,
+                    "levelid": 467
+                },
+                {
+                    "name": "了然於胸",
+                    "flag": "LV.4",
+                    "key": 64,
+                    "levelid": 468
+                },
+                {
+                    "name": "豁然贯通",
+                    "flag": "LV.5",
+                    "key": 65,
+                    "levelid": 469
+                },
+                {
+                    "name": "渐入佳净",
+                    "flag": "LV.6",
+                    "key": 66,
+                    "levelid": 470
+                },
+                {
+                    "name": "驾轻就熟",
+                    "flag": "LV.7",
+                    "key": 67,
+                    "levelid": 471
+                },
+                {
+                    "name": "略有小成",
+                    "flag": "LV.8",
+                    "key": 68,
+                    "levelid": 472
+                },
+                {
+                    "name": "出类拔萃",
+                    "flag": "LV.9",
+                    "key": 69,
+                    "levelid": 473
+                },
+                {
+                    "name": "心领神会",
+                    "flag": "LV.10",
+                    "key": 70,
+                    "levelid": 474
+                },
+                {
+                    "name": "净在掌握",
+                    "flag": "LV.11",
+                    "key": 71,
+                    "levelid": 475
+                },
+                {
+                    "name": "挥洒自如",
+                    "flag": "LV.12",
+                    "key": 72,
+                    "levelid": 476
+                },
+                {
+                    "name": "游刃有余",
+                    "flag": "LV.13",
+                    "key": 73,
+                    "levelid": 477
+                },
+                {
+                    "name": "举世无双",
+                    "flag": "LV.14",
+                    "key": 74,
+                    "levelid": 478
+                },
+                {
+                    "name": "已臻化净",
+                    "flag": "LV.15",
+                    "key": 75,
+                    "levelid": 479
+                },
+                {
+                    "name": "技冠群雄",
+                    "flag": "LV.16",
+                    "key": 76,
+                    "levelid": 480
+                },
+                {
+                    "name": "融会贯通",
+                    "flag": "LV.17",
+                    "key": 77,
+                    "levelid": 481
+                },
+                {
+                    "name": "炉火纯青",
+                    "flag": "LV.18",
+                    "key": 78,
+                    "levelid": 482
+                },
+                {
+                    "name": "出神入化",
+                    "flag": "LV.19",
+                    "key": 79,
+                    "levelid": 483
+                },
+                {
+                    "name": "净界王者",
+                    "flag": "LV.20",
+                    "key": 80,
+                    "levelid": 484
+                }
+            ]
         }
     ]
 }

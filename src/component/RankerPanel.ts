@@ -192,6 +192,7 @@ class AlertPanel extends eui.Group {
         super()
         this.title = title
         this.isGray = isGray
+        
         this._y = _y
         this.init()
     }
@@ -199,6 +200,7 @@ class AlertPanel extends eui.Group {
     private init() {
         let stage = ViewManager.getInstance().stage
         this.width = stage.stageWidth
+        this.height = stage.stageHeight
         
         let panel = new eui.Panel()
         panel.skinName = "resource/eui_skins/AlertPanelSkin.exml"

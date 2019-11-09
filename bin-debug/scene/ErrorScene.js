@@ -56,16 +56,17 @@ var ErrorScene = (function (_super) {
         tmfx02.x = 100;
         tmfx02.y = 700;
         var content = new egret.TextField();
-        var num;
-        subject.options.forEach(function (item, i) {
-            if (item.flag.indexOf(subject.result) != -1) {
-                num = i;
-            }
-        });
-        content.textFlow = [
-            { text: '应选' + subject.result + '\n' },
-            { text: subject.options[num].name }
-        ];
+        // let num
+        // subject.options.forEach((item, i) => {
+        //     if (item.flag.indexOf(subject.result) != -1) {
+        //         num = i
+        //     }
+        // })
+        // content.textFlow = [
+        //     { text: '应选' + subject.result + '\n' },
+        //     { text: subject.options[num].name }
+        // ]
+        content.text = '应选' + subject.result;
         content.width = 550;
         content.x = 100;
         content.y = 780;
@@ -105,16 +106,17 @@ var ErrorScene = (function (_super) {
         if (!subject)
             return;
         this.title.text = subject.title;
-        var num;
-        subject.options.forEach(function (item, i) {
-            if (item.flag.indexOf(subject.result) != -1) {
-                num = i;
-            }
-        });
-        this.content.textFlow = [
-            { text: '应选' + subject.result + '\n' },
-            { text: subject.options[num].name }
-        ];
+        // let num
+        // subject.options.forEach((item, i) => {
+        //     if (item.flag.indexOf(subject.result) != -1) {
+        //         num = i
+        //     }
+        // })
+        // this.content.textFlow = [
+        //     { text: '应选' + subject.result + '\n' },
+        //     { text: subject.options[num].name }
+        // ]
+        this.content.text = '应选' + subject.result;
         var res = '';
         for (var _i = 0, _a = subject.options; _i < _a.length; _i++) {
             var option = _a[_i];

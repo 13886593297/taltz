@@ -59,16 +59,17 @@ class ErrorScene extends Scene {
         tmfx02.y = 700
 
         let content = new egret.TextField()
-        let num
-        subject.options.forEach((item, i) => {
-            if (item.flag.indexOf(subject.result) != -1) {
-                num = i
-            }
-        })
-        content.textFlow = [
-            { text: '应选' + subject.result + '\n' },
-            { text: subject.options[num].name }
-        ]
+        // let num
+        // subject.options.forEach((item, i) => {
+        //     if (item.flag.indexOf(subject.result) != -1) {
+        //         num = i
+        //     }
+        // })
+        // content.textFlow = [
+        //     { text: '应选' + subject.result + '\n' },
+        //     { text: subject.options[num].name }
+        // ]
+        content.text = '应选' + subject.result
         content.width = 550
         content.x = 100
         content.y = 780
@@ -112,16 +113,17 @@ class ErrorScene extends Scene {
         if (!subject) return
         this.title.text = subject.title
 
-        let num
-        subject.options.forEach((item, i) => {
-            if (item.flag.indexOf(subject.result) != -1) {
-                num = i
-            }
-        })
-        this.content.textFlow = [
-            { text: '应选' + subject.result + '\n' },
-            { text: subject.options[num].name }
-        ]
+        // let num
+        // subject.options.forEach((item, i) => {
+        //     if (item.flag.indexOf(subject.result) != -1) {
+        //         num = i
+        //     }
+        // })
+        // this.content.textFlow = [
+        //     { text: '应选' + subject.result + '\n' },
+        //     { text: subject.options[num].name }
+        // ]
+        this.content.text = '应选' + subject.result
         let res = ''
         for (let option of subject.options) {
             if (option.flag == subject.result) {

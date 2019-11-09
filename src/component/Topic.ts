@@ -265,11 +265,6 @@ class TopicItem extends egret.DisplayObjectContainer {
     public static readonly STATUS_OK = 3
     public static readonly STATUS_CORRECT = 4
 
-    private readonly RECT = {
-        width: 560,
-        height: 90,
-    }
-
     private status
     private optionNum
 
@@ -280,8 +275,8 @@ class TopicItem extends egret.DisplayObjectContainer {
         this.optionNum = optionNum
         this.status = TopicItem.STATUS_NORMAL
         this.touchEnabled = true
-        let line = Math.ceil(this.option.name.length / 11)
-        this.height = this.RECT.height + (line - 1) * 30
+        let line = Math.ceil(this.option.name.length / 14)
+        this.height = 82 + (line - 1) * 30
         this.init()
     }
 
@@ -292,7 +287,6 @@ class TopicItem extends egret.DisplayObjectContainer {
         text.text = this.option.name
         text.width = 420
         text.lineSpacing = 10
-        text.size = 36
         text.x = 150
         text.height = this.height
         text.textAlign = egret.HorizontalAlign.CENTER
@@ -323,7 +317,7 @@ class TopicItem extends egret.DisplayObjectContainer {
         if (this.status == TopicItem.STATUS_OK || this.status == TopicItem.STATUS_ERROR) {
             this.icon.texture = RES.getRes(this.ICON_RES[this.status])
         }
-        icon.x = 570
+        icon.x = 580
         icon.y = this.height / 2
         icon.anchorOffsetY = 24
         this.icon = icon
@@ -347,11 +341,10 @@ class TopicItem extends egret.DisplayObjectContainer {
         if (this.status == status) return
         this.status = status
         this.bg.texture = RES.getRes(this.BG_RES[status])
-
-        if (status == TopicItem.STATUS_SELECTED || status == TopicItem.STATUS_OK) {
+        // status == TopicItem.STATUS_SELECTED || status == TopicItem.STATUS_OK || status == TopicItem.STATUS_ERROR || status == TopicItem.STATUS_NORMAL
+        if (status > 0) {
             this.text.textColor = 0xffffff
-        }
-        else {
+        } else {
             this.text.textColor = 0x79cd72
         }
 

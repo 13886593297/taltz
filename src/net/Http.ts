@@ -148,7 +148,10 @@ class Url {
     public static readonly HTTP_PERSON_RANK_LIST = "/game/api/rank/personal";
     public static readonly HTTP_TEAM_PERSON_RANK_LIST = "/game/api/rank/personalteam";
 
+    public static readonly HTTP_WATERING_INFO = '/game/api/watering/info';
+    public static readonly HTTP_WATERING_DO = '/game/api/watering/do';
+    public static readonly HTTP_WATERING_PICK = '/game/api/watering/pick';
 
     public static readonly HTTP_PK_SOCKET = "http://xujiagui.vicp.cc:12631/proom"
-    
+
 }

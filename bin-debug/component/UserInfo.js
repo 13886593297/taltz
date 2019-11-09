@@ -198,12 +198,11 @@ var UserInfo = (function (_super) {
         // 数值
         var numArr;
         if (this.type == 'score') {
-            console.log(this.userinfo);
             titleArr = ['积分', '累积签到', '个人达标率', '团队达标率'];
             textGroup.x = 230;
             textGroup.y = 350;
             this.info(titleArr, textGroup, 28, 365, 50);
-            numArr = [this.userinfo.score + '分', this.userinfo.signTotal + '天', this.userinfo.personAchiRate + '%', this.userinfo.teamAchiRate + '%'];
+            numArr = [this.userinfo.score + '分', this.userinfo.signTotal + '天', this.userinfo.personAchiRate + '%', this.userinfo.teamAchiRate.toFixed(2) + '%'];
             this.info(numArr, textGroup, 30, 365, 50, egret.HorizontalAlign.RIGHT);
         }
         else {
@@ -211,7 +210,7 @@ var UserInfo = (function (_super) {
             textGroup.x = 300;
             textGroup.y = 230;
             this.info(titleArr, textGroup, 24);
-            numArr = [this.userinfo.score + '分', this.userinfo.personAchiRate + '%', this.userinfo.teamAchiRate + '%', this.userinfo.contSignTotal + '天'];
+            numArr = [this.userinfo.score + '分', this.userinfo.personAchiRate + '%', this.userinfo.teamAchiRate.toFixed(2) + '%', this.userinfo.contSignTotal + '天'];
             this.info(numArr, textGroup, 28, 300, 45, egret.HorizontalAlign.RIGHT);
         }
     };

@@ -132,6 +132,9 @@ var Url = (function () {
     Url.HTTP_TEAM_RANK_LIST = "/game/api/rank/team";
     Url.HTTP_PERSON_RANK_LIST = "/game/api/rank/personal";
     Url.HTTP_TEAM_PERSON_RANK_LIST = "/game/api/rank/personalteam";
+    Url.HTTP_WATERING_INFO = '/game/api/watering/info';
+    Url.HTTP_WATERING_DO = '/game/api/watering/do';
+    Url.HTTP_WATERING_PICK = '/game/api/watering/pick';
     Url.HTTP_PK_SOCKET = "http://xujiagui.vicp.cc:12631/proom";
     return Url;
 }());

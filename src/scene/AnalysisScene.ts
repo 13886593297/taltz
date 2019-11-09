@@ -48,16 +48,17 @@ class AnalysisScene extends Scene {
         y += 100
         let content = new egret.TextField()
 
-        let num
-        this.subject.options.forEach((item, i) => {
-            if (item.flag.indexOf(this.subject.result) != -1) {
-                num = i
-            }
-        })
-        content.textFlow = [
-            { text: '应选' + this.subject.result + '\n' },
-            { text: this.subject.options[num].name }
-        ]
+        // let num
+        // this.subject.options.forEach((item, i) => {
+        //     if (item.flag.indexOf(this.subject.result) != -1) {
+        //         num = i
+        //     }
+        // })
+        // content.textFlow = [
+        //     { text: '应选' + this.subject.result + '\n' },
+        //     { text: this.subject.options[num].name }
+        // ]
+        content.text = '应选' + this.subject.result
         content.width = 550
         content.x = 100
         content.y = y

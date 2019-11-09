@@ -4,7 +4,8 @@ class PeachTree extends Scene {
     private _myRotation = 5  // 旋转角度
     private count = 0  // 显示几个桃子
     private info  // 桃子信息
-    private curPeachIndex  // 签到5天新长出来的桃子index
+    private curPeachInfo  // 签到5天新长出来的桃子index
+    private peachText = new eui.Group()
     constructor() {
         super()
     }
@@ -21,10 +22,13 @@ class PeachTree extends Scene {
         this.initAvatar()
 
         // 获取桃子信息
-        let info = RES.getRes('instruction_json')
-        this.info = info
+        Http.getInstance().post(Url.HTTP_WATERING_INFO, null, data => {
+            this.info = data.data
+            console.log(this.info)
+            this.getKattle()
+        });
 
-        this.getKattle()
+
     }
 
     /**
@@ -130,21 +134,11 @@ class PeachTree extends Scene {
             // 点击领取水壶，提交后台记录信息，浇水天数+1
             emptyKattle.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
                 this.removeChild(group) // 删除空水壶
-
-                this.info.isGetKattle = true
-                this.info.waterDays++
-                // 如果到了5天的整数倍，新长出一颗桃子
-                if (this.info.waterDays % 5 == 0) {
-                    for (let i = 0; i < this.info.peach.length; i++) {
-                        if (!this.info.peach[i].isGrowUp) {
-                            this.info.peach[i].isGrowUp = true
-                            this.curPeachIndex = i
-                            break
-                        }
-                    }
-                }
-                this.drawTree()  // 开始画树
-                this.kettleAni()  // 开始浇水动画
+                Http.getInstance().post(Url.HTTP_WATERING_DO, null, json => {
+                    this.curPeachInfo = json.data
+                    this.drawTree()  // 开始画树
+                    this.kettleAni()  // 开始浇水动画
+                })
             }, this)
         } else {
             this.drawTree()
@@ -165,7 +159,7 @@ class PeachTree extends Scene {
         let leafArr = [
             { bg: 'peachTree1_png', zIndex: 2 },
             { bg: 'peachTree2_png', zIndex: 5 },
-            { bg: 'peachTree3_png', zIndex: 7 },
+            { bg: 'peachTree3_png', zIndex: 6 },
         ]
 
         leafArr.forEach(item => {
@@ -228,54 +222,69 @@ class PeachTree extends Scene {
             { bg: 'peach3_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 8 },
         ]
 
-        peachArr.forEach((item, i) => {
+        let pArr = []
+        peachArr.forEach(item => {
             let peach = Util.createBitmapByName(item.bg)
             peach.x = item.x
             peach.y = item.y
-            this.addChildAt(peach, item.zIndex)
-
-            // 桃子是否显示
-            peach.visible = this.info.peach[i].isGrowUp
-            if (this.info.peach[i].isGrowUp) {
-                this.count++
-            }
-            // 刚长出来的桃子
-            if (this.curPeachIndex == i) {
-                peach.scaleX = 0
-                peach.scaleY = 0
-                egret.Tween.get(peach).to({ scaleX: 1, scaleY: 1 }, 1000)
-            }
-
-            peach.touchEnabled = true
             peach.anchorOffsetX = peach.width / 2
-            // 桃子晃动动画
-            peach.rotation = -this._myRotation
-            egret.Tween.get(peach, { loop: true })
-                .to({ rotation: this._myRotation }, 1000, egret.Ease.quadInOut)
-                .to({ rotation: -this._myRotation }, 1000, egret.Ease.quadInOut)
-            // 摘取桃子
-            peach.addEventListener(egret.TouchEvent.TOUCH_TAP, (evt: egret.Event) => {
-                egret.Tween.get(evt.target)
-                    .to({ x: 640, y: 310, scaleX: 0.2, scaleY: 0.2, visible: false }, 1500)
-                    .call(() => {
-                        this.userInfo.score += 15
-                        this.showScore(this.userInfo.score)
-                        this.showScoreAni()
-                        this.count--
-                        if (this.count <= 0) {
-                            peachText.visible = false
-                        }
-                    })
-            }, this)
+            peach.visible = false
+            this.addChildAt(peach, item.zIndex)
+            pArr.push(peach)
         })
 
-        // 摘取你的功夫桃子文字
-        let peachText = new eui.Group()
-        this.addChild(peachText)
-        this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫桃子', peachText)
-        if (this.count <= 0) {
-            peachText.visible = false
+        // 根据info显示对应的桃子
+        this.info.peach.forEach((item) => {
+            let peach = pArr[item.position - 1]
+            this.count++
+            this.peachAni(peach, item)
+        })
+
+        // 新成长的桃子
+        if (this.curPeachInfo) {
+            let curPeach = pArr[this.curPeachInfo.position - 1]
+            this.count++
+            curPeach.scaleX = 0
+            curPeach.scaleY = 0
+            egret.Tween.get(curPeach).to({ scaleX: 1, scaleY: 1 }, 1000)
+            this.peachAni(curPeach, this.curPeachInfo)
         }
+
+        // 摘取你的功夫桃子文字
+        this.addChild(this.peachText)
+        this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫桃子', this.peachText)
+        if (this.count <= 0) {
+            this.peachText.visible = false
+        }
+    }
+
+    private peachAni(peach, item) {
+        peach.visible = true
+        peach.touchEnabled = true
+
+        // 桃子晃动动画
+        peach.rotation = -this._myRotation
+        egret.Tween.get(peach, { loop: true })
+            .to({ rotation: this._myRotation }, 1000, egret.Ease.quadInOut)
+            .to({ rotation: -this._myRotation }, 1000, egret.Ease.quadInOut)
+
+        // 摘桃子
+        peach.addEventListener(egret.TouchEvent.TOUCH_TAP, (evt: egret.Event) => {
+            egret.Tween.get(evt.target)
+                .to({ x: 640, y: 310, scaleX: 0.2, scaleY: 0.2, visible: false }, 1500)
+                .call(() => {
+                    Http.getInstance().post(Url.HTTP_WATERING_PICK + '?id=' + item.id, '', data => {
+                        if (data.data != -1) {
+                            this.userInfo.score += 15
+                            this.showScore(this.userInfo.score)
+                            this.showScoreAni()
+                            if (--this.count <= 0) {
+                                this.peachText.visible = false
+                            }
+                        }
+                    })
+                })
+        }, this)
     }
 
     // 积分

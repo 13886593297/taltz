@@ -253,17 +253,13 @@ var TopicItem = (function (_super) {
         var _this = _super.call(this) || this;
         _this.BG_RES = ['option_normal_png', 'option_select_png', 'option_error_png', 'option_ok_png', 'option_ok_png'];
         _this.ICON_RES = { 2: "icon_err_png", 3: "icon_ok_png" };
-        _this.RECT = {
-            width: 560,
-            height: 90,
-        };
         _this.width = width;
         _this.option = option;
         _this.optionNum = optionNum;
         _this.status = TopicItem.STATUS_NORMAL;
         _this.touchEnabled = true;
-        var line = Math.ceil(_this.option.name.length / 11);
-        _this.height = _this.RECT.height + (line - 1) * 30;
+        var line = Math.ceil(_this.option.name.length / 14);
+        _this.height = 82 + (line - 1) * 30;
         _this.init();
         return _this;
     }
@@ -274,7 +270,6 @@ var TopicItem = (function (_super) {
         text.text = this.option.name;
         text.width = 420;
         text.lineSpacing = 10;
-        text.size = 36;
         text.x = 150;
         text.height = this.height;
         text.textAlign = egret.HorizontalAlign.CENTER;
@@ -301,7 +296,7 @@ var TopicItem = (function (_super) {
         if (this.status == TopicItem.STATUS_OK || this.status == TopicItem.STATUS_ERROR) {
             this.icon.texture = RES.getRes(this.ICON_RES[this.status]);
         }
-        icon.x = 570;
+        icon.x = 580;
         icon.y = this.height / 2;
         icon.anchorOffsetY = 24;
         this.icon = icon;
@@ -324,7 +319,8 @@ var TopicItem = (function (_super) {
             return;
         this.status = status;
         this.bg.texture = RES.getRes(this.BG_RES[status]);
-        if (status == TopicItem.STATUS_SELECTED || status == TopicItem.STATUS_OK) {
+        // status == TopicItem.STATUS_SELECTED || status == TopicItem.STATUS_OK || status == TopicItem.STATUS_ERROR || status == TopicItem.STATUS_NORMAL
+        if (status > 0) {
             this.text.textColor = 0xffffff;
         }
         else {

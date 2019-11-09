@@ -79,6 +79,7 @@ class TrainLevelScene extends Scene {
                 Util.playMusic('model_select_mp3')
                 if (currentLevel >= data.key) {
                     Http.getInstance().post(Url.HTTP_TRAIN_START, { type: 1, tid: level.levelData.levelid }, data => {
+                        console.log(level.levelData.levelid, data.data)
                         if (data.data.questions.length > 0) {
                             let answer = new Answers()
                             answer.lifecycleId = data.data.lifecycleId

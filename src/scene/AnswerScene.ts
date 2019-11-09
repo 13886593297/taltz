@@ -41,7 +41,7 @@ class AnswerScene extends Scene {
         this.start = +new Date()
 
         let title = this.trainTitle(this.levelData.flag, this.levelData.name)
-        title.x = 170
+        title.x = 180
         title.y = 25
         this.addChild(title)
 
@@ -223,7 +223,6 @@ class AnswerScene extends Scene {
                         this.topic.setDisableSeleced()
                         this.analysisButton.visible = true
                         if (result) {
-                            //this.analysisButton.labelDisplay.text = "题目分析"
                             Util.playMusic('answer_ok_mp3')
                             this.topic.setSelectedStatus(TopicItem.STATUS_OK)
                         }

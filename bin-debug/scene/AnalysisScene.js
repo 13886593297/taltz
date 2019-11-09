@@ -20,7 +20,6 @@ var AnalysisScene = (function (_super) {
         return _this;
     }
     AnalysisScene.prototype.init = function () {
-        var _this = this;
         _super.prototype.setBackground.call(this);
         var y = 20;
         var title = Util.createBitmapByName('title_tmfx_png');
@@ -50,16 +49,17 @@ var AnalysisScene = (function (_super) {
         tmfx02.y = y;
         y += 100;
         var content = new egret.TextField();
-        var num;
-        this.subject.options.forEach(function (item, i) {
-            if (item.flag.indexOf(_this.subject.result) != -1) {
-                num = i;
-            }
-        });
-        content.textFlow = [
-            { text: '应选' + this.subject.result + '\n' },
-            { text: this.subject.options[num].name }
-        ];
+        // let num
+        // this.subject.options.forEach((item, i) => {
+        //     if (item.flag.indexOf(this.subject.result) != -1) {
+        //         num = i
+        //     }
+        // })
+        // content.textFlow = [
+        //     { text: '应选' + this.subject.result + '\n' },
+        //     { text: this.subject.options[num].name }
+        // ]
+        content.text = '应选' + this.subject.result;
         content.width = 550;
         content.x = 100;
         content.y = y;

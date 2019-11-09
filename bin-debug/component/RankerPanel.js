@@ -181,6 +181,7 @@ var AlertPanel = (function (_super) {
         var _this = this;
         var stage = ViewManager.getInstance().stage;
         this.width = stage.stageWidth;
+        this.height = stage.stageHeight;
         var panel = new eui.Panel();
         panel.skinName = "resource/eui_skins/AlertPanelSkin.exml";
         panel.title = this.title;

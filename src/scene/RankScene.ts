@@ -181,7 +181,7 @@ class RankScene extends Scene {
             userInfo.lineSpacing = 10
         } else {
             userInfo.text = rank.teamName
-            userInfo.size = 50
+            userInfo.size = 44
             userInfo.y = 75
         }
         userInfo.x = 200
@@ -200,7 +200,7 @@ class RankScene extends Scene {
             achiRate.lineSpacing = 15
         } else {
             achiRate.text = '团队达标率'
-            achiRate.x = 520
+            achiRate.x = 540
             achiRate.y = 120
             achiRate.size = 22
         }
@@ -214,14 +214,15 @@ class RankScene extends Scene {
             ]
             achiRateNum.x = 550
             achiRateNum.size = 36
+            achiRateNum.y = 65
         } else {
             achiRateNum.text = rank.achiRate + '%'
             achiRateNum.x = 520
-            achiRateNum.width = achiRate.width
+            achiRateNum.width = 150
             achiRateNum.textAlign = egret.HorizontalAlign.CENTER
-            achiRateNum.size = 50
+            achiRateNum.size = 42
+            achiRateNum.y = 70
         }
-        achiRateNum.y = 65
         rankGroup.addChild(achiRateNum)
 
         return rankGroup
