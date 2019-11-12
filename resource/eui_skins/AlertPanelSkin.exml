@@ -2,6 +2,7 @@
 <e:Skin class="skins.PanelSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<w:Config id="165c3961d02"/>
     <e:Image height="60" width="472" source="alter_bg_png"/>
-	<e:Image id="closeButton" source="dialog_close_x_png" y="15" x="425" width="25" height="25"/>
+    <e:Image source="dialog_close_x_png" y="18" x="425" width="25" height="25"/>
+	<e:Image id="closeButton" source="mask_transparent_png" y="-20" x="390" width="100" height="100"/>
 	<e:Label id="titleDisplay" size="22" fontFamily="SimHei" wordWrap="false" width="70%" height="100%" text="" verticalAlign="middle" horizontalCenter="20" textAlign="center" textColor="0x7fc871"/>
 </e:Skin>

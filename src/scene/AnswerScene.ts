@@ -199,7 +199,10 @@ class AnswerScene extends Scene {
                     let selectOption = this.topic.getSelect()
                     if (!selectOption) {
                         //TODO 
-                        let alert = new AlertPanel("请选择答案！", 1160)
+                        let alert = new AlertPanel("提示：请先选择答案！", 160)
+                        alert.x = 80
+                        alert.scaleX = 1.2
+                        alert.scaleY = 1.1
                         this.addChild(alert)
                         return
                     }

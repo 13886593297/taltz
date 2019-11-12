@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>艾乐明</title>
+    <title>净阶战队</title>
     <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="full-screen" content="true" />
@@ -55,7 +55,7 @@
 <body>
 <div style="margin: auto;width: 100%;height: 100%;" id="egret-player" class="egret-player" data-entry-class="Main"  data-orientation="auto" data-scale-mode="fixedNarrow" data-frame-rate="30" data-content-width="750" data-content-height="1206" data-multi-fingered="2" data-show-fps="false" data-show-log="false" data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 
-   <div id="loadingUi" style="margin: auto;width: 100%;height: 100%;background: url(resource/brand/olumiant/loading.png) center center no-repeat #efeff4;background-size: 100%;">
+   <div id="loadingUi" style="margin: auto;width: 100%;height: 100%;background: url(resource/brand/taltz/loading.png) center center no-repeat #efeff4;background-size: 100%;">
    </div>
 </div>
 
@@ -95,7 +95,7 @@
     var token=getRequest['token'];
     var teamName = localStorage.getItem('teamName');
     if(teamName){
-        document.title = "艾乐明-"+teamName;
+        document.title = "净阶战队-"+teamName;
     }
 
     var loadScript = function (list, callback) {
@@ -246,10 +246,10 @@
 
   function onMenuShareAppMessage(title,desc,link,imgurl,callback){
        wx.onMenuShareAppMessage({
-      title: title || '艾乐明',
-      desc: desc || '艾乐明-默认测试战队',
-      link: link || 'https://gamiwechat-olumiant-q.lillyadmin.cn',
-      imgUrl: 'https://gamiwechat-olumiant-q.lillyadmin.cn/games/resource/assets/share.jpg',
+      title: title || '净阶战队',
+      desc: desc || '净阶战队-默认测试战队',
+      link: link || 'https://gamiwechat-taltz-q.lillyadmin.cn',
+      imgUrl: 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
       trigger: function (res) {
           
       },
@@ -265,9 +265,9 @@
   }
   function onMenuShareTimeline(title,link,imgUrl,callback){
     wx.onMenuShareTimeline({
-      title: '艾乐明邀请您！',
-      link: 'https://gamiwechat-olumiant-q.lillyadmin.cn',
-      imgUrl: 'https://gamiwechat-olumiant-q.lillyadmin.cn/games/resource/assets/share.jpg',
+      title: '净阶战队邀请您！',
+      link: 'https://gamiwechat-taltz-q.lillyadmin.cn',
+      imgUrl: 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
       trigger: function (res) {
         // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
       },

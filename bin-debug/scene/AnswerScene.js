@@ -180,7 +180,10 @@ var AnswerScene = (function (_super) {
                     var selectOption = _this.topic.getSelect();
                     if (!selectOption) {
                         //TODO 
-                        var alert_1 = new AlertPanel("请选择答案！", 1160);
+                        var alert_1 = new AlertPanel("提示：请先选择答案！", 160);
+                        alert_1.x = 80;
+                        alert_1.scaleX = 1.2;
+                        alert_1.scaleY = 1.1;
                         _this.addChild(alert_1);
                         return;
                     }

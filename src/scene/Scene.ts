@@ -23,7 +23,7 @@ class Scene extends eui.UILayer {
 
     public crteateNavButton(bg) {
         let nav_bg = Util.createBitmapByName(bg)
-        nav_bg.x = 650
+        nav_bg.x = this.stage.stageWidth - 90
         nav_bg.y = 40
         this.addChild(nav_bg)
 

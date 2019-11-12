@@ -25,6 +25,7 @@ class RankScene extends Scene {
         this.getRank(Url.HTTP_TEAM_RANK_LIST, this.teamPage, this.size)
             .then(data => {
                 this.teamRank = data
+                console.log(this.teamRank)
             })
     }
 
@@ -91,7 +92,7 @@ class RankScene extends Scene {
         if (type == 2) {
             rankDatas = this.teamRank
         }
-        
+
         this.addItem(rankDatas, type)
         var myScroller: eui.Scroller = new eui.Scroller()
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
@@ -144,14 +145,14 @@ class RankScene extends Scene {
 
         // 排名背景
         let rankBg = Util.createBitmapByName('rank_item_bg_png')
-        rankBg.x = this.stage.stageWidth / 2
-        rankBg.anchorOffsetX = rankBg.width / 2
+        rankGroup.x = (this.stage.stageWidth - rankBg.width) / 2
+        rankGroup.width = rankBg.width
         rankGroup.addChild(rankBg)
 
         // 排名皇冠
         if (rank.serialNo < 4) {
             let crown = Util.createBitmapByName('cup' + rank.serialNo + '_png')
-            crown.x = 570
+            crown.x = 515
             crown.y = -20
             rankGroup.addChild(crown)
         }
@@ -162,7 +163,7 @@ class RankScene extends Scene {
         num.textColor = rank.serialNo == 1 ? 0xd7a83f : rank.serialNo == 2 ? 0xbebebe : rank.serialNo == 3 ? 0xb77e43 : 0x077424
         num.bold = true
         num.size = 50
-        num.x = 120
+        num.x = 65
         num.y = 20
         num.width = 66
         num.height = 66
@@ -184,7 +185,7 @@ class RankScene extends Scene {
             userInfo.size = 44
             userInfo.y = 75
         }
-        userInfo.x = 200
+        userInfo.x = 145
         rankGroup.addChild(userInfo)
 
         // 达标率
@@ -194,13 +195,13 @@ class RankScene extends Scene {
                 { text: '个人达标率：\n' },
                 { text: '个人积分：' }
             ]
-            achiRate.x = 430
+            achiRate.x = 385
             achiRate.y = 75
             achiRate.size = 20
             achiRate.lineSpacing = 15
         } else {
             achiRate.text = '团队达标率'
-            achiRate.x = 540
+            achiRate.x = 485
             achiRate.y = 120
             achiRate.size = 22
         }
@@ -212,18 +213,28 @@ class RankScene extends Scene {
                 { text: rank.achiRate + '%\n' },
                 { text: rank.score + '' }
             ]
-            achiRateNum.x = 550
+            achiRateNum.x = 495
             achiRateNum.size = 36
             achiRateNum.y = 65
         } else {
             achiRateNum.text = rank.achiRate + '%'
-            achiRateNum.x = 520
+            achiRateNum.x = 475
             achiRateNum.width = 150
             achiRateNum.textAlign = egret.HorizontalAlign.CENTER
             achiRateNum.size = 42
             achiRateNum.y = 70
         }
         rankGroup.addChild(achiRateNum)
+
+        // // 如果是战队排行榜，注册点击事件
+        // if (type == 2) {
+        //     rankGroup.touchEnabled = true
+        //     rankGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+        //         Http.getInstance().post(Url.HTTP_TEAM_PERSON_RANK_LIST, { tid: this.teamid, page: this.personPage, size: this.size }, () => {
+
+        //         })
+        //     }, this)
+        // }
 
         return rankGroup
     }

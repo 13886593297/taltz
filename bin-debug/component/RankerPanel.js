@@ -165,7 +165,7 @@ var RankItem = (function (_super) {
 __reflect(RankItem.prototype, "RankItem");
 var AlertPanel = (function (_super) {
     __extends(AlertPanel, _super);
-    function AlertPanel(title, _y, isGray) {
+    function AlertPanel(title, y, isGray) {
         if (title === void 0) { title = " "; }
         if (isGray === void 0) { isGray = false; }
         var _this = _super.call(this) || this;
@@ -173,29 +173,29 @@ var AlertPanel = (function (_super) {
         _this.isGray = false;
         _this.title = title;
         _this.isGray = isGray;
-        _this._y = _y;
+        _this.y = y;
         _this.init();
         return _this;
     }
     AlertPanel.prototype.init = function () {
         var _this = this;
         var stage = ViewManager.getInstance().stage;
-        this.width = stage.stageWidth;
-        this.height = stage.stageHeight;
         var panel = new eui.Panel();
         panel.skinName = "resource/eui_skins/AlertPanelSkin.exml";
         panel.title = this.title;
         panel.width = 472;
         panel.height = 60;
-        panel.x = (stage.stageWidth - panel.width) / 2;
-        panel.y = this._y;
-        this.addChildAt(panel, 101);
+        this.x = (stage.stageWidth - panel.width) / 2;
+        this.addChild(panel);
         if (this.isGray) {
             panel.filters = [Util.grayFliter()];
         }
-        panel.addEventListener(eui.UIEvent.CLOSING, function () {
+        // 显示2秒后关闭
+        this.timer = new egret.Timer(2000, 1);
+        this.timer.addEventListener(egret.TimerEvent.TIMER, function () {
             _this.parent.removeChild(_this);
         }, this);
+        this.timer.start();
     };
     return AlertPanel;
 }(eui.Group));

@@ -83,7 +83,6 @@ var TrainLevelScene = (function (_super) {
                 Util.playMusic('model_select_mp3');
                 if (currentLevel >= data.key) {
                     Http.getInstance().post(Url.HTTP_TRAIN_START, { type: 1, tid: level.levelData.levelid }, function (data) {
-                        console.log(level.levelData.levelid, data.data);
                         if (data.data.questions.length > 0) {
                             var answer = new Answers();
                             answer.lifecycleId = data.data.lifecycleId;

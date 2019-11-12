@@ -47,24 +47,16 @@ var AnalysisScene = (function (_super) {
         this.addChild(tmfx02);
         tmfx02.x = 100;
         tmfx02.y = y;
-        y += 100;
+        y += 80;
         var content = new egret.TextField();
-        // let num
-        // this.subject.options.forEach((item, i) => {
-        //     if (item.flag.indexOf(this.subject.result) != -1) {
-        //         num = i
-        //     }
-        // })
-        // content.textFlow = [
-        //     { text: '应选' + this.subject.result + '\n' },
-        //     { text: this.subject.options[num].name }
-        // ]
-        content.text = '应选' + this.subject.result;
+        content.textFlow = [
+            { text: '应选' + this.subject.result + '\n' },
+            { text: this.subject.content }
+        ];
         content.width = 550;
         content.x = 100;
         content.y = y;
         content.lineSpacing = 10;
-        content.size = 40;
         content.textColor = 0x38ae36;
         this.addChild(content);
         y += content.textHeight + 100;

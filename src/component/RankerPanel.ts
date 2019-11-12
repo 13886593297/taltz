@@ -184,38 +184,35 @@ class RankItem extends eui.Group {
 }
 
 class AlertPanel extends eui.Group {
-
     private title = ""
     private isGray = false
-    private _y
-    public constructor(title = " ", _y, isGray = false, ) {
+    private timer: egret.Timer
+    public constructor(title = " ", y, isGray = false, ) {
         super()
         this.title = title
         this.isGray = isGray
-        
-        this._y = _y
+        this.y = y
         this.init()
     }
 
     private init() {
         let stage = ViewManager.getInstance().stage
-        this.width = stage.stageWidth
-        this.height = stage.stageHeight
-        
         let panel = new eui.Panel()
         panel.skinName = "resource/eui_skins/AlertPanelSkin.exml"
         panel.title = this.title
         panel.width = 472
         panel.height = 60
-        panel.x = (stage.stageWidth - panel.width) / 2
-        panel.y = this._y
-        this.addChildAt(panel, 101)
+        this.x = (stage.stageWidth - panel.width) / 2
+        this.addChild(panel)
         if (this.isGray) {
             panel.filters = [Util.grayFliter()]
         }
 
-        panel.addEventListener(eui.UIEvent.CLOSING, () => {
+        // 显示2秒后关闭
+        this.timer = new egret.Timer(2000, 1)
+        this.timer.addEventListener(egret.TimerEvent.TIMER, () => {
             this.parent.removeChild(this)
         }, this)
+        this.timer.start()
     }
 }

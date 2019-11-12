@@ -124,7 +124,7 @@ var Radar = (function (_super) {
         attrName.strokeColor = 0xffffff;
         attrName.size = 40;
         attrName.x = 145;
-        attrName.y = 210;
+        attrName.y = 205;
         this.addChild(attrName);
     };
     return Radar;

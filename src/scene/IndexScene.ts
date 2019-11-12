@@ -14,7 +14,7 @@ class IndexScene extends Scene {
         super.setBackground()
         Http.getInstance().post(Url.HTTP_USER_INFO, "", (data) => {
             DataManager.getInstance().setUser(data.data)
-            Util.setTitle("艾乐明-" + data.data.teamName)
+            Util.setTitle("净阶战队-" + data.data.teamName)
             let user = new UserInfo('home')
             user.touchEnabled = true
             user.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
@@ -135,6 +135,6 @@ class IndexScene extends Scene {
      */
     public updateScene() {
         this.userView.refresh()
-        Util.setTitle("艾乐明-" + DataManager.getInstance().getUser()['teamName'])
+        Util.setTitle("净阶战队-" + DataManager.getInstance().getUser()['teamName'])
     }
 }

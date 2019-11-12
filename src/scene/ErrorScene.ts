@@ -59,29 +59,21 @@ class ErrorScene extends Scene {
         tmfx02.y = 700
 
         let content = new egret.TextField()
-        // let num
-        // subject.options.forEach((item, i) => {
-        //     if (item.flag.indexOf(subject.result) != -1) {
-        //         num = i
-        //     }
-        // })
-        // content.textFlow = [
-        //     { text: '应选' + subject.result + '\n' },
-        //     { text: subject.options[num].name }
-        // ]
-        content.text = '应选' + subject.result
+        content.textFlow = [
+            { text: '应选' + subject.result + '\n' },
+            { text: subject.content }
+        ]
         content.width = 550
         content.x = 100
         content.y = 780
         content.lineSpacing = 10
-        content.size = 40
         content.textColor = 0x35b039
         this.addChild(content)
         this.content = content
 
         let next = Util.createBitmapByName('next_png')
         next.x = this.stage.stageWidth / 2 - next.width - 10
-        next.y = 950
+        next.y = 1000
         this.addChild(next)
         next.touchEnabled = true
         next.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
@@ -91,7 +83,7 @@ class ErrorScene extends Scene {
 
         let train = Util.createBitmapByName('continueTrain_png')
         train.x = this.stage.stageWidth / 2 + 10
-        train.y = 950
+        train.y = 1000
         this.addChild(train)
         train.touchEnabled = true
         train.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
@@ -112,18 +104,10 @@ class ErrorScene extends Scene {
         let subject = Util.getTrain(this.errors[this.curIdx - 1])
         if (!subject) return
         this.title.text = subject.title
-
-        // let num
-        // subject.options.forEach((item, i) => {
-        //     if (item.flag.indexOf(subject.result) != -1) {
-        //         num = i
-        //     }
-        // })
-        // this.content.textFlow = [
-        //     { text: '应选' + subject.result + '\n' },
-        //     { text: subject.options[num].name }
-        // ]
-        this.content.text = '应选' + subject.result
+        this.content.textFlow = [
+            { text: '应选' + subject.result + '\n' },
+            { text: subject.content }
+        ]
         let res = ''
         for (let option of subject.options) {
             if (option.flag == subject.result) {

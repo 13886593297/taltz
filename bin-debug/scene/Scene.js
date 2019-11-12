@@ -31,7 +31,7 @@ var Scene = (function (_super) {
     Scene.prototype.crteateNavButton = function (bg) {
         var _this = this;
         var nav_bg = Util.createBitmapByName(bg);
-        nav_bg.x = 650;
+        nav_bg.x = this.stage.stageWidth - 90;
         nav_bg.y = 40;
         this.addChild(nav_bg);
         nav_bg.touchEnabled = true;

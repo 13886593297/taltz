@@ -73,6 +73,7 @@ var PeachTree = (function (_super) {
      */
     PeachTree.prototype.initAvatar = function () {
         var avatarGroup = new eui.Group();
+        this.avatarGroup = avatarGroup;
         this.addChild(avatarGroup);
         avatarGroup.touchEnabled = true;
         avatarGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
@@ -81,16 +82,16 @@ var PeachTree = (function (_super) {
         }, this);
         // 背景
         var avatar_bg = Util.createBitmapByName('avatar_bg_png');
-        avatar_bg.x = this.stage.stageWidth - avatar_bg.width;
-        avatar_bg.y = 200;
+        avatarGroup.x = this.stage.stageWidth - avatar_bg.width;
+        avatarGroup.y = 200;
         avatarGroup.addChild(avatar_bg);
         // 头像
-        Util.setUserImg(this.userInfo.avatar, 108, 476, 205, avatarGroup);
+        Util.setUserImg(this.userInfo.avatar, 108, 11, 5, avatarGroup);
         // 积分文字
         var scoreText = new egret.TextField();
         scoreText.text = '积分';
-        scoreText.x = 610;
-        scoreText.y = 220;
+        scoreText.x = 140;
+        scoreText.y = 20;
         scoreText.size = 40;
         avatarGroup.addChild(scoreText);
         // 积分数值
@@ -134,6 +135,7 @@ var PeachTree = (function (_super) {
                 _this.removeChild(group_1); // 删除空水壶
                 Http.getInstance().post(Url.HTTP_WATERING_DO, null, function (json) {
                     _this.curPeachInfo = json.data;
+                    console.log(_this.curPeachInfo);
                     _this.drawTree(); // 开始画树
                     _this.kettleAni(); // 开始浇水动画
                 });
@@ -233,12 +235,16 @@ var PeachTree = (function (_super) {
         });
         // 新成长的桃子
         if (this.curPeachInfo) {
-            var curPeach = pArr[this.curPeachInfo.position - 1];
-            this.count++;
-            curPeach.scaleX = 0;
-            curPeach.scaleY = 0;
-            egret.Tween.get(curPeach).to({ scaleX: 1, scaleY: 1 }, 1000);
-            this.peachAni(curPeach, this.curPeachInfo);
+            var lastPeachCreateTime = new Date(this.curPeachInfo.create_time.split('T')[0]).getDate();
+            var curDate = new Date().getDate();
+            if (curDate - lastPeachCreateTime == 0) {
+                var curPeach = pArr[this.curPeachInfo.position - 1];
+                this.count++;
+                curPeach.scaleX = 0;
+                curPeach.scaleY = 0;
+                egret.Tween.get(curPeach).to({ scaleX: 1, scaleY: 1 }, 1000);
+                this.peachAni(curPeach, this.curPeachInfo);
+            }
         }
         // 摘取你的功夫桃子文字
         this.addChild(this.peachText);
@@ -281,10 +287,10 @@ var PeachTree = (function (_super) {
         }
         this.scoreContent = new egret.TextField();
         this.scoreContent.text = num;
-        this.scoreContent.x = 610;
-        this.scoreContent.y = 266;
+        this.scoreContent.x = 140;
+        this.scoreContent.y = 65;
         this.scoreContent.size = 40;
-        this.addChild(this.scoreContent);
+        this.avatarGroup.addChild(this.scoreContent);
     };
     // 积分增加的动画
     PeachTree.prototype.showScoreAni = function () {

@@ -1,5 +1,6 @@
 class PeachTree extends Scene {
     private userInfo  // 玩家信息
+    private avatarGroup  // 头像积分区域
     private scoreContent  // 积分数值是否已经创建
     private _myRotation = 5  // 旋转角度
     private count = 0  // 显示几个桃子
@@ -70,6 +71,7 @@ class PeachTree extends Scene {
      */
     private initAvatar() {
         let avatarGroup = new eui.Group()
+        this.avatarGroup = avatarGroup
         this.addChild(avatarGroup)
         avatarGroup.touchEnabled = true
         avatarGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
@@ -79,18 +81,18 @@ class PeachTree extends Scene {
 
         // 背景
         let avatar_bg = Util.createBitmapByName('avatar_bg_png')
-        avatar_bg.x = this.stage.stageWidth - avatar_bg.width
-        avatar_bg.y = 200
+        avatarGroup.x = this.stage.stageWidth - avatar_bg.width
+        avatarGroup.y = 200
         avatarGroup.addChild(avatar_bg)
 
         // 头像
-        Util.setUserImg(this.userInfo.avatar, 108, 476, 205, avatarGroup)
+        Util.setUserImg(this.userInfo.avatar, 108, 11, 5, avatarGroup)
 
         // 积分文字
         let scoreText = new egret.TextField()
         scoreText.text = '积分'
-        scoreText.x = 610
-        scoreText.y = 220
+        scoreText.x = 140
+        scoreText.y = 20
         scoreText.size = 40
         avatarGroup.addChild(scoreText)
 
@@ -136,6 +138,7 @@ class PeachTree extends Scene {
                 this.removeChild(group) // 删除空水壶
                 Http.getInstance().post(Url.HTTP_WATERING_DO, null, json => {
                     this.curPeachInfo = json.data
+                    console.log(this.curPeachInfo)
                     this.drawTree()  // 开始画树
                     this.kettleAni()  // 开始浇水动画
                 })
@@ -242,12 +245,16 @@ class PeachTree extends Scene {
 
         // 新成长的桃子
         if (this.curPeachInfo) {
-            let curPeach = pArr[this.curPeachInfo.position - 1]
-            this.count++
-            curPeach.scaleX = 0
-            curPeach.scaleY = 0
-            egret.Tween.get(curPeach).to({ scaleX: 1, scaleY: 1 }, 1000)
-            this.peachAni(curPeach, this.curPeachInfo)
+            let lastPeachCreateTime = new Date(this.curPeachInfo.create_time.split('T')[0]).getDate()
+            let curDate = new Date().getDate()
+            if (curDate - lastPeachCreateTime == 0) {
+                let curPeach = pArr[this.curPeachInfo.position - 1]
+                this.count++
+                curPeach.scaleX = 0
+                curPeach.scaleY = 0
+                egret.Tween.get(curPeach).to({ scaleX: 1, scaleY: 1 }, 1000)
+                this.peachAni(curPeach, this.curPeachInfo)
+            }
         }
 
         // 摘取你的功夫桃子文字
@@ -294,10 +301,10 @@ class PeachTree extends Scene {
         }
         this.scoreContent = new egret.TextField()
         this.scoreContent.text = num
-        this.scoreContent.x = 610
-        this.scoreContent.y = 266
+        this.scoreContent.x = 140
+        this.scoreContent.y = 65
         this.scoreContent.size = 40
-        this.addChild(this.scoreContent)
+        this.avatarGroup.addChild(this.scoreContent)
     }
 
     // 积分增加的动画

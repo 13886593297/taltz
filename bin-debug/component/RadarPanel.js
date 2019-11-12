@@ -30,7 +30,7 @@ var RadarPanel = (function (_super) {
     };
     // 保存图片
     RadarPanel.prototype.onSaveImg = function () {
-        var alert = new AlertPanel("提示:请自行截图保存图片", 1150);
+        var alert = new AlertPanel("提示:请自行截图保存图片", 1130);
         this.pp.addChild(alert);
     };
     return RadarPanel;

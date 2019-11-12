@@ -56,24 +56,27 @@ class UserInfo extends eui.Group {
         info_top.width = stage.stageWidth
         this.addChild(info_top)
 
+        this.infoBg()
+    }
+
+    private infoBg() {
+        let stage = ViewManager.getInstance().stage
+        let group = new eui.Group()
+        this.group = group
+        this.addChild(group)
         let bg: egret.Bitmap
         if (this.type == 'score') {
             bg = Util.createBitmapByName('info_bg1_png')
-            bg.y = 140
+            group.y = 140
         } else {
             bg = Util.createBitmapByName('info_bg_png')
-            bg.y = 110
+            group.y = 110
         }
-        bg.x = (stage.stageWidth - bg.width) / 2
-        this.addChild(bg)
-
-        let group = new eui.Group()
+        group.x = (stage.stageWidth - bg.width) / 2
         group.width = bg.width
         group.height = bg.height
-        group.x = (stage.stageWidth - bg.width) / 2
-        group.y = bg.y
-        this.addChild(group)
-        this.group = group
+        group.addChild(bg)
+
         this.initRight()
         this.initLeft()
 
@@ -104,12 +107,13 @@ class UserInfo extends eui.Group {
 
         // 头像
         if (this.type == 'score') {
-            Util.setUserImg('http://127.0.0.1:8360' + this.userinfo.avatar, 157, 109, 255, this)
+            Util.setUserImg('http://127.0.0.1:8360' + this.userinfo.avatar, 157, 109, 114, this.group)
+            // Util.setUserImg(this.userinfo.avatar, 157, 109, 114, this.group)
         } else {
-            Util.setUserImg(this.userinfo.avatar, 157, 65, 139, this)
+            Util.setUserImg(this.userinfo.avatar, 157, 30, 30, this.group)
         }
 
-        // 桃子森林文字
+        // 桃子森林
         var peachWord: egret.Bitmap = Util.createBitmapByName('peachWord_png')
         peachWord.width = 240
         peachWord.x = -10

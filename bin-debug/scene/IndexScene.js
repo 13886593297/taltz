@@ -22,7 +22,7 @@ var IndexScene = (function (_super) {
         _super.prototype.setBackground.call(this);
         Http.getInstance().post(Url.HTTP_USER_INFO, "", function (data) {
             DataManager.getInstance().setUser(data.data);
-            Util.setTitle("艾乐明-" + data.data.teamName);
+            Util.setTitle("净阶战队-" + data.data.teamName);
             var user = new UserInfo('home');
             user.touchEnabled = true;
             user.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
@@ -142,7 +142,7 @@ var IndexScene = (function (_super) {
      */
     IndexScene.prototype.updateScene = function () {
         this.userView.refresh();
-        Util.setTitle("艾乐明-" + DataManager.getInstance().getUser()['teamName']);
+        Util.setTitle("净阶战队-" + DataManager.getInstance().getUser()['teamName']);
     };
     return IndexScene;
 }(Scene));

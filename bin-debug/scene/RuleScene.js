@@ -40,8 +40,8 @@ var RuleScene = (function (_super) {
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
         myScroller.width = 540;
         myScroller.height = 660;
-        myScroller.x = 110;
-        myScroller.y = 280;
+        myScroller.x = (this.stage.stageWidth - myScroller.width) / 2;
+        myScroller.y = 300;
         //设置viewport
         myScroller.viewport = group;
         this.addChild(myScroller);
@@ -83,9 +83,10 @@ var RuleText = (function (_super) {
             { text: "c.答题过程中可收藏题目，在“训练场-我的收藏”中可查看\n" },
             { text: "\n" },
             { text: "\n" },
-            { text: "**本平台规则由艾乐明品牌组制定，并拥有最终解释权\n" }
+            { text: "**本平台规则由拓咨品牌组制定，并拥有最终解释权\n" }
         ];
         this.addChild(text);
+        this.width = text.textWidth;
         this.height = text.textHeight;
     };
     return RuleText;
