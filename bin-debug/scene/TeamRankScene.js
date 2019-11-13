@@ -21,15 +21,8 @@ var TeamRankScene = (function (_super) {
     TeamRankScene.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this);
-        var bg = Util.createBitmapByName("blue_small_bg_png");
-        bg.width = 590;
-        bg.x = (this.stage.width - bg.width) / 2;
-        bg.y = 80;
+        var bg = Util.createBitmapByName("teamRank_png");
         this.addChild(bg);
-        var title = new CTitle('队内月排行');
-        title.y = 160;
-        title.x = (this.stage.stageWidth - 283) / 2;
-        this.addChild(title);
         //请求团队数据
         Http.getInstance().post(Url.HTTP_TEAM_PERSON_RANK_LIST, { tid: this.teamid, page: this.personPage, size: this.size }, function (json) {
             _this.personRank = json.data;
@@ -44,50 +37,95 @@ var TeamRankScene = (function (_super) {
     };
     TeamRankScene.prototype.initRanker = function () {
         var _this = this;
-        var x = this.stage.stageWidth / 2 - 315;
-        var bg = Util.createBitmapByName("user_border_png");
-        bg.width = 630;
-        bg.height = 830;
-        bg.x = x;
-        bg.y = 250;
-        this.addChild(bg);
         var group = new eui.Group();
         this.groupView = group;
-        group.width = 630;
-        var rankDatas = this.personRank;
-        var y = 10;
-        for (var _i = 0, rankDatas_1 = rankDatas; _i < rankDatas_1.length; _i++) {
-            var rank = rankDatas_1[_i];
-            rank.type = 1;
-            // let rankItem = new RankItemTemplate(rank)
-            // rankItem.x = (this.stage.stageWidth - 555) / 2
-            // rankItem.y = y
-            // group.addChild(rankItem)
-            // y += 210
-        }
+        group.width = 640;
+        this.addItem(this.personRank);
         var myScroller = new eui.Scroller();
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
         myScroller.width = this.stage.stageWidth;
-        myScroller.height = 700;
-        myScroller.y = 280;
+        myScroller.height = this.stage.stageHeight - 200;
+        myScroller.y = 150;
         //设置viewport
         myScroller.viewport = group;
         this.addChild(myScroller);
         this.scrollView = myScroller;
+        // 上滑加载更多
         myScroller.addEventListener(eui.UIEvent.CHANGE_END, function () {
-            if (myScroller.viewport.scrollV + 800 >= myScroller.viewport.contentHeight) {
+            if (myScroller.viewport.scrollV + 1050 >= myScroller.viewport.contentHeight) {
                 _this.loadMoreData();
             }
         }, this);
-        var downArrow = Util.createBitmapByName('icon_down_png');
-        downArrow.anchorOffsetX = 66;
-        downArrow.y = 1050;
-        downArrow.x = this.stage.stageWidth / 2;
-        this.addChild(downArrow);
-        downArrow.touchEnabled = true;
-        downArrow.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            myScroller.viewport.scrollV += 200;
-        }, this);
+    };
+    TeamRankScene.prototype.addItem = function (data, y) {
+        if (y === void 0) { y = 60; }
+        for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+            var rank = data_1[_i];
+            var rankItem = this.rankItemTemplate(rank, y);
+            y += 200;
+            rankItem.height = 250;
+            this.groupView.addChild(rankItem);
+        }
+    };
+    TeamRankScene.prototype.rankItemTemplate = function (item, y) {
+        var rankGroup = new eui.Group();
+        rankGroup.y = y;
+        // 排名背景
+        var rankBg = Util.createBitmapByName('rank_item_bg_png');
+        rankGroup.x = (this.stage.stageWidth - rankBg.width) / 2;
+        rankGroup.width = rankBg.width;
+        rankGroup.addChild(rankBg);
+        // 排名皇冠
+        if (item.serialNo < 4) {
+            var crown = Util.createBitmapByName('cup' + item.serialNo + '_png');
+            crown.x = 515;
+            crown.y = -20;
+            rankGroup.addChild(crown);
+        }
+        // 排名No.
+        var num = new egret.TextField();
+        num.text = item.serialNo;
+        num.textColor = item.serialNo == 1 ? 0xd7a83f : item.serialNo == 2 ? 0xbebebe : item.serialNo == 3 ? 0xb77e43 : 0x077424;
+        num.bold = true;
+        num.size = 50;
+        num.x = 65;
+        num.y = 20;
+        num.width = 66;
+        num.height = 66;
+        num.textAlign = egret.HorizontalAlign.CENTER;
+        num.verticalAlign = egret.VerticalAlign.MIDDLE;
+        rankGroup.addChild(num);
+        // 组名
+        var userInfo = new egret.TextField();
+        userInfo.textFlow = [
+            { text: item.teamName + '\n', style: { size: 28 } },
+            { text: item.userName, style: { size: 40 } }
+        ];
+        userInfo.y = 60;
+        userInfo.lineSpacing = 10;
+        userInfo.x = 145;
+        rankGroup.addChild(userInfo);
+        // 达标率
+        var achiRate = new egret.TextField();
+        achiRate.textFlow = [
+            { text: '个人达标率：\n' },
+            { text: '个人积分：' }
+        ];
+        achiRate.x = 385;
+        achiRate.y = 75;
+        achiRate.size = 20;
+        achiRate.lineSpacing = 15;
+        rankGroup.addChild(achiRate);
+        var achiRateNum = new egret.TextField();
+        achiRateNum.textFlow = [
+            { text: item.achiRate + '%\n' },
+            { text: item.score + '' }
+        ];
+        achiRateNum.x = 495;
+        achiRateNum.size = 36;
+        achiRateNum.y = 65;
+        rankGroup.addChild(achiRateNum);
+        return rankGroup;
     };
     TeamRankScene.prototype.loadMoreData = function () {
         var _this = this;
@@ -100,17 +138,7 @@ var TeamRankScene = (function (_super) {
                     _this.personPage = -1;
                 }
                 _this.personRank.concat(json.data);
-                var x = _this.stage.stageWidth / 2 - 315;
-                var y = _this.scrollView.viewport.contentHeight;
-                for (var _i = 0, _a = json.data; _i < _a.length; _i++) {
-                    var rank = _a[_i];
-                    rank.type = 1;
-                    var rankItem = new RankItem(rank, 500);
-                    rankItem.x = x + 65;
-                    rankItem.y = y;
-                    _this.groupView.addChild(rankItem);
-                    y += rankItem.height + 10;
-                }
+                _this.addItem(_this.personRank);
             });
         }
     };

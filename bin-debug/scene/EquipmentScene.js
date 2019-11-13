@@ -54,7 +54,7 @@ var EquipmentScene = (function (_super) {
         }
         var searchInput = new SearchInput('');
         searchInput.x = (this.stage.stageWidth - 515) / 2;
-        searchInput.y = 200;
+        searchInput.y = 230;
         this.addChild(searchInput);
     };
     return EquipmentScene;

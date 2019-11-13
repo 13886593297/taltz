@@ -41,7 +41,7 @@ var AnswerScene = (function (_super) {
             var pBar = new eui.ProgressBar();
             pBar.maximum = 10; //设置进度条的最大值
             pBar.minimum = 1; //设置进度条的最小值
-            pBar.width = 400;
+            pBar.width = 430;
             pBar.height = 40;
             this.addChild(pBar);
             pBar.x = 150;

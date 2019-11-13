@@ -26,8 +26,8 @@ var SearchInput = (function (_super) {
             var keywords = _this.txtInput.text;
             if (keywords == '') {
                 var alert_1 = new AlertPanel("请输入查询关键字", 1200);
-                alert_1.x = 0 - _this.x;
-                alert_1.y = 0 - _this.y;
+                alert_1.x = 21;
+                alert_1.y = -70;
                 _super.prototype.addChildAt.call(_this, alert_1, 100);
             }
             else {

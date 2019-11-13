@@ -18,6 +18,7 @@ class LevelView extends eui.Group {
         }
         
         let bg = Util.createBitmapByName(this.IMGS[this.levelData.status])
+        this.width = bg.width
         group.addChild(bg)
 
         // 每关的名称

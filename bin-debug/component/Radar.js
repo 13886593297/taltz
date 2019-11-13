@@ -101,16 +101,16 @@ var Radar = (function (_super) {
             var x_1 = points[k].x;
             var y_1 = points[k].y;
             if (k == '0') {
-                x_1 += 30;
+                x_1 += 15;
             }
             else if (k == '1' || k == '5') {
-                x_1 += 40;
+                x_1 += 30;
             }
             else if (k == '2' || k == '4') {
-                x_1 -= 100;
+                x_1 -= 90;
             }
             else if (k == '3') {
-                x_1 -= 80;
+                x_1 -= 75;
             }
             label.x = x_1;
             label.y = y_1 - 25;

@@ -60,8 +60,12 @@ var LoadingUI = (function (_super) {
         this.textField.x = 0;
         this.textField.height = 100;
         this.textField.textAlign = "center";
-        this.textField.size = 60;
-        this.textField.textColor = 0x808894;
+        this.textField.textColor = 0x43c141;
+        // loading gif
+        var loading_gif = new MyMovieClip('loading_gif');
+        loading_gif.x = (stage.stageWidth - loading_gif.width) / 2 - 35;
+        loading_gif.y = this.textField.y + 50;
+        this.addChild(loading_gif);
         var group = new eui.Group();
         group.width = stage.stageWidth;
         group.y = 300;
@@ -101,7 +105,10 @@ var LoadingUI = (function (_super) {
         }, this);
     };
     LoadingUI.prototype.onProgress = function (current, total) {
-        this.textField.text = Math.ceil(current / total * 100) + "%";
+        this.textField.textFlow = [
+            { text: " " + Math.ceil(current / total * 100), style: { size: 40 } },
+            { text: '%' }
+        ];
     };
     return LoadingUI;
 }(egret.Sprite));

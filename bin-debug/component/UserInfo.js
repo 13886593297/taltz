@@ -103,7 +103,6 @@ var UserInfo = (function (_super) {
         this.group.addChild(iconGroup);
         // 头像
         if (this.type == 'score') {
-            // Util.setUserImg('http://127.0.0.1:8360' + this.userinfo.avatar, 157, 109, 114, this.group)
             Util.setUserImg(this.userinfo.avatar, 157, 109, 114, this.group);
         }
         else {
@@ -170,7 +169,7 @@ var UserInfo = (function (_super) {
         level.textColor = 0xffffff;
         level.size = 44;
         if (this.type == 'score') {
-            level.x = 330;
+            level.x = 300;
             level.y = 210;
         }
         else {

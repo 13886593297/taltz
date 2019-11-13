@@ -107,8 +107,7 @@ class UserInfo extends eui.Group {
 
         // 头像
         if (this.type == 'score') {
-            Util.setUserImg('http://127.0.0.1:8360' + this.userinfo.avatar, 157, 109, 114, this.group)
-            // Util.setUserImg(this.userinfo.avatar, 157, 109, 114, this.group)
+            Util.setUserImg(this.userinfo.avatar, 157, 109, 114, this.group)
         } else {
             Util.setUserImg(this.userinfo.avatar, 157, 30, 30, this.group)
         }
@@ -176,7 +175,7 @@ class UserInfo extends eui.Group {
         level.size = 44
 
         if (this.type == 'score') {
-            level.x = 330
+            level.x = 300
             level.y = 210
         } else {
             level.x = 220

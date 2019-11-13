@@ -25,7 +25,6 @@ class RankScene extends Scene {
         this.getRank(Url.HTTP_TEAM_RANK_LIST, this.teamPage, this.size)
             .then(data => {
                 this.teamRank = data
-                console.log(this.teamRank)
             })
     }
 
@@ -226,16 +225,13 @@ class RankScene extends Scene {
         }
         rankGroup.addChild(achiRateNum)
 
-        // // 如果是战队排行榜，注册点击事件
-        // if (type == 2) {
-        //     rankGroup.touchEnabled = true
-        //     rankGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-        //         Http.getInstance().post(Url.HTTP_TEAM_PERSON_RANK_LIST, { tid: this.teamid, page: this.personPage, size: this.size }, () => {
-
-        //         })
-        //     }, this)
-        // }
-
+        // 如果是战队排行榜，注册点击事件
+        if (type == 2) {
+            rankGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+                let scene = new TeamRankScene(rank.teamId)
+                ViewManager.getInstance().changeScene(scene)
+            }, this)
+        }
         return rankGroup
     }
 }

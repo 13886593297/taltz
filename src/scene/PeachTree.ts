@@ -25,11 +25,8 @@ class PeachTree extends Scene {
         // 获取桃子信息
         Http.getInstance().post(Url.HTTP_WATERING_INFO, null, data => {
             this.info = data.data
-            console.log(this.info)
             this.getKattle()
-        });
-
-
+        })
     }
 
     /**
@@ -133,12 +130,11 @@ class PeachTree extends Scene {
             emptyKattle.touchEnabled = true
             group.addChild(emptyKattle)
 
-            // 点击领取水壶，提交后台记录信息，浇水天数+1
+            // 领取水壶
             emptyKattle.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
                 this.removeChild(group) // 删除空水壶
                 Http.getInstance().post(Url.HTTP_WATERING_DO, null, json => {
                     this.curPeachInfo = json.data
-                    console.log(this.curPeachInfo)
                     this.drawTree()  // 开始画树
                     this.kettleAni()  // 开始浇水动画
                 })
@@ -158,7 +154,7 @@ class PeachTree extends Scene {
         treeShadow.y = this.stage.stageHeight - 144
         this.addChildAt(treeShadow, 1)
 
-        // 叶子
+        // 桃树主干
         let leafArr = [
             { bg: 'peachTree1_png', zIndex: 2 },
             { bg: 'peachTree2_png', zIndex: 5 },
@@ -167,7 +163,6 @@ class PeachTree extends Scene {
 
         leafArr.forEach(item => {
             let leaf = Util.createBitmapByName(item.bg)
-            leaf.x = 0
             leaf.y = this.stage.stageHeight - 817
             this.addChildAt(leaf, item.zIndex)
         })
@@ -186,32 +181,42 @@ class PeachTree extends Scene {
         kettle.y = this.stage.stageHeight - 884
         kettleGroup.addChild(kettle)
 
-        // 左上角提示
-        let left_tip_bg = Util.createBitmapByName('water_success_png')
-        left_tip_bg.x = 70
-        left_tip_bg.y = 410
-        kettleGroup.addChild(left_tip_bg)
-        let left_tip_text = new egret.TextField()
-        left_tip_text.text = '提示：浇水成功'
-        left_tip_text.width = 200
-        left_tip_text.height = left_tip_bg.height
-        left_tip_text.x = 140
-        left_tip_text.y = 410
-        left_tip_text.textAlign = egret.HorizontalAlign.CENTER
-        left_tip_text.verticalAlign = egret.VerticalAlign.MIDDLE
-        left_tip_text.size = 20
-        left_tip_text.textColor = 0x7fc871
-        kettleGroup.addChild(left_tip_text)
-
-        // 右下角提示
+        // 为你的桃树浇水吧
         let right_tip = new eui.Group()
         kettleGroup.addChild(right_tip)
         this.showTip(390, this.stage.stageHeight - 174, '为你的桃树浇水吧', right_tip)
 
+        // 浇水成功提示
+        let wateringTip = new eui.Group()
+        wateringTip.x = 70
+        wateringTip.y = 410
+        wateringTip.alpha = 0
+        this.addChild(wateringTip)
+
+        // 浇水成功背景
+        let water_success_png = Util.createBitmapByName('water_success_png')
+        wateringTip.addChild(water_success_png)
+        // 浇水成功文字
+        let water_success_text = new egret.TextField()
+        water_success_text.text = '提示：浇水成功'
+        water_success_text.width = 190
+        water_success_text.x = 70
+        water_success_text.height = water_success_png.height
+        water_success_text.textAlign = egret.HorizontalAlign.CENTER
+        water_success_text.verticalAlign = egret.VerticalAlign.MIDDLE
+        water_success_text.size = 20
+        water_success_text.textColor = 0x7fc871
+        wateringTip.addChild(water_success_text)
+
+        // 浇水动画完成后显示浇水成功提示，再开始绘制桃子
         egret.Tween.get(kettleGroup)
             .to({ alpha: 1 }, 500).wait(2000)
             .to({ alpha: 0 }, 500).call(() => {
-                this.drawPeach()
+                egret.Tween.get(wateringTip)
+                    .to({ alpha: 1 }, 500).wait(1000)
+                    .to({ alpha: 0 }, 500).call(() => {
+                        this.drawPeach()
+                    })
             })
     }
 
@@ -225,7 +230,7 @@ class PeachTree extends Scene {
             { bg: 'peach3_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 8 },
         ]
 
-        let pArr = []
+        let pArr = []  // 创建出来的桃子数组
         peachArr.forEach(item => {
             let peach = Util.createBitmapByName(item.bg)
             peach.x = item.x
@@ -245,9 +250,10 @@ class PeachTree extends Scene {
 
         // 新成长的桃子
         if (this.curPeachInfo) {
-            let lastPeachCreateTime = new Date(this.curPeachInfo.create_time.split('T')[0]).getDate()
+            let lastPeachCreateDate = new Date(this.curPeachInfo.create_time.split('T')[0]).getDate()
             let curDate = new Date().getDate()
-            if (curDate - lastPeachCreateTime == 0) {
+            // 最后一颗桃子生长出来的日期和当前日期一致说明是新长出来的桃子
+            if (curDate - lastPeachCreateDate == 0) {
                 let curPeach = pArr[this.curPeachInfo.position - 1]
                 this.count++
                 curPeach.scaleX = 0
@@ -257,7 +263,7 @@ class PeachTree extends Scene {
             }
         }
 
-        // 摘取你的功夫桃子文字
+        // 摘桃子提示
         this.addChild(this.peachText)
         this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫桃子', this.peachText)
         if (this.count <= 0) {
@@ -265,7 +271,12 @@ class PeachTree extends Scene {
         }
     }
 
-    private peachAni(peach, item) {
+    /**
+     * 根据后台数据显示桃子
+     * @param peach 桃子
+     * @param item 后台返回的每个桃子的数据
+     */
+    private peachAni(peach: egret.Bitmap, item) {
         peach.visible = true
         peach.touchEnabled = true
 
@@ -282,9 +293,7 @@ class PeachTree extends Scene {
                 .call(() => {
                     Http.getInstance().post(Url.HTTP_WATERING_PICK + '?id=' + item.id, '', data => {
                         if (data.data != -1) {
-                            this.userInfo.score += 15
-                            this.showScore(this.userInfo.score)
-                            this.showScoreAni()
+                            this.showScore(this.userInfo.score += 15, true)
                             if (--this.count <= 0) {
                                 this.peachText.visible = false
                             }
@@ -295,9 +304,9 @@ class PeachTree extends Scene {
     }
 
     // 积分
-    private showScore(num) {
+    private showScore(num, isAni = false) {
         if (this.scoreContent) {
-            this.removeChild(this.scoreContent)
+            this.avatarGroup.removeChild(this.scoreContent)
         }
         this.scoreContent = new egret.TextField()
         this.scoreContent.text = num
@@ -305,25 +314,23 @@ class PeachTree extends Scene {
         this.scoreContent.y = 65
         this.scoreContent.size = 40
         this.avatarGroup.addChild(this.scoreContent)
-    }
 
-    // 积分增加的动画
-    private showScoreAni() {
-        let scoreAni = new egret.TextField()
-        scoreAni.text = '+15'
-        scoreAni.size = 50
-        scoreAni.x = 660
-        scoreAni.y = 280
-        this.addChild(scoreAni)
-        let tw = egret.Tween.get(scoreAni)
-        tw.to({ y: 240, alpha: 0 }, 500)
+        // 积分增加的动画
+        if (isAni) {
+            let scoreAni = new egret.TextField()
+            scoreAni.text = '+15'
+            scoreAni.size = 50
+            scoreAni.x = 200
+            scoreAni.y = 80
+            this.avatarGroup.addChild(scoreAni)
+            let tw = egret.Tween.get(scoreAni)
+            tw.to({ y: 40, alpha: 0 }, 500)
+        }
     }
 
     // 显示提示
     private showTip(x, y, text, group) {
         let tipBg = Util.createBitmapByName('tip_bg_png')
-        tipBg.x = x
-        tipBg.y = y
         group.addChild(tipBg)
         // 文字
         let tipText = new egret.TextField()
@@ -332,8 +339,8 @@ class PeachTree extends Scene {
         tipText.height = tipBg.height
         tipText.textAlign = egret.HorizontalAlign.CENTER
         tipText.verticalAlign = egret.VerticalAlign.MIDDLE
-        tipText.x = x
-        tipText.y = y
+        tipText.x = tipBg.x = x
+        tipText.y = tipBg.y = y
         tipText.size = 26
         group.addChild(tipText)
     }

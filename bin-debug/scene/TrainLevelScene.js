@@ -12,31 +12,6 @@ var TrainLevelScene = (function (_super) {
     __extends(TrainLevelScene, _super);
     function TrainLevelScene(bandge) {
         var _this = _super.call(this) || this;
-        /**
-         * 配置关卡位置
-         */
-        _this.POINTS = [
-            { x: 100, y: 70 },
-            { x: 460, y: 270 },
-            { x: 100, y: 470 },
-            { x: 460, y: 670 },
-            { x: 100, y: 870 },
-            { x: 460, y: 1070 },
-            { x: 100, y: 1270 },
-            { x: 460, y: 1470 },
-            { x: 100, y: 1670 },
-            { x: 460, y: 1870 },
-            { x: 100, y: 2070 },
-            { x: 460, y: 2270 },
-            { x: 100, y: 2470 },
-            { x: 460, y: 2670 },
-            { x: 100, y: 2870 },
-            { x: 460, y: 3070 },
-            { x: 100, y: 3270 },
-            { x: 460, y: 3470 },
-            { x: 100, y: 3670 },
-            { x: 460, y: 3870 }
-        ];
         _this.bandge = bandge;
         return _this;
     }
@@ -50,14 +25,13 @@ var TrainLevelScene = (function (_super) {
         //创建一个容器，里面包含一张图片
         var group = new eui.Group();
         group.height = 5000;
-        group.width = this.stage.stageWidth;
+        group.width = 570;
         this.addChild(group);
         var lineGroup = new eui.Group();
         lineGroup.height = 4100;
         group.addChild(lineGroup);
+        var y = 70;
         var _loop_1 = function (i) {
-            // 每个关卡的位置
-            var point = this_1.POINTS[i];
             // 每关的信息
             var data = this_1.bandge.levels[i];
             // 判断是否通关
@@ -74,8 +48,13 @@ var TrainLevelScene = (function (_super) {
                 data.status = 0;
             }
             var level = new LevelView(data);
-            level.x = point.x;
-            level.y = point.y;
+            if (i % 2 == 0) {
+                level.x = 0;
+            }
+            else {
+                level.x = group.width - level.width;
+            }
+            level.y = y;
             group.addChild(level);
             level.touchEnabled = true;
             level.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
@@ -106,24 +85,27 @@ var TrainLevelScene = (function (_super) {
             if (i < 19) {
                 if (i % 2 == 1) {
                     linePic = Util.createBitmapByName("train_line_left_png");
-                    linePic.y = point.y + 90;
+                    linePic.y = y + 90;
                 }
                 else {
                     linePic = Util.createBitmapByName("train_line_right_png");
-                    linePic.y = point.y + 100;
+                    linePic.y = y + 100;
                 }
+                linePic.x = -100;
                 group.addChild(linePic);
             }
+            y += 200;
         };
         var this_1 = this;
-        for (var i = 0; i < this.POINTS.length; i++) {
+        for (var i = 0; i < 20; i++) {
             _loop_1(i);
         }
         //创建一个Scroller
         var myScroller = new eui.Scroller();
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-        myScroller.width = this.stage.stageWidth;
+        myScroller.width = group.width;
         myScroller.height = this.stage.stageHeight - 200;
+        myScroller.x = (this.stage.stageWidth - group.width) / 2;
         myScroller.y = 150;
         //设置viewport
         myScroller.viewport = group;

@@ -37,17 +37,17 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
     private textField: egret.TextField;
 
     private createView(): void {
-        
+
         let stage = ViewManager.getInstance().stage;
         this.width = stage.stageWidth;
         this.height = stage.stageHeight;
 
-        var bg:egret.Shape = new egret.Shape();
-        bg.graphics.beginFill( 0x000000, 1);
-        bg.graphics.drawRect( 0, 0, stage.stageWidth, stage.stageHeight );
+        var bg: egret.Shape = new egret.Shape();
+        bg.graphics.beginFill(0x000000, 1);
+        bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
         bg.graphics.endFill();
-        bg.$alpha=0.1;
-        this.addChild( bg );
+        bg.$alpha = 0.1;
+        this.addChild(bg);
 
         this.textField = new egret.TextField();
         this.addChild(this.textField);
@@ -56,8 +56,13 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
         this.textField.x = 0
         this.textField.height = 100;
         this.textField.textAlign = "center";
-        this.textField.size = 60;
-        this.textField.textColor = 0x808894;
+        this.textField.textColor = 0x43c141;
+
+        // loading gif
+        let loading_gif = new MyMovieClip('loading_gif')
+        loading_gif.x = (stage.stageWidth - loading_gif.width) / 2 - 35
+        loading_gif.y = this.textField.y + 50
+        this.addChild(loading_gif)
 
         let group = new eui.Group();
         group.width = stage.stageWidth;
@@ -102,7 +107,7 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
                 customUniform: 0
             }
         );
-    
+
 
         this.filters = [customFilter1];
         this.addEventListener(egret.Event.ENTER_FRAME, () => {
@@ -111,11 +116,12 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
                 customFilter1.uniforms.customUniform = 0.0;
             }
         }, this);
-
-        
     }
 
     public onProgress(current: number, total: number): void {
-        this.textField.text = `${Math.ceil(current/total*100)}%`;
+        this.textField.textFlow = [
+            {text: ` ${Math.ceil(current / total * 100)}`, style: {size: 40}},
+            {text: '%'}
+        ]
     }
 }

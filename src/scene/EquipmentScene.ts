@@ -42,7 +42,7 @@ class EquipmentScene extends Scene {
 
         let searchInput = new SearchInput('')
         searchInput.x = (this.stage.stageWidth - 515) / 2
-        searchInput.y = 200
+        searchInput.y = 230
         this.addChild(searchInput)
     }
 }

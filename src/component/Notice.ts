@@ -27,11 +27,12 @@ class Notice extends eui.Group {
 
         let text = new egret.TextField()
         text.height = 62
-        text.size = 22
+        text.size = 20
         text.textColor = 0x7fc871
         text.width = 320
-        text.x = 230
+        text.x = 240
         text.verticalAlign = egret.VerticalAlign.MIDDLE
+        text.textAlign = egret.HorizontalAlign.CENTER
         this.addChild(text)
         this.text1 = text
         text.mask = this.mask

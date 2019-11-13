@@ -27,7 +27,7 @@ class UserScene extends Scene {
         // 玩家数据
         let userData = DataManager.getInstance().getUser()
         let radar = new Radar(userData.attrInfo, userData.attrName, 450, 450)
-        radar.x = 140
+        radar.x = (this.stage.stageWidth - 450) / 2
         radar.y = 550
         shareGroup.addChild(radar)
         // 注册微信分享

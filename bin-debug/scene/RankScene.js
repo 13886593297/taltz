@@ -35,7 +35,6 @@ var RankScene = (function (_super) {
         this.getRank(Url.HTTP_TEAM_RANK_LIST, this.teamPage, this.size)
             .then(function (data) {
             _this.teamRank = data;
-            console.log(_this.teamRank);
         });
     };
     /**
@@ -225,14 +224,13 @@ var RankScene = (function (_super) {
             achiRateNum.y = 70;
         }
         rankGroup.addChild(achiRateNum);
-        // // 如果是战队排行榜，注册点击事件
-        // if (type == 2) {
-        //     rankGroup.touchEnabled = true
-        //     rankGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-        //         Http.getInstance().post(Url.HTTP_TEAM_PERSON_RANK_LIST, { tid: this.teamid, page: this.personPage, size: this.size }, () => {
-        //         })
-        //     }, this)
-        // }
+        // 如果是战队排行榜，注册点击事件
+        if (type == 2) {
+            rankGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+                var scene = new TeamRankScene(rank.teamId);
+                ViewManager.getInstance().changeScene(scene);
+            }, this);
+        }
         return rankGroup;
     };
     return RankScene;
