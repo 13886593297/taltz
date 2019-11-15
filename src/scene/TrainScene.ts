@@ -1,10 +1,8 @@
 class TrainScene extends Scene {
-    /**
-     * 徽章配置信息
-     */
     private bandge
-    constructor() {
+    constructor(isBackHome = false) {
         super()
+        this.isBackHome = isBackHome
         this.bandge = Util.getConfig('bandge')
         Util.setTitle('训练场')
     }

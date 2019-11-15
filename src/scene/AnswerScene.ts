@@ -153,7 +153,18 @@ class AnswerScene extends Scene {
                 Http.getInstance().post(Url.HTTP_FAVOR_SUBJECT, { qid: qid, type: 2 }, (json) => {
                     this.answers.questions.splice(this.curIdx - 1, 1)
                     if (this.answers.questions.length == 0) {
-                        ViewManager.getInstance().back()
+                        // ViewManager.getInstance().back()
+
+
+                        Http.getInstance().post(Url.HTTP_FAVOR_LIST, "", data => {
+                            if (data.data && data.data.length > 0) {
+                                let scene = new FavorScene(data.data, true)
+                                ViewManager.getInstance().changeScene(scene)
+                            } else {
+                                let scene = new TrainScene(true)
+                                ViewManager.getInstance().changeScene(scene)
+                            }
+                        })
                         return
                     }
 

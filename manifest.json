@@ -61,7 +61,7 @@
 		"bin-debug/scene/ErrorScene.js",
 		"bin-debug/scene/FavorScene.js",
 		"bin-debug/scene/IndexScene.js",
-		"bin-debug/scene/PeachTree.js",
+		"bin-debug/scene/PeachScene.js",
 		"bin-debug/scene/RankScene.js",
 		"bin-debug/scene/ResultScene.js",
 		"bin-debug/scene/RuleScene.js",

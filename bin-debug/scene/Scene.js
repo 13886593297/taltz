@@ -15,6 +15,7 @@ var Scene = (function (_super) {
         _this.isRemove = true;
         _this.close_btn = 'close_png'; // 关闭按钮
         _this.isnSpecialReturn = false;
+        _this.isBackHome = false;
         _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.initScene, _this);
         _this.addEventListener(egret.Event.REMOVED_FROM_STAGE, _this.release, _this);
         return _this;
@@ -37,7 +38,12 @@ var Scene = (function (_super) {
         nav_bg.touchEnabled = true;
         nav_bg.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
             hideIFrame();
-            _this.onBack();
+            if (_this.isBackHome) {
+                ViewManager.getInstance().jumpHome();
+            }
+            else {
+                _this.onBack();
+            }
         }, this);
     };
     Scene.prototype.setBackground = function (bg) {

@@ -4,6 +4,7 @@ class Scene extends eui.UILayer {
     public isnSpecialReturn: any = false
     public navColor
     public name
+    public isBackHome = false
 
     public constructor() {
         super()
@@ -30,7 +31,11 @@ class Scene extends eui.UILayer {
         nav_bg.touchEnabled = true
         nav_bg.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             hideIFrame()
-            this.onBack()
+            if (this.isBackHome) {
+                ViewManager.getInstance().jumpHome()
+            } else {
+                this.onBack()
+            }
         }, this)
     }
 

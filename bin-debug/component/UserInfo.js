@@ -118,7 +118,7 @@ var UserInfo = (function (_super) {
         }
         peachWord.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
             // 跳转到桃子森林页面
-            var scene = new PeachTree();
+            var scene = new PeachScene();
             ViewManager.getInstance().changeScene(scene);
         }, this);
         peachWord.touchEnabled = true;

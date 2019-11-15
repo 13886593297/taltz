@@ -10,9 +10,11 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var FavorScene = (function (_super) {
     __extends(FavorScene, _super);
-    function FavorScene(favors) {
+    function FavorScene(favors, isBackHome) {
+        if (isBackHome === void 0) { isBackHome = false; }
         var _this = _super.call(this) || this;
         _this.favors = favors;
+        _this.isBackHome = isBackHome;
         return _this;
     }
     FavorScene.prototype.init = function () {

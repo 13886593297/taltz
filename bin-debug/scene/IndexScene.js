@@ -85,7 +85,7 @@ var IndexScene = (function (_super) {
                     sign.addEventListener(eui.UIEvent.CLOSING, function () {
                         _this.sign = null;
                         if (!_this.signFalg) {
-                            var scene = new PeachTree();
+                            var scene = new PeachScene();
                             ViewManager.getInstance().changeScene(scene);
                         }
                     }, _this);
@@ -95,7 +95,7 @@ var IndexScene = (function (_super) {
                         _this.signFalg = true;
                         if (_this.sign) {
                             _this.removeChild(_this.sign);
-                            var scene = new PeachTree();
+                            var scene = new PeachScene();
                             ViewManager.getInstance().changeScene(scene);
                         }
                     }, _this);

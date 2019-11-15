@@ -10,8 +10,10 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var TrainScene = (function (_super) {
     __extends(TrainScene, _super);
-    function TrainScene() {
+    function TrainScene(isBackHome) {
+        if (isBackHome === void 0) { isBackHome = false; }
         var _this = _super.call(this) || this;
+        _this.isBackHome = isBackHome;
         _this.bandge = Util.getConfig('bandge');
         Util.setTitle('训练场');
         return _this;

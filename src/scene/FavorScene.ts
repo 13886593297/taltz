@@ -1,8 +1,9 @@
 class FavorScene extends Scene {
     private favors
-    constructor(favors) {
+    constructor(favors, isBackHome = false) {
         super()
         this.favors = favors
+        this.isBackHome = isBackHome
     }
 
     public init() {
@@ -63,8 +64,6 @@ class FavorScene extends Scene {
                     this.addChild(alert)
                 }
             })
-
         }
     }
-
 }

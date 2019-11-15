@@ -1,4 +1,7 @@
-class PeachTree extends Scene {
+/**
+ * 桃子森林
+ */
+class PeachScene extends Scene {
     private userInfo  // 玩家信息
     private avatarGroup  // 头像积分区域
     private scoreContent  // 积分数值是否已经创建
@@ -310,7 +313,7 @@ class PeachTree extends Scene {
             egret.Tween.get(evt.target)
                 .to({ x: 640, y: 310, scaleX: 0.2, scaleY: 0.2, visible: false }, 1500)
                 .call(() => {
-                    Http.getInstance().post(Url.HTTP_WATERING_PICK + '?id=' + item.id, '', data => {
+                    Http.getInstance().post(Url.HTTP_WATERING_PICK, {id: item.id}, data => {
                         if (data.data != -1) {
                             this.showScore(this.userInfo.score += 15, true)
                             if (--this.count <= 0) {

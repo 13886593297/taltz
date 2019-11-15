@@ -77,7 +77,7 @@ class IndexScene extends Scene {
                     sign.addEventListener(eui.UIEvent.CLOSING, () => {
                         this.sign = null
                         if (!this.signFalg) {
-                            let scene = new PeachTree()
+                            let scene = new PeachScene()
                             ViewManager.getInstance().changeScene(scene)
                         }
                     }, this)
@@ -87,7 +87,7 @@ class IndexScene extends Scene {
                         this.signFalg = true
                         if (this.sign) {
                             this.removeChild(this.sign)
-                            let scene = new PeachTree()
+                            let scene = new PeachScene()
                             ViewManager.getInstance().changeScene(scene)
                         }
                     }, this)

@@ -122,7 +122,7 @@ class UserInfo extends eui.Group {
         }
         peachWord.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
             // 跳转到桃子森林页面
-            let scene = new PeachTree()
+            let scene = new PeachScene()
             ViewManager.getInstance().changeScene(scene)
         }, this)
         peachWord.touchEnabled = true

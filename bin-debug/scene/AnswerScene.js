@@ -134,7 +134,17 @@ var AnswerScene = (function (_super) {
                 Http.getInstance().post(Url.HTTP_FAVOR_SUBJECT, { qid: qid, type: 2 }, function (json) {
                     _this.answers.questions.splice(_this.curIdx - 1, 1);
                     if (_this.answers.questions.length == 0) {
-                        ViewManager.getInstance().back();
+                        // ViewManager.getInstance().back()
+                        Http.getInstance().post(Url.HTTP_FAVOR_LIST, "", function (data) {
+                            if (data.data && data.data.length > 0) {
+                                var scene = new FavorScene(data.data, true);
+                                ViewManager.getInstance().changeScene(scene);
+                            }
+                            else {
+                                var scene = new TrainScene(true);
+                                ViewManager.getInstance().changeScene(scene);
+                            }
+                        });
                         return;
                     }
                     if (_this.curIdx >= _this.answers.questions.length) {
