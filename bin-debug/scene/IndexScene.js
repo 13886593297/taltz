@@ -47,7 +47,7 @@ var IndexScene = (function (_super) {
         for (var _i = 0, models_1 = models; _i < models_1.length; _i++) {
             var model = models_1[_i];
             var bg = Util.createBitmapByName(model.bg);
-            if (model.key == 3)
+            if (model.key == 3 || model.key == 4)
                 bg.filters = [grayFilter];
             bg.x = (this.stage.stageWidth - bg.width) / 2;
             bg.y = model.y;
@@ -131,8 +131,9 @@ var IndexScene = (function (_super) {
                     _this.addChild(alert_1);
                     break;
                 case 4:
-                    var escene = new EquipmentScene();
-                    ViewManager.getInstance().changeScene(escene);
+                    // let escene = new EquipmentScene()
+                    // ViewManager.getInstance().changeScene(escene)
+                    _this.addChild(new AlertPanel("装备库资料准备中", 1120));
                     break;
             }
         };

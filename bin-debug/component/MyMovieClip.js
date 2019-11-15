@@ -13,9 +13,11 @@ r.prototype = e.prototype, t.prototype = new r();
  */
 var MyMovieClip = (function (_super) {
     __extends(MyMovieClip, _super);
-    function MyMovieClip(name) {
+    function MyMovieClip(name, playTimes) {
+        if (playTimes === void 0) { playTimes = -1; }
         var _this = _super.call(this) || this;
-        _this._name = name;
+        _this.aniName = name;
+        _this.playTimes = playTimes;
         _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.onAddToStage, _this);
         return _this;
     }
@@ -25,9 +27,9 @@ var MyMovieClip = (function (_super) {
     MyMovieClip.prototype.initMovieClip = function () {
         /*** 本示例关键代码段开始 ***/
         var mcDataFactory = new egret.MovieClipDataFactory(this._mcData, this._mcTexture);
-        var role = new egret.MovieClip(mcDataFactory.generateMovieClipData(this._name));
+        var role = new egret.MovieClip(mcDataFactory.generateMovieClipData(this.aniName));
         this.addChild(role);
-        role.gotoAndPlay(1, 3);
+        role.gotoAndPlay(1, this.playTimes);
         /*** 本示例关键代码段结束 ***/
     };
     MyMovieClip.prototype.load = function (callback) {
@@ -47,7 +49,7 @@ var MyMovieClip = (function (_super) {
             check();
         }, this);
         loader.dataFormat = egret.URLLoaderDataFormat.TEXTURE;
-        var request = new egret.URLRequest("resource/brand/taltz/" + this._name + ".png");
+        var request = new egret.URLRequest("resource/brand/taltz/" + this.aniName + ".png");
         loader.load(request);
         var loader = new egret.URLLoader();
         loader.addEventListener(egret.Event.COMPLETE, function loadOver(e) {
@@ -56,7 +58,7 @@ var MyMovieClip = (function (_super) {
             check();
         }, this);
         loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
-        var request = new egret.URLRequest("resource/brand/taltz/" + this._name + ".json");
+        var request = new egret.URLRequest("resource/brand/taltz/" + this.aniName + ".json");
         loader.load(request);
     };
     return MyMovieClip;

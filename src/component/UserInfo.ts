@@ -85,8 +85,8 @@ class UserInfo extends eui.Group {
             let rateValue = Math.round(trainResult.trainCorrectCount * 100 / trainResult.trainTotalCount)
             let trainGroup = new eui.Group()
             trainGroup.x = 230
-            trainGroup.y = 770
-            this.addChild(trainGroup)
+            trainGroup.y = 630
+            group.addChild(trainGroup)
             let textArr = ['累积训练', '正确率']
             this.info(textArr, trainGroup, 42, 365, 60)
             let numArr = [trainResult.trainTotalCount + '题', rateValue + '%']

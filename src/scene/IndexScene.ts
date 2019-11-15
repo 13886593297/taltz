@@ -38,7 +38,7 @@ class IndexScene extends Scene {
         let grayFilter = Util.grayFliter()
         for (let model of models) {
             let bg: egret.Bitmap = Util.createBitmapByName(model.bg)
-            if (model.key == 3) bg.filters = [grayFilter]
+            if (model.key == 3 || model.key == 4) bg.filters = [grayFilter]
             bg.x = (this.stage.stageWidth - bg.width) / 2
             bg.y = model.y
             this.addChild(bg)
@@ -123,8 +123,9 @@ class IndexScene extends Scene {
                     this.addChild(alert)
                     break
                 case 4:
-                    let escene = new EquipmentScene()
-                    ViewManager.getInstance().changeScene(escene)
+                    // let escene = new EquipmentScene()
+                    // ViewManager.getInstance().changeScene(escene)
+                    this.addChild(new AlertPanel("装备库资料准备中", 1120))
                     break
             }
         }

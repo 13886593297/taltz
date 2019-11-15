@@ -4,11 +4,13 @@
 class MyMovieClip extends egret.DisplayObjectContainer {
     private _mcData: any;
     private _mcTexture: egret.Texture;
-    private _name: any
+    private aniName: string  // gif名字
+    private playTimes: number  // 循环次数
 
-    constructor(name) {
+    constructor(name, playTimes = -1) {
         super();
-        this._name = name
+        this.aniName = name
+        this.playTimes = playTimes
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
 
@@ -19,9 +21,9 @@ class MyMovieClip extends egret.DisplayObjectContainer {
     private initMovieClip(): void {
         /*** 本示例关键代码段开始 ***/
         var mcDataFactory = new egret.MovieClipDataFactory(this._mcData, this._mcTexture);
-        var role: egret.MovieClip = new egret.MovieClip(mcDataFactory.generateMovieClipData(this._name));
+        var role: egret.MovieClip = new egret.MovieClip(mcDataFactory.generateMovieClipData(this.aniName));
         this.addChild(role);
-        role.gotoAndPlay(1, 3);
+        role.gotoAndPlay(1, this.playTimes);
         /*** 本示例关键代码段结束 ***/
     }
 
@@ -44,7 +46,7 @@ class MyMovieClip extends egret.DisplayObjectContainer {
             check();
         }, this);
         loader.dataFormat = egret.URLLoaderDataFormat.TEXTURE;
-        var request = new egret.URLRequest("resource/brand/taltz/" + this._name + ".png");
+        var request = new egret.URLRequest("resource/brand/taltz/" + this.aniName + ".png");
         loader.load(request);
 
         var loader = new egret.URLLoader();
@@ -54,7 +56,7 @@ class MyMovieClip extends egret.DisplayObjectContainer {
             check();
         }, this);
         loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
-        var request = new egret.URLRequest("resource/brand/taltz/" + this._name + ".json");
+        var request = new egret.URLRequest("resource/brand/taltz/" + this.aniName + ".json");
         loader.load(request);
     }
 }

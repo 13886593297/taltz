@@ -24,11 +24,11 @@ class TrainScene extends Scene {
         let grayFliter = Util.grayFliter()
 
         // 关卡
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < this.bandge.length; i++) {
             let grade = Util.createBitmapByName(`train_grade${i + 1}_png`)
             grade.touchEnabled = true
             // 未通关
-            if (Math.floor(userinfo.lv / 20) < i) {
+            if (userinfo.lv < this.bandge[i].start) {
                 grade.filters = [grayFliter]
                 grade.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
                     Util.playMusic('model_select_mp3')

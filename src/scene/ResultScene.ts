@@ -161,7 +161,6 @@ class ResultScene extends Scene {
         return group
     }
 
-
     public onBack() {
         ViewManager.getInstance().jumpHome()
     }

@@ -29,11 +29,11 @@ var Notice = (function (_super) {
         notice.anchorOffsetX = notice.width / 2;
         this.addChild(notice);
         var text = new egret.TextField();
-        text.height = 62;
+        text.height = 60;
         text.size = 20;
         text.textColor = 0x7fc871;
-        text.width = 320;
-        text.x = 240;
+        text.width = 300;
+        text.x = 260;
         text.verticalAlign = egret.VerticalAlign.MIDDLE;
         text.textAlign = egret.HorizontalAlign.CENTER;
         this.addChild(text);

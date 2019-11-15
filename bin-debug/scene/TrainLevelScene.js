@@ -70,7 +70,7 @@ var TrainLevelScene = (function (_super) {
                             ViewManager.getInstance().changeScene(scene);
                         }
                         else {
-                            var alert_1 = new AlertPanel("提示:请先通关前面的关卡后再来哦", 150);
+                            var alert_1 = new AlertPanel("提示:题库未设置", 150);
                             _this.addChild(alert_1);
                         }
                     });

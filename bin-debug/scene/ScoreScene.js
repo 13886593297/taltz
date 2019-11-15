@@ -16,9 +16,13 @@ var ScoreScene = (function (_super) {
     ScoreScene.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this);
+        var shareGroup = new eui.Group();
+        this.addChild(shareGroup);
+        // 玩家信息
         var user = new UserInfo('score');
         user.y = 20;
-        this.addChild(user);
+        shareGroup.addChild(user);
+        // 保存图片和分享
         var saveButton = Util.createBitmapByName('button_small_1_png');
         saveButton.x = this.stage.stageWidth / 2 - saveButton.width - 10;
         saveButton.y = 1020;
@@ -37,13 +41,13 @@ var ScoreScene = (function (_super) {
             var tips = new SharePanel();
             _this.addChild(tips);
         }, this);
-        this.registerShare();
+        this.registerShare(shareGroup);
     };
-    ScoreScene.prototype.registerShare = function () {
+    ScoreScene.prototype.registerShare = function (shareGroup) {
         var user = DataManager.getInstance().getUser();
         var trainResult = user.trainResult;
         var rateValue = Math.round(trainResult.trainCorrectCount * 100 / trainResult.trainTotalCount);
-        Util.registerShare(this.shareGroup, ShareType.TRAIN_RESULT, user.nickName, rateValue + '%');
+        Util.registerShare(shareGroup, ShareType.TRAIN_RESULT, user.nickName, rateValue + '%');
     };
     ScoreScene.prototype.onBack = function () {
         ViewManager.getInstance().jumpHome();

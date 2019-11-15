@@ -1,15 +1,20 @@
 class ScoreScene extends Scene {
-    private shareGroup
     constructor() {
         super()
     }
 
     public init() {
         super.setBackground()
+
+        let shareGroup = new eui.Group()
+        this.addChild(shareGroup)
+
+        // 玩家信息
         let user = new UserInfo('score')
         user.y = 20
-        this.addChild(user)
+        shareGroup.addChild(user)
 
+        // 保存图片和分享
         let saveButton = Util.createBitmapByName('button_small_1_png')
         saveButton.x = this.stage.stageWidth / 2 - saveButton.width - 10
         saveButton.y = 1020
@@ -31,16 +36,15 @@ class ScoreScene extends Scene {
             this.addChild(tips)
         }, this)
 
-        this.registerShare()
+        this.registerShare(shareGroup)
     }
 
-    private registerShare() {
+    private registerShare(shareGroup) {
         let user = DataManager.getInstance().getUser()
         let trainResult = user.trainResult
         let rateValue = Math.round(trainResult.trainCorrectCount * 100 / trainResult.trainTotalCount)
-        Util.registerShare(this.shareGroup, ShareType.TRAIN_RESULT, user.nickName, rateValue + '%')
+        Util.registerShare(shareGroup, ShareType.TRAIN_RESULT, user.nickName, rateValue + '%')
     }
-
 
     public onBack() {
         ViewManager.getInstance().jumpHome()

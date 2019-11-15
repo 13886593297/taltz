@@ -6,7 +6,8 @@ class PeachTree extends Scene {
     private count = 0  // 显示几个桃子
     private info  // 桃子信息
     private curPeachInfo  // 签到5天新长出来的桃子index
-    private peachText = new eui.Group()
+    private peachText = new eui.Group()  // 摘桃子提示
+    private peachGroup = new eui.Group()  // 整体树和桃子
     constructor() {
         super()
     }
@@ -149,22 +150,25 @@ class PeachTree extends Scene {
      * 画树
      */
     private drawTree() {
+        this.addChild(this.peachGroup)
+        this.peachGroup.y = this.stage.stageHeight - 144
+        this.peachGroup.anchorOffsetY = this.stage.stageHeight - 144
         // 树下阴影
         let treeShadow = Util.createBitmapByName('shadow_png')
         treeShadow.y = this.stage.stageHeight - 144
-        this.addChildAt(treeShadow, 1)
+        this.peachGroup.addChildAt(treeShadow, 1)
 
         // 桃树主干
         let leafArr = [
             { bg: 'peachTree1_png', zIndex: 2 },
-            { bg: 'peachTree2_png', zIndex: 5 },
-            { bg: 'peachTree3_png', zIndex: 6 },
+            { bg: 'peachTree2_png', zIndex: 3 },
+            { bg: 'peachTree3_png', zIndex: 5 },
         ]
 
         leafArr.forEach(item => {
             let leaf = Util.createBitmapByName(item.bg)
             leaf.y = this.stage.stageHeight - 817
-            this.addChildAt(leaf, item.zIndex)
+            this.peachGroup.addChildAt(leaf, item.zIndex)
         })
     }
 
@@ -176,7 +180,7 @@ class PeachTree extends Scene {
         kettleGroup.alpha = 0
         this.addChild(kettleGroup)
         // 水壶
-        let kettle = new MyMovieClip('kettleMovie')
+        let kettle = new MyMovieClip('kettleMovie', 3)
         kettle.x = 380
         kettle.y = this.stage.stageHeight - 884
         kettleGroup.addChild(kettle)
@@ -225,9 +229,9 @@ class PeachTree extends Scene {
      */
     private drawPeach() {
         let peachArr = [
-            { bg: 'peach1_png', x: 580, y: this.stage.stageHeight - 524, zIndex: 3 },
-            { bg: 'peach2_png', x: 245, y: this.stage.stageHeight - 464, zIndex: 4 },
-            { bg: 'peach3_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 8 },
+            { bg: 'peach1_png', x: 580, y: this.stage.stageHeight - 524, zIndex: 2 },
+            { bg: 'peach2_png', x: 245, y: this.stage.stageHeight - 464, zIndex: 2 },
+            { bg: 'peach3_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 5 },
         ]
 
         let pArr = []  // 创建出来的桃子数组
@@ -237,7 +241,7 @@ class PeachTree extends Scene {
             peach.y = item.y
             peach.anchorOffsetX = peach.width / 2
             peach.visible = false
-            this.addChildAt(peach, item.zIndex)
+            this.peachGroup.addChildAt(peach, item.zIndex)
             pArr.push(peach)
         })
 
@@ -263,12 +267,27 @@ class PeachTree extends Scene {
             }
         }
 
+        if (this.count <= 0) {
+            this.peachTreeAni()
+        }
+
         // 摘桃子提示
         this.addChild(this.peachText)
         this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫桃子', this.peachText)
         if (this.count <= 0) {
             this.peachText.visible = false
         }
+    }
+
+    // 当没有桃子时点击桃树会上下晃动
+    private peachTreeAni() {
+        this.peachGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            egret.Tween.get(this.peachGroup)
+                .to({ scaleY: 1.03 }, 300)
+                .to({ scaleY: 1 }, 300)
+                .to({ scaleY: 1.03 }, 300)
+                .to({ scaleY: 1 }, 300)
+        }, this)
     }
 
     /**
@@ -296,6 +315,7 @@ class PeachTree extends Scene {
                             this.showScore(this.userInfo.score += 15, true)
                             if (--this.count <= 0) {
                                 this.peachText.visible = false
+                                this.peachTreeAni()
                             }
                         }
                     })

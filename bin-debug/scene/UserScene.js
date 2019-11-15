@@ -28,7 +28,7 @@ var UserScene = (function (_super) {
         var radarPanel = new RadarPanel(this);
         radarPanel.x = (this.stage.stageWidth - 660) / 2;
         radarPanel.y = 530;
-        shareGroup.addChild(radarPanel);
+        this.addChild(radarPanel);
         // 玩家数据
         var userData = DataManager.getInstance().getUser();
         var radar = new Radar(userData.attrInfo, userData.attrName, 450, 450);

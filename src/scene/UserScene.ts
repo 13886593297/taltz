@@ -2,7 +2,6 @@
  * 用户中心
  */
 class UserScene extends Scene {
-
     public constructor() {
         super()
     }
@@ -22,7 +21,7 @@ class UserScene extends Scene {
         let radarPanel = new RadarPanel(this)
         radarPanel.x = (this.stage.stageWidth - 660) / 2
         radarPanel.y = 530
-        shareGroup.addChild(radarPanel)
+        this.addChild(radarPanel)
 
         // 玩家数据
         let userData = DataManager.getInstance().getUser()

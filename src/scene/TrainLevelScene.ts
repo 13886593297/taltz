@@ -60,7 +60,7 @@ class TrainLevelScene extends Scene {
                             ViewManager.getInstance().changeScene(scene)
                         }
                         else {
-                            let alert = new AlertPanel("提示:请先通关前面的关卡后再来哦", 150)
+                            let alert = new AlertPanel("提示:题库未设置", 150)
                             this.addChild(alert)
                         }
                     })

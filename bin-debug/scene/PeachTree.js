@@ -14,7 +14,8 @@ var PeachTree = (function (_super) {
         var _this = _super.call(this) || this;
         _this._myRotation = 5; // 旋转角度
         _this.count = 0; // 显示几个桃子
-        _this.peachText = new eui.Group();
+        _this.peachText = new eui.Group(); // 摘桃子提示
+        _this.peachGroup = new eui.Group(); // 整体树和桃子
         return _this;
     }
     PeachTree.prototype.init = function () {
@@ -149,20 +150,23 @@ var PeachTree = (function (_super) {
      */
     PeachTree.prototype.drawTree = function () {
         var _this = this;
+        this.addChild(this.peachGroup);
+        this.peachGroup.y = this.stage.stageHeight - 144;
+        this.peachGroup.anchorOffsetY = this.stage.stageHeight - 144;
         // 树下阴影
         var treeShadow = Util.createBitmapByName('shadow_png');
         treeShadow.y = this.stage.stageHeight - 144;
-        this.addChildAt(treeShadow, 1);
+        this.peachGroup.addChildAt(treeShadow, 1);
         // 桃树主干
         var leafArr = [
             { bg: 'peachTree1_png', zIndex: 2 },
-            { bg: 'peachTree2_png', zIndex: 5 },
-            { bg: 'peachTree3_png', zIndex: 6 },
+            { bg: 'peachTree2_png', zIndex: 3 },
+            { bg: 'peachTree3_png', zIndex: 5 },
         ];
         leafArr.forEach(function (item) {
             var leaf = Util.createBitmapByName(item.bg);
             leaf.y = _this.stage.stageHeight - 817;
-            _this.addChildAt(leaf, item.zIndex);
+            _this.peachGroup.addChildAt(leaf, item.zIndex);
         });
     };
     /**
@@ -174,7 +178,7 @@ var PeachTree = (function (_super) {
         kettleGroup.alpha = 0;
         this.addChild(kettleGroup);
         // 水壶
-        var kettle = new MyMovieClip('kettleMovie');
+        var kettle = new MyMovieClip('kettleMovie', 3);
         kettle.x = 380;
         kettle.y = this.stage.stageHeight - 884;
         kettleGroup.addChild(kettle);
@@ -219,9 +223,9 @@ var PeachTree = (function (_super) {
     PeachTree.prototype.drawPeach = function () {
         var _this = this;
         var peachArr = [
-            { bg: 'peach1_png', x: 580, y: this.stage.stageHeight - 524, zIndex: 3 },
-            { bg: 'peach2_png', x: 245, y: this.stage.stageHeight - 464, zIndex: 4 },
-            { bg: 'peach3_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 8 },
+            { bg: 'peach1_png', x: 580, y: this.stage.stageHeight - 524, zIndex: 2 },
+            { bg: 'peach2_png', x: 245, y: this.stage.stageHeight - 464, zIndex: 2 },
+            { bg: 'peach3_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 5 },
         ];
         var pArr = []; // 创建出来的桃子数组
         peachArr.forEach(function (item) {
@@ -230,7 +234,7 @@ var PeachTree = (function (_super) {
             peach.y = item.y;
             peach.anchorOffsetX = peach.width / 2;
             peach.visible = false;
-            _this.addChildAt(peach, item.zIndex);
+            _this.peachGroup.addChildAt(peach, item.zIndex);
             pArr.push(peach);
         });
         // 根据info显示对应的桃子
@@ -253,12 +257,26 @@ var PeachTree = (function (_super) {
                 this.peachAni(curPeach, this.curPeachInfo);
             }
         }
+        if (this.count <= 0) {
+            this.peachTreeAni();
+        }
         // 摘桃子提示
         this.addChild(this.peachText);
         this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫桃子', this.peachText);
         if (this.count <= 0) {
             this.peachText.visible = false;
         }
+    };
+    // 当没有桃子时点击桃树会上下晃动
+    PeachTree.prototype.peachTreeAni = function () {
+        var _this = this;
+        this.peachGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            egret.Tween.get(_this.peachGroup)
+                .to({ scaleY: 1.03 }, 300)
+                .to({ scaleY: 1 }, 300)
+                .to({ scaleY: 1.03 }, 300)
+                .to({ scaleY: 1 }, 300);
+        }, this);
     };
     /**
      * 根据后台数据显示桃子
@@ -284,6 +302,7 @@ var PeachTree = (function (_super) {
                         _this.showScore(_this.userInfo.score += 15, true);
                         if (--_this.count <= 0) {
                             _this.peachText.visible = false;
+                            _this.peachTreeAni();
                         }
                     }
                 });

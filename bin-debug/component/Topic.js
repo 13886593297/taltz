@@ -32,6 +32,7 @@ var Topic = (function (_super) {
         var _this = this;
         //题目标题
         var qtitle = new egret.TextField();
+        qtitle.y = 10;
         qtitle.width = this.width;
         qtitle.textColor = 0x36b134;
         var titleText = this.subject.title;
@@ -280,6 +281,7 @@ var TopicItem = (function (_super) {
         // 答案前缀
         var prefix = new egret.TextField();
         prefix.text = this.optionNum;
+        this.prefix = prefix;
         prefix.width = 100;
         prefix.height = this.height;
         prefix.size = 50;
@@ -319,12 +321,15 @@ var TopicItem = (function (_super) {
             return;
         this.status = status;
         this.bg.texture = RES.getRes(this.BG_RES[status]);
-        // status == TopicItem.STATUS_SELECTED || status == TopicItem.STATUS_OK || status == TopicItem.STATUS_ERROR || status == TopicItem.STATUS_NORMAL
-        if (status > 0) {
-            this.text.textColor = 0xffffff;
+        if (status == 0) {
+            this.text.textColor = 0x79cd72;
+        }
+        else if (status == 2) {
+            this.text.textColor = 0x4d7d44;
+            this.prefix.textColor = 0x99a496;
         }
         else {
-            this.text.textColor = 0x79cd72;
+            this.text.textColor = 0xffffff;
         }
         if (status == TopicItem.STATUS_OK || status == TopicItem.STATUS_ERROR) {
             this.icon.visible = true;

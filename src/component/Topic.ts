@@ -1,5 +1,3 @@
-
-
 /**
  * 题目信息
  */
@@ -34,6 +32,7 @@ class Topic extends eui.Group {
     private init() {
         //题目标题
         let qtitle = new egret.TextField()
+        qtitle.y = 10
         qtitle.width = this.width
         qtitle.textColor = 0x36b134
 
@@ -267,6 +266,7 @@ class TopicItem extends egret.DisplayObjectContainer {
 
     private status
     private optionNum
+    private prefix
 
     public constructor(optionNum, option, width = 633) {
         super()
@@ -298,6 +298,7 @@ class TopicItem extends egret.DisplayObjectContainer {
         // 答案前缀
         let prefix = new egret.TextField()
         prefix.text = this.optionNum
+        this.prefix = prefix
         prefix.width = 100
         prefix.height = this.height
         prefix.size = 50
@@ -341,11 +342,13 @@ class TopicItem extends egret.DisplayObjectContainer {
         if (this.status == status) return
         this.status = status
         this.bg.texture = RES.getRes(this.BG_RES[status])
-        // status == TopicItem.STATUS_SELECTED || status == TopicItem.STATUS_OK || status == TopicItem.STATUS_ERROR || status == TopicItem.STATUS_NORMAL
-        if (status > 0) {
-            this.text.textColor = 0xffffff
-        } else {
+        if (status == 0) {
             this.text.textColor = 0x79cd72
+        } else if (status == 2) {
+            this.text.textColor = 0x4d7d44
+            this.prefix.textColor = 0x99a496
+        } else {
+            this.text.textColor = 0xffffff
         }
 
         if (status == TopicItem.STATUS_OK || status == TopicItem.STATUS_ERROR) {
