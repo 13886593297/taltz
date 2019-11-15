@@ -129,7 +129,7 @@ class PeachScene extends Scene {
                         .to({ rotation: -10 }, 150)
                         .wait(1000)
                     // 领取水壶提示背景
-                    this.showTip(420, 720, '恭喜你获得水壶×1', group)
+                    this.showTip(420, 720, '请点击领取水壶', group)
                 })
             emptyKattle.touchEnabled = true
             group.addChild(emptyKattle)
