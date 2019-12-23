@@ -20,6 +20,7 @@ var IndexScene = (function (_super) {
         var _this = this;
         this.close_btn = false;
         _super.prototype.setBackground.call(this);
+        // 获取用户信息
         Http.getInstance().post(Url.HTTP_USER_INFO, "", function (data) {
             DataManager.getInstance().setUser(data.data);
             Util.setTitle("净阶战队-" + data.data.teamName);
@@ -30,79 +31,6 @@ var IndexScene = (function (_super) {
                 ViewManager.getInstance().changeScene(scene);
             }, _this);
             _this.userView = user;
-            _this.addChild(user);
-            _this.createLayout();
-        });
-    };
-    IndexScene.prototype.createLayout = function () {
-        var _this = this;
-        // 选项按钮
-        var models = [
-            { bg: 'model_bg_1_png', y: 550, key: 1 },
-            { bg: 'model_bg_2_png', y: 690, key: 2 },
-            { bg: 'model_bg_3_png', y: 830, key: 3 },
-            { bg: 'model_bg_4_png', y: 970, key: 4 },
-        ];
-        var grayFilter = Util.grayFliter();
-        for (var _i = 0, models_1 = models; _i < models_1.length; _i++) {
-            var model = models_1[_i];
-            var bg = Util.createBitmapByName(model.bg);
-            if (model.key == 3 || model.key == 4)
-                bg.filters = [grayFilter];
-            bg.x = (this.stage.stageWidth - bg.width) / 2;
-            bg.y = model.y;
-            this.addChild(bg);
-            bg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouch(model.key), this);
-            bg.touchEnabled = true;
-        }
-        // 底部通知消息
-        Http.getInstance().post(Url.HTTP_NOTICE, {}, function (data) {
-            var notice = new Notice(data.data);
-            notice.y = 1120;
-            _this.addChild(notice);
-            notice.touchEnabled = true;
-            notice.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-                //跳转规则界面
-                var scene = new RuleScene();
-                ViewManager.getInstance().changeScene(scene);
-            }, _this);
-        });
-        // 初始化游戏数据
-        Http.getInstance().post(Url.HTTP_GAME_INIT, "", function (json) {
-            Http.getInstance().post(Url.HTTP_SIGN, {}, function (data) {
-                DataManager.getInstance().setSign(data.data);
-                //需要签到
-                if (json.data.isNeedSign) {
-                    _this.signFalg = false;
-                    //更新用户数据
-                    Http.getInstance().post(Url.HTTP_USER_BASE_INFO, "", function (info) {
-                        DataManager.getInstance().updateUserInfo(info.data);
-                        _this.userView.refresh();
-                    });
-                    var sign = new Sign();
-                    _this.addChildAt(sign, 100);
-                    _this.sign = sign;
-                    sign.addEventListener(eui.UIEvent.CLOSING, function () {
-                        _this.sign = null;
-                        if (!_this.signFalg) {
-                            var scene = new PeachScene();
-                            ViewManager.getInstance().changeScene(scene);
-                        }
-                    }, _this);
-                    var timer = new egret.Timer(5000, 1);
-                    //注册事件侦听器
-                    timer.addEventListener(egret.TimerEvent.TIMER, function () {
-                        _this.signFalg = true;
-                        if (_this.sign) {
-                            _this.removeChild(_this.sign);
-                            var scene = new PeachScene();
-                            ViewManager.getInstance().changeScene(scene);
-                        }
-                    }, _this);
-                    //开始计时
-                    timer.start();
-                }
-            });
         });
         var url = window.location.href.split('#')[0];
         Http.getInstance().post(Url.HTTP_JSSDK_CONFIG, { showurl: url }, function (json) {
@@ -110,6 +38,72 @@ var IndexScene = (function (_super) {
             setTimeout(function () {
                 Util.registerShare(null, ShareType.NORMAL);
             }, 1000);
+        });
+        // 初始化游戏数据
+        Http.getInstance().post(Url.HTTP_GAME_INIT, "", function (json) {
+            Http.getInstance().post(Url.HTTP_SIGN, {}, function (data) {
+                DataManager.getInstance().setSign(data.data);
+                //需要签到
+                if (json.data.isNeedSign) {
+                    //更新用户数据
+                    Http.getInstance().post(Url.HTTP_USER_BASE_INFO, "", function (info) {
+                        DataManager.getInstance().updateUserInfo(info.data);
+                    });
+                    var sign = new Sign();
+                    _this.addChildAt(sign, 100);
+                    _this.sign = sign;
+                    sign.addEventListener(eui.UIEvent.CLOSING, function () {
+                        _this.sign = null;
+                        var scene = new PeachScene(true);
+                        ViewManager.getInstance().changeScene(scene);
+                    }, _this);
+                    var timer = new egret.Timer(5000, 1);
+                    //注册事件侦听器
+                    timer.addEventListener(egret.TimerEvent.TIMER, function () {
+                        if (_this.sign) {
+                            _this.removeChild(_this.sign);
+                            var scene = new PeachScene(true);
+                            ViewManager.getInstance().changeScene(scene);
+                        }
+                    }, _this);
+                    //开始计时
+                    timer.start();
+                }
+                else {
+                    _this.addChild(_this.userView);
+                    // 选项按钮
+                    var models = [
+                        { bg: 'model_bg_1_png', y: 550, key: 1 },
+                        { bg: 'model_bg_2_png', y: 690, key: 2 },
+                        { bg: 'model_bg_3_png', y: 830, key: 3 },
+                        { bg: 'model_bg_4_png', y: 970, key: 4 },
+                    ];
+                    var grayFilter = Util.grayFliter();
+                    for (var _i = 0, models_1 = models; _i < models_1.length; _i++) {
+                        var model = models_1[_i];
+                        var bg = Util.createBitmapByName(model.bg);
+                        if (model.key == 3)
+                            bg.filters = [grayFilter];
+                        bg.x = (_this.stage.stageWidth - bg.width) / 2;
+                        bg.y = model.y;
+                        _this.addChild(bg);
+                        bg.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTouch(model.key), _this);
+                        bg.touchEnabled = true;
+                    }
+                    // 底部通知消息
+                    Http.getInstance().post(Url.HTTP_NOTICE, {}, function (data) {
+                        var notice = new Notice(data.data);
+                        notice.y = 1120;
+                        _this.addChild(notice);
+                        notice.touchEnabled = true;
+                        notice.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+                            //跳转规则界面
+                            var scene = new RuleScene();
+                            ViewManager.getInstance().changeScene(scene);
+                        }, _this);
+                    });
+                }
+            });
         });
     };
     // 页面跳转
@@ -131,9 +125,9 @@ var IndexScene = (function (_super) {
                     _this.addChild(alert_1);
                     break;
                 case 4:
-                    // let escene = new EquipmentScene()
-                    // ViewManager.getInstance().changeScene(escene)
-                    _this.addChild(new AlertPanel("装备库资料准备中", 1120));
+                    var escene = new EquipmentScene();
+                    ViewManager.getInstance().changeScene(escene);
+                    // this.addChild(new AlertPanel("装备库资料准备中", 1120))
                     break;
             }
         };

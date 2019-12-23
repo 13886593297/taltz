@@ -21,6 +21,7 @@ class UserInfo extends eui.Group {
         if (!this.userinfo) {
             var timer: egret.Timer = new egret.Timer(500, 5)
             timer.addEventListener(egret.TimerEvent.TIMER, this.timerFunc, this)
+            timer.start()
             this.timer = timer
         } else {
             this.init()
@@ -209,14 +210,14 @@ class UserInfo extends eui.Group {
         // 数值
         let numArr
         if (this.type == 'score') {
-            titleArr = ['积分', '累积签到', '个人达标率', '团队达标率']
+            titleArr = ['个人累计积分', '累积签到', '个人达标率', '团队达标率']
             textGroup.x = 230
             textGroup.y = 350
             this.info(titleArr, textGroup, 28, 365, 50)
             numArr = [this.userinfo.score + '分', this.userinfo.signTotal + '天', this.userinfo.personAchiRate + '%', this.userinfo.teamAchiRate.toFixed(2) + '%']
             this.info(numArr, textGroup, 30, 365, 50, egret.HorizontalAlign.RIGHT)
         } else {
-            titleArr = ['个人积分', '个人达标率', '团队达标率', '连续达标天数']
+            titleArr = ['个人累计积分', '个人达标率', '团队达标率', '连续达标天数']
             textGroup.x = 300
             textGroup.y = 230
             this.info(titleArr, textGroup, 24)

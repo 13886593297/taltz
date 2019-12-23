@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "roundthumb_png,handle_png,off_png,on_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,option_normal_png,option_select_png,mask_png,mask_transparent_png,info_bg_png,info_bg1_png,info_top01_png,info_top02_png,info_top03_png,peachWord_png,notice_png,bg_level_pass_png,bg_level_cur_png,favor_fill_png,favor_png,cup1_png,cup2_png,cup3_png,model_bg_1_png,rank_item_bg_png,share_arrow_png,share_tips_jpg,model_bg_2_png,model_bg_3_png,model_bg_4_png,sign_mask_png,option_error_png,option_ok_png,icon_ok_png,icon_err_png,user_name_bg_png,bg_level_nopass_png,progress_bg_png,button_bg_png,button_submit_bg_png,dialog_close_x_png,share_tips_android_jpg,rank_title_self_png,rank_title_team_png,share_qrcode_bg_png,share_mask_png,share_qrcode_png,v_progress_bg_png,v_progress_bg2_png,v_progress_thumb_png,v_progress_thumb2_png,user_unknow_jpg,loading_png,equip_bg_1_png,equip_bg_2_png,equip_bg_3_png,equip_title_png,equip_bg_12_01_png,equip_bg_13_01_png,equip_bg_14_01_png,equip_bg_mp4_png,equip_bg_pdf_png,myfavor_png,alter_bg_png,train_line_left_png,train_line_right_png,favor_title_png,favor_title_cpxx_png,favor_title_jbxx_png,favor_title_jpfx_png,favor_title_lcyj_png,favor_title_sccl_png,favor_title_zyjz_png,icon_tmfx_png,title_tmfx_png,button_small_1_png,button_small_2_png,bg_png,train_fail_png,train_success_png,score_bg_png,share_jpg,search_border_png,search_png,search_result_bg_png,title_error_png,green_small_bg_png,person_pk_png,team_pk_png,pk_auto_png,pk_friend_png,pk_bg_png,pk_title_bg_png,peachTree3_png,peach3_png,peachTree2_png,peach2_png,peach1_png,peachTree1_png,close_png,close_white_png,taltz_bg_png,avatar_bg_png,kettle_empty_png,shadow_png,tip_bg_png,title_png,title_rank_png,title_signRecord_png,rule_png,train_title_png,train_grade1_png,train_grade2_png,train_grade3_png,train_grade4_png,flagBg_png,flagBg_blank_png,tmfx01_png,tmfx02_png,tmfx03_png,continueTrain_png,next_png,flaunt_png,errorParse_png,water_success_png,teamRank_png",
+			"keys": "thumb_pb_png,description_json,option_normal_png,option_select_png,mask_png,mask_transparent_png,info_bg_png,info_bg1_png,info_top01_png,info_top02_png,info_top03_png,peachWord_png,notice_png,bg_level_pass_png,bg_level_cur_png,favor_fill_png,favor_png,cup1_png,cup2_png,cup3_png,model_bg_1_png,rank_item_bg_png,share_arrow_png,share_tips_jpg,model_bg_2_png,model_bg_3_png,model_bg_4_png,sign_mask_png,option_error_png,option_ok_png,icon_ok_png,icon_err_png,bg_level_nopass_png,progress_bg_png,button_bg_png,button_submit_bg_png,dialog_close_x_png,share_tips_android_jpg,rank_title_self_png,rank_title_team_png,equip_bg_1_png,equip_bg_2_png,equip_bg_3_png,equip_bg_4_png,equip_title_png,equip_bg_15_01_png,equip_bg_16_01_png,equip_bg_17_01_png,equip_bg_18_01_png,equip_bg_mp4_png,equip_bg_pdf_png,myfavor_png,alter_bg_png,train_line_left_png,train_line_right_png,favor_title_png,favor_title_cpxx_png,favor_title_jbxx_png,favor_title_jpfx_png,favor_title_lcyj_png,favor_title_sccl_png,favor_title_zyjz_png,icon_tmfx_png,title_tmfx_png,button_small_1_png,button_small_2_png,bg_png,train_fail_png,train_success_png,share_jpg,search_border_png,search_png,search_result_bg_png,title_error_png,green_small_bg_png,peachTree3_png,peach3_png,peachTree2_png,peach2_png,peach1_png,peachTree1_png,close_png,close_white_png,taltz_bg_png,avatar_bg_png,kettle_empty_png,shadow_png,tip_bg_png,title_png,title_rank_png,title_signRecord_png,rule_png,train_title_png,train_grade1_png,train_grade2_png,train_grade3_png,train_grade4_png,flagBg_png,flagBg_blank_png,tmfx01_png,tmfx02_png,tmfx03_png,continueTrain_png,next_png,flaunt_png,errorParse_png,water_success_png,teamRank_png,roundthumb_png",
 			"name": "preload"
 		},
 		{
@@ -18,40 +18,15 @@
 		}
 	],
 	"resources": [
-		{
-			"url": "assets/ScrollBar/roundthumb.png",
+        {
+            "url": "assets/ScrollBar/roundthumb.png",
 			"type": "image",
 			"name": "roundthumb_png"
-		},
-		{
-			"url": "assets/ToggleSwitch/handle.png",
-			"type": "image",
-			"name": "handle_png"
-		},
-		{
-			"url": "assets/ToggleSwitch/off.png",
-			"type": "image",
-			"name": "off_png"
-		},
-		{
-			"url": "assets/ToggleSwitch/on.png",
-			"type": "image",
-			"name": "on_png"
-		},
+        },
 		{
 			"url": "assets/ProgressBar/thumb_pb.png",
 			"type": "image",
 			"name": "thumb_pb_png"
-		},
-		{
-			"url": "assets/ProgressBar/track_pb.png",
-			"type": "image",
-			"name": "track_pb_png"
-		},
-		{
-			"url": "assets/ScrollBar/track_sb.png",
-			"type": "image",
-			"name": "track_sb_png"
 		},
 		{
 			"url": "config/description.json",
@@ -244,11 +219,6 @@
 			"name": "icon_err_png"
 		},
 		{
-			"url": "assets/User/user_name_bg.png",
-			"type": "image",
-			"name": "user_name_bg_png"
-		},
-		{
 			"url": "assets/Train/bg_level_nopass.png",
 			"type": "image",
 			"name": "bg_level_nopass_png"
@@ -320,54 +290,6 @@
 			"name": "rank_title_team_png"
 		},
 		{
-			"url": "assets/User/share_qrcode_bg.png",
-			"type": "image",
-			"name": "share_qrcode_bg_png"
-		},
-		{
-			"url": "assets/User/share_mask.png",
-			"type": "image",
-			"name": "share_mask_png",
-			"scale9grid": "6,7,21,80"
-		},
-		{
-			"url": "assets/User/share_qrcode.png",
-			"type": "image",
-			"name": "share_qrcode_png"
-		},
-		{
-			"url": "assets/ProgressBar/v_progress_bg.png",
-			"type": "image",
-			"name": "v_progress_bg_png",
-			"scale9grid": "0,25,26,60"
-		},
-		{
-			"url": "assets/ProgressBar/v_progress_bg2.png",
-			"type": "image",
-			"name": "v_progress_bg2_png",
-			"scale9grid": "0,22,26,36"
-		},
-		{
-			"url": "assets/ProgressBar/v_progress_thumb.png",
-			"type": "image",
-			"name": "v_progress_thumb_png"
-		},
-		{
-			"url": "assets/ProgressBar/v_progress_thumb2.png",
-			"type": "image",
-			"name": "v_progress_thumb2_png"
-		},
-		{
-			"url": "assets/User/user_unknow.jpg",
-			"type": "image",
-			"name": "user_unknow_jpg"
-		},
-		{
-			"url": "assets/loading.png",
-			"type": "image",
-			"name": "loading_png"
-		},
-		{
 			"url": "assets/Equip/equip_bg_1.png",
 			"type": "image",
 			"name": "equip_bg_1_png"
@@ -381,26 +303,36 @@
 			"url": "assets/Equip/equip_bg_3.png",
 			"type": "image",
 			"name": "equip_bg_3_png"
+        },
+        {
+			"url": "assets/Equip/equip_bg_4.png",
+			"type": "image",
+			"name": "equip_bg_4_png"
 		},
 		{
 			"url": "assets/Equip/equip_title.png",
 			"type": "image",
 			"name": "equip_title_png"
-		},
-		{
+        },
+        {
 			"url": "assets/Equip/equip_bg_1_01.png",
 			"type": "image",
-			"name": "equip_bg_12_01_png"
+			"name": "equip_bg_15_01_png"
 		},
 		{
 			"url": "assets/Equip/equip_bg_2_01.png",
 			"type": "image",
-			"name": "equip_bg_13_01_png"
+			"name": "equip_bg_16_01_png"
 		},
 		{
 			"url": "assets/Equip/equip_bg_3_01.png",
 			"type": "image",
-			"name": "equip_bg_14_01_png"
+			"name": "equip_bg_17_01_png"
+		},
+		{
+			"url": "assets/Equip/equip_bg_4_01.png",
+			"type": "image",
+			"name": "equip_bg_18_01_png"
 		},
 		{
 			"url": "assets/Equip/equip_bg_mp4.png",
@@ -503,11 +435,6 @@
 			"name": "train_success_png"
 		},
 		{
-			"url": "assets/User/score_bg.png",
-			"type": "image",
-			"name": "score_bg_png"
-		},
-		{
 			"url": "assets/share.jpg",
 			"type": "image",
 			"name": "share_jpg"
@@ -536,36 +463,6 @@
 			"url": "assets/bg/green_small_bg.png",
 			"type": "image",
 			"name": "green_small_bg_png"
-		},
-		{
-			"url": "assets/Pk/person_pk.png",
-			"type": "image",
-			"name": "person_pk_png"
-		},
-		{
-			"url": "assets/Pk/team_pk.png",
-			"type": "image",
-			"name": "team_pk_png"
-		},
-		{
-			"url": "assets/Pk/pk_bg.png",
-			"type": "image",
-			"name": "pk_bg_png"
-		},
-		{
-			"url": "assets/Pk/pk_auto.png",
-			"type": "image",
-			"name": "pk_auto_png"
-		},
-		{
-			"url": "assets/Pk/pk_friend.png",
-			"type": "image",
-			"name": "pk_friend_png"
-		},
-		{
-			"url": "assets/Pk/pk_title_bg.png",
-			"type": "image",
-			"name": "pk_title_bg_png"
 		},
 		{
 			"url": "brand/taltz/peachTree3.png",

@@ -1,9 +1,10 @@
 class EquipmentScene extends Scene {
     configs = [
         { icon: '', bg: '', name: '搜索结果', type: 0 },
-        { icon: '', bg: 'equip_bg_1_png', name: '疾病档案', type: 12 },
-        { icon: '', bg: 'equip_bg_2_png', name: '产品资料', type: 13 },
-        { icon: '', bg: 'equip_bg_3_png', name: '竞品分析', type: 14 },
+        { icon: '', bg: 'equip_bg_1_png', name: '最新内容', type: 15 },
+        { icon: '', bg: 'equip_bg_2_png', name: '疾病档案', type: 16 },
+        { icon: '', bg: 'equip_bg_3_png', name: '产品资料', type: 17 },
+        { icon: '', bg: 'equip_bg_4_png', name: '竞品分析', type: 18 },
     ]
 
     constructor() {
@@ -21,23 +22,30 @@ class EquipmentScene extends Scene {
         title.y = 20
         this.addChild(title)
 
-        let y = 320
-        let x = (this.stage.stageWidth - 300) / 2
+        let y = 325
         for (let config of this.configs) {
             if (config.type == 0) {
                 continue
             }
             let bg: egret.Bitmap = Util.createBitmapByName(config.bg)
             this.addChild(bg)
-            bg.x = x
-            bg.y = y
+            if (config.type % 2 != 0) {
+                bg.x = this.stage.stageWidth / 2 - bg.width
+            } else {
+                bg.x = this.stage.stageWidth / 2
+            }
+            if (config.type < 17) {
+                bg.y = y
+            } else {
+                bg.y = y + bg.height
+            }
+            
             bg.touchEnabled = true
             bg.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
                 Util.playMusic('model_select_mp3')
                 let scene = new EquipList(config)
                 ViewManager.getInstance().changeScene(scene)
             }, this)
-            y += bg.height
         }
 
         let searchInput = new SearchInput('')

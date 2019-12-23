@@ -76,7 +76,6 @@ class ViewManager {
      */
     public jumpHome() {
         let oldScene = this.getCurrentScene();
-        console.log(oldScene);
         oldScene.parent.removeChild(oldScene);
         let home = this.views[0];
         if (home.name == 'home') {

@@ -68,7 +68,6 @@ var ViewManager = (function () {
      */
     ViewManager.prototype.jumpHome = function () {
         var oldScene = this.getCurrentScene();
-        console.log(oldScene);
         oldScene.parent.removeChild(oldScene);
         var home = this.views[0];
         if (home.name == 'home') {

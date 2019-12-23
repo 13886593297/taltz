@@ -17,7 +17,7 @@ class EquipSearch extends Scene {
 
         let searchInput = new SearchInput(this.keywords)
         searchInput.x = (this.stage.stageWidth - 515) / 2
-        searchInput.y = 200
+        searchInput.y = 230
         this.addChild(searchInput)
 
         this.changeTypeList()
@@ -52,7 +52,6 @@ class EquipSearch extends Scene {
                     equipItem.scaleX = .75
                     equipItem.scaleY = .75
                     equipItem.y = y
-                    equipItem.x = -35
                     y += equipItem.height + 30
                     equipItem.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onSeeItemDetail(item), this)
                     group.addChild(equipItem)

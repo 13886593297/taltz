@@ -143,12 +143,14 @@ var Util = (function () {
      */
     Util.setCache = function (key, value) {
         //TODO 
+        window.localStorage.setItem(key, value);
     };
     /**
      * 获取本地缓存数据
      */
     Util.getCache = function (key) {
         //TODO
+        return window.localStorage.getItem(key);
     };
     Util.getLightFliter = function (color) {
         if (color === void 0) { color = 0x0000FF; }

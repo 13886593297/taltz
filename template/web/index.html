@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <title>净阶战队</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="full-screen" content="true" />
     <meta name="screen-orientation" content="portrait" />
@@ -12,7 +13,8 @@
     <meta name="x5-fullscreen" content="true" />
     <meta name="360-fullscreen" content="true" />
     <style>
-       html, body {
+        html,
+        body {
             -ms-touch-action: none;
             background: #ffffff;
             padding: 0;
@@ -20,279 +22,317 @@
             margin: 0;
             height: 100%;
         }
-        #back_button{
-            height: 60px;
-            line-height: 60px;
-            text-align: right;
-            right:15px;
-            color:#F46C22;
-            position: fixed;z-index: 10;
+
+        #egretTitle {
+            width: 100%;
+            margin-top: 10px;
         }
-        
-        .view_bg{
+
+        #back_button {
+            position: absolute;
+            width: 31px;
+            top: 20px;
+            right: 20px;
+        }
+
+        .view_bg {
             background: url(resource/assets/bg/bg.png) bottom center no-repeat #efeff4;
             background-size: 100% 100%;
             position: fixed;
-            z-index: 100;width: 100%;height: 100%;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
         }
 
-        .brand_img{
-          width:70px;
-          height: 70px
+        .brand_img {
+            width: 70px;
+            height: 70px
         }
 
-        #html_view img{
-            max-width: 100%
+        #html_view {
+            background-image: url('./resource/assets/Equip/movie_bg.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 100%;
+            height: 100%;
+            margin-top: 60px;
+            position: relative;
         }
 
-        .weui-article h1{
-            font-size: 21px;
+        .weui-article {
+            padding: 0;
         }
 
+        .weui-article>div {
+            position: relative;
+            color: #fff;
+            width: 76vw;
+            height: 8vw;
+            line-height: 8vw;
+            left: 13vw;
+            top: 3vw;
+            overflow: hidden;
+            text-align: left;
+            text-indent: 3vw;
+        }
+
+        .weui-article section {
+            width: 79vw;
+            margin-left: 11vw;
+            margin-top: 12vw;
+        }
+
+        .weui-article h1 {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        #egretTime {
+            color: #fff;
+            position: absolute;
+            top: 66vw;
+            right: 12vw;
+            font-size: 9px;
+        }
     </style>
 </head>
 
 <body>
-<div style="margin: auto;width: 100%;height: 100%;" id="egret-player" class="egret-player" data-entry-class="Main"  data-orientation="auto" data-scale-mode="fixedNarrow" data-frame-rate="30" data-content-width="750" data-content-height="1206" data-multi-fingered="2" data-show-fps="false" data-show-log="false" data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
+    <div style="margin: auto;width: 100%;height: 100%;" id="egret-player" class="egret-player" data-entry-class="Main"
+        data-orientation="auto" data-scale-mode="fixedNarrow" data-frame-rate="30" data-content-width="750"
+        data-content-height="1206" data-multi-fingered="2" data-show-fps="false" data-show-log="false"
+        data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 
-   <div id="loadingUi" style="margin: auto;width: 100%;height: 100%;background: url(resource/brand/taltz/loading.png) center center no-repeat #efeff4;background-size: cover;">
-   </div>
-</div>
-
-<div class="view_bg" id="egretFrame" style="display: none;">
-    <div id="back_button" onclick="onBack()"> 
-        <div style="position: relative">
-                <image src="./resource/assets/nav_bg.png" style="width: 90px;height: 28px"></image>
-                <div style="position: absolute;left:30px;font-size: 14px;top: -8px;height: 0;color:#F46C22;">返回</div>
+        <div id="loadingUi"
+            style="margin: auto;width: 100%;height: 100%;background: url(resource/brand/taltz/loading.png) center center no-repeat #efeff4;background-size: cover;">
         </div>
-       
     </div>
-    <div id="html_view" style="color: #F46C22;overflow-y: scroll;padding-top: 50px"></div>
-</div>
 
-<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
-<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
-<script src="./libs/socket/socket.io.js"></script>
-<script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
-<script>
-    var vConsole = new VConsole();
+    <div class="view_bg" id="egretFrame" style="display: none;">
+        <img id="egretTitle" src="" alt="">
+        <img id="back_button" onclick="onBack()" src="./resource/assets/close.png" alt="" />
+        <div id="html_view"></div>
+    </div>
 
-    function GetRequest() {   
-       var url = location.search; //获取url中"?"符后的字串   
-       var theRequest = new Object();   
-       if (url.indexOf("?") != -1) {   
-          var str = url.substr(1);   
-          strs = str.split("&");   
-          for(var i = 0; i < strs.length; i ++) {   
-             theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);   
-          }   
-       }   
-       return theRequest;   
-    } 
+    <script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="./libs/socket/socket.io.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script> -->
+    <script>
+        // var vConsole = new VConsole();
 
-    //判断浏览器地址是否有token
-    var getRequest = GetRequest();
-    var token=getRequest['token'];
-    var teamName = localStorage.getItem('teamName');
-    if(teamName){
-        document.title = "净阶战队-"+teamName;
-    }
-
-    var loadScript = function (list, callback) {
-        var loaded = 0;
-        var loadNext = function () {
-            loadSingleScript(list[loaded], function () {
-                loaded++;
-                if (loaded >= list.length) {
-                    callback();
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
                 }
-                else {
-                    loadNext();
-                }
-            })
+            }
+            return theRequest;
+        }
+
+        //判断浏览器地址是否有token
+        var getRequest = GetRequest();
+        var token = getRequest['token'];
+        var teamName = localStorage.getItem('teamName');
+        if (teamName) {
+            document.title = "净阶战队-" + teamName;
+        }
+
+        var loadScript = function (list, callback) {
+            var loaded = 0;
+            var loadNext = function () {
+                loadSingleScript(list[loaded], function () {
+                    loaded++;
+                    if (loaded >= list.length) {
+                        callback();
+                    } else {
+                        loadNext();
+                    }
+                })
+            };
+            loadNext();
         };
-        loadNext();
-    };
 
-    document.getElementById("html_view").style.height=(document.body.clientHeight) +"px";
+        var loadSingleScript = function (src, callback) {
+            var s = document.createElement('script');
+            s.async = false;
+            s.src = src;
+            s.addEventListener('load', function () {
+                s.parentNode.removeChild(s);
+                s.removeEventListener('load', arguments.callee, false);
+                callback();
+            }, false);
+            document.body.appendChild(s);
+        };
 
-    var loadSingleScript = function (src, callback) {
-        var s = document.createElement('script');
-        s.async = false;
-        s.src = src;
-        s.addEventListener('load', function () {
-            s.parentNode.removeChild(s);
-            s.removeEventListener('load', arguments.callee, false);
-            callback();
-        }, false);
-        document.body.appendChild(s);
-    };
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', './manifest.json?v=' + Math.random(), true);
-    xhr.addEventListener("load", function () {
-        var manifest = JSON.parse(xhr.response);
-        var list = manifest.initial.concat(manifest.game);
-        loadScript(list, function () {
-            egret.runEgret({
-                renderMode: "webgl", audioType: 0, calculateCanvasScaleFactor: function (context) {
-                    var backingStore = context.backingStorePixelRatio ||
-                        context.webkitBackingStorePixelRatio ||
-                        context.mozBackingStorePixelRatio ||
-                        context.msBackingStorePixelRatio ||
-                        context.oBackingStorePixelRatio ||
-                        context.backingStorePixelRatio || 1;
-                    return (window.devicePixelRatio || 1) / backingStore;
-                }
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', './manifest.json?v=' + Math.random(), true);
+        xhr.addEventListener("load", function () {
+            var manifest = JSON.parse(xhr.response);
+            var list = manifest.initial.concat(manifest.game);
+            loadScript(list, function () {
+                egret.runEgret({
+                    renderMode: "webgl",
+                    audioType: 0,
+                    calculateCanvasScaleFactor: function (context) {
+                        var backingStore = context.backingStorePixelRatio ||
+                            context.webkitBackingStorePixelRatio ||
+                            context.mozBackingStorePixelRatio ||
+                            context.msBackingStorePixelRatio ||
+                            context.oBackingStorePixelRatio ||
+                            context.backingStorePixelRatio || 1;
+                        return (window.devicePixelRatio || 1) / backingStore;
+                    }
+                });
             });
         });
-    });
-    xhr.send(null);
+        xhr.send(null);
 
-    function showIFrame(html, title) {
-        document.getElementById("egretFrame").style.display = "inline";
-        document.getElementById("html_view").innerHTML = html;
+        function showIFrame(src, title, time) {
+            document.getElementById("egretFrame").style.display = "inline";
+            document.getElementById("egretTitle").src = './resource/assets/Equip/' + src + '_01.png';
+            document.getElementById("html_view").innerHTML = title + `<div id="egretTime">${time}</div>`;
+        }
 
-        if (!title) title = "返回";
-        document.getElementById("back_button").innerHTML = title;
-        
-    }
+        function hideIFrame() {
+            document.getElementById("egretFrame").style.display = "none";
+        }
 
-    function hideIFrame() {
-       
-        document.getElementById("egretFrame").style.display = "none";
-    }
+        function removeLoading() {
+            document.getElementById("loadingUi").remove();
+        }
 
-    function removeLoading(){
-         document.getElementById("loadingUi").remove();
-    }
+        function showAlert(msg) {
+            weui.alert(msg);
+        }
 
-    function showAlert(msg){
-        weui.alert(msg);
-    }
-    function showAlertButton(msg,button,callback){
-        weui.alert(msg,{title: '提示',
-            buttons: [{
-                label: button,
-                type: 'primary',
-                onClick: callback
-            }]});
-    }
+        function showAlertButton(msg, button, callback) {
+            weui.alert(msg, {
+                title: '提示',
+                buttons: [{
+                    label: button,
+                    type: 'primary',
+                    onClick: callback
+                }]
+            });
+        }
 
-    function onBack() {
-        document.getElementById("html_view").innerHTML = '';
-        Util.onHideIframe();
-        document.getElementById("egretFrame").style.display = "none";
-    }
+        function onBack() {
+            document.getElementById("html_view").innerHTML = '';
+            Util.onHideIframe();
+            document.getElementById("egretFrame").style.display = "none";
+        }
 
-    function connectSocket(url){
-        console.log('链接'+url);
-        console.log(io);
-         var socket = io(url);
-         return socket;
-    }
+        function connectSocket(url) {
+            console.log('链接' + url);
+            console.log(io);
+            var socket = io(url);
+            return socket;
+        }
 
-    pushHistory();
+        pushHistory();
 
-    window.addEventListener("popstate", function (e) {
-        console.log("返回")
-        weui.confirm('确认要退出游戏吗？', function(){
-            console.log("1")
-            history.go(-1)
-             wx.closeWindow();
-            }, function(){ 
+        window.addEventListener("popstate", function (e) {
+            console.log("返回")
+            weui.confirm('确认要退出游戏吗？', function () {
+                console.log("1")
+                history.go(-1)
+                wx.closeWindow();
+            }, function () {
                 console.log("2")
                 pushHistory();
             });
-    }, false); 
-    
-    function pushHistory() {
-        var state = { title: "title", url: "#" };
-        window.history.pushState(state, "title", "#");
-    }
+        }, false);
 
-    // var vConsole = new VConsole();
-    
+        function pushHistory() {
+            var state = {
+                title: "title",
+                url: "#"
+            };
+            window.history.pushState(state, "title", "#");
+        }
 
-  /*
-   * 注意：
-   * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
-   * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
-   * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
-   *
-   * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：
-   * 邮箱地址：weixin-open@qq.com
-   * 邮件主题：【微信JS-SDK反馈】具体问题
-   * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
-   */
- 
-
-  function configSdk(object){
-      let config = {
-          appId: object.appid,
-      timestamp: object.timestamp,
-      nonceStr: object.noncestr,
-      signature: object.sign,
-          jsApiList:[
-        'checkJsApi',
-        'onMenuShareTimeline',
-        'onMenuShareAppMessage',
-        'closeWindow',
-      ]
-      };
-       wx.config(config);
-  } 
+        // var vConsole = new VConsole();
 
 
-  function onMenuShareAppMessage(title,desc,link,imgurl,callback){
-       wx.onMenuShareAppMessage({
-      title: title || '净阶战队',
-      desc: desc || '净阶战队-默认测试战队',
-      link: link || 'https://gamiwechat-taltz-q.lillyadmin.cn',
-      imgUrl: 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
-      trigger: function (res) {
-          
-      },
-      success: function (res) {
-          if(callback)callback();
-        //   
-      },
-      cancel: function (res) {
-      },
-      fail: function (res) {
-      }
-    });
-  }
-  function onMenuShareTimeline(title,link,imgUrl,callback){
-    wx.onMenuShareTimeline({
-      title: '净阶战队邀请您！',
-      link: 'https://gamiwechat-taltz-q.lillyadmin.cn',
-      imgUrl: 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
-      trigger: function (res) {
-        // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
-      },
-      success: function (res) {
-           if(callback)callback();
-      },
-      cancel: function (res) {
-      },
-      fail: function (res) {
-      }
-    });
-  }
- 
-
- window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
-    if (window.orientation === 180 || window.orientation === 0) { 
-        // alert('竖屏状态！');
-    } 
-    if (window.orientation === 90 || window.orientation === -90 ){ 
-        Util.changeLandscape();
-    }  
-}, false); 
+        /*
+         * 注意：
+         * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+         * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
+         * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+         *
+         * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：
+         * 邮箱地址：weixin-open@qq.com
+         * 邮件主题：【微信JS-SDK反馈】具体问题
+         * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
+         */
 
 
-</script>
+        function configSdk(object) {
+            let config = {
+                appId: object.appid,
+                timestamp: object.timestamp,
+                nonceStr: object.noncestr,
+                signature: object.sign,
+                jsApiList: [
+                    'checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'closeWindow',
+                ]
+            };
+            wx.config(config);
+        }
+
+
+        function onMenuShareAppMessage(title, desc, link, imgurl, callback) {
+            wx.onMenuShareAppMessage({
+                title: title || '净阶战队',
+                desc: desc || '净阶战队-默认测试战队',
+                link: link || 'https://gamiwechat-taltz-q.lillyadmin.cn',
+                imgUrl: 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
+                trigger: function (res) {
+
+                },
+                success: function (res) {
+                    if (callback) callback();
+                    //   
+                },
+                cancel: function (res) {},
+                fail: function (res) {}
+            });
+        }
+
+        function onMenuShareTimeline(title, link, imgUrl, callback) {
+            wx.onMenuShareTimeline({
+                title: '净阶战队邀请您！',
+                link: 'https://gamiwechat-taltz-q.lillyadmin.cn',
+                imgUrl: 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
+                trigger: function (res) {
+                    // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
+                },
+                success: function (res) {
+                    if (callback) callback();
+                },
+                cancel: function (res) {},
+                fail: function (res) {}
+            });
+        }
+
+
+        window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function () {
+            if (window.orientation === 180 || window.orientation === 0) {
+                // alert('竖屏状态！');
+            }
+            if (window.orientation === 90 || window.orientation === -90) {
+                Util.changeLandscape();
+            }
+        }, false);
+    </script>
 </body>
 
 </html>

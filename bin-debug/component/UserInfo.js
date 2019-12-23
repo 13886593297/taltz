@@ -24,6 +24,7 @@ var UserInfo = (function (_super) {
         if (!_this.userinfo) {
             var timer = new egret.Timer(500, 5);
             timer.addEventListener(egret.TimerEvent.TIMER, _this.timerFunc, _this);
+            timer.start();
             _this.timer = timer;
         }
         else {
@@ -200,7 +201,7 @@ var UserInfo = (function (_super) {
         // 数值
         var numArr;
         if (this.type == 'score') {
-            titleArr = ['积分', '累积签到', '个人达标率', '团队达标率'];
+            titleArr = ['个人累计积分', '累积签到', '个人达标率', '团队达标率'];
             textGroup.x = 230;
             textGroup.y = 350;
             this.info(titleArr, textGroup, 28, 365, 50);
@@ -208,7 +209,7 @@ var UserInfo = (function (_super) {
             this.info(numArr, textGroup, 30, 365, 50, egret.HorizontalAlign.RIGHT);
         }
         else {
-            titleArr = ['个人积分', '个人达标率', '团队达标率', '连续达标天数'];
+            titleArr = ['个人累计积分', '个人达标率', '团队达标率', '连续达标天数'];
             textGroup.x = 300;
             textGroup.y = 230;
             this.info(titleArr, textGroup, 24);

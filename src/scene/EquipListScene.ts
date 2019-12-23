@@ -1,7 +1,6 @@
 
 class EquipList extends Scene {
     private config
-    private searchInput: SearchInput
     constructor(config) {
         super()
         this.config = config
@@ -18,7 +17,6 @@ class EquipList extends Scene {
     private changeTypeList(config) {
         Http.getInstance().post(Url.HTTP_EQUIP_LIST, { catid: config.type }, data => {
             var group = new eui.Group()
-            group.height = 5000
             group.width = this.stage.stageWidth
             this.addChild(group)
 
@@ -27,6 +25,7 @@ class EquipList extends Scene {
                 let list = data.data
                 for (let item of list) {
                     let equipItem = new EquipItem(item)
+                    equipItem.x = (this.stage.stageWidth - equipItem.width) / 2
                     equipItem.y = y
                     y += 130
                     equipItem.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onSeeItemDetail(item), this)

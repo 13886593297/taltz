@@ -3,5 +3,6 @@
 	<w:Config id="16d017a4f6c" ></w:Config>
 	<e:Image source="search_border_png"/>
 	<e:EditableText id="txtInput" width="400" height="88" text="{keywords}" x="35" y="0" anchorOffsetX="0" anchorOffsetY="0" textColor="0x7fc871" verticalAlign="middle" size="36"/>
-	<e:Image id="btnSearch" source="search_png" x="440" y="18"/>
+	<!-- <e:Image  source="search_png" x="440" y="18"/> -->
+    <e:Label id="btnSearch" text="搜索" x="350" y="25" anchorOffsetX="0" width="200" size="40" anchorOffsetY="0" height="38" textColor="0x7fc96f" textAlign="center" verticalAlign="middle"/>
 </e:Skin>

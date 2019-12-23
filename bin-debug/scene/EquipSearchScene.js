@@ -23,7 +23,7 @@ var EquipSearch = (function (_super) {
         this.addChild(title);
         var searchInput = new SearchInput(this.keywords);
         searchInput.x = (this.stage.stageWidth - 515) / 2;
-        searchInput.y = 200;
+        searchInput.y = 230;
         this.addChild(searchInput);
         this.changeTypeList();
     };
@@ -55,7 +55,6 @@ var EquipSearch = (function (_super) {
                     equipItem.scaleX = .75;
                     equipItem.scaleY = .75;
                     equipItem.y = y;
-                    equipItem.x = -35;
                     y += equipItem.height + 30;
                     equipItem.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onSeeItemDetail(item), _this);
                     group.addChild(equipItem);

@@ -86,7 +86,7 @@ class TeamRankScene extends Scene {
         num.text = item.serialNo
         num.textColor = item.serialNo == 1 ? 0xd7a83f : item.serialNo == 2 ? 0xbebebe : item.serialNo == 3 ? 0xb77e43 : 0x077424
         num.bold = true
-        num.size = 50
+        num.size = item.serialNo < 100 ? 50 : 38
         num.x = 65
         num.y = 20
         num.width = 66
@@ -110,9 +110,9 @@ class TeamRankScene extends Scene {
         let achiRate = new egret.TextField()
         achiRate.textFlow = [
             { text: '个人达标率：\n' },
-            { text: '个人积分：' }
+            { text: '个人当月积分：' }
         ]
-        achiRate.x = 385
+        achiRate.x = 340
         achiRate.y = 75
         achiRate.size = 20
         achiRate.lineSpacing = 15
@@ -120,10 +120,10 @@ class TeamRankScene extends Scene {
 
         let achiRateNum = new egret.TextField()
         achiRateNum.textFlow = [
-            { text: item.achiRate + '%\n' },
+            { text: item.achiRate.toFixed(2) + '%\n' },
             { text: item.score + '' }
         ]
-        achiRateNum.x = 495
+        achiRateNum.x = 470
         achiRateNum.size = 36
         achiRateNum.y = 65
         rankGroup.addChild(achiRateNum)

@@ -26,7 +26,6 @@ var EquipList = (function (_super) {
         var _this = this;
         Http.getInstance().post(Url.HTTP_EQUIP_LIST, { catid: config.type }, function (data) {
             var group = new eui.Group();
-            group.height = 5000;
             group.width = _this.stage.stageWidth;
             _this.addChild(group);
             var y = 0;
@@ -35,6 +34,7 @@ var EquipList = (function (_super) {
                 for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
                     var item = list_1[_i];
                     var equipItem = new EquipItem(item);
+                    equipItem.x = (_this.stage.stageWidth - equipItem.width) / 2;
                     equipItem.y = y;
                     y += 130;
                     equipItem.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onSeeItemDetail(item), _this);

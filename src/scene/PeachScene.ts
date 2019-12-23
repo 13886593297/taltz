@@ -11,8 +11,9 @@ class PeachScene extends Scene {
     private curPeachInfo  // 签到5天新长出来的桃子index
     private peachText = new eui.Group()  // 摘桃子提示
     private peachGroup = new eui.Group()  // 整体树和桃子
-    constructor() {
+    constructor(isBackHome = false) {
         super()
+        this.isBackHome = isBackHome
     }
 
     public init() {
@@ -29,7 +30,12 @@ class PeachScene extends Scene {
         // 获取桃子信息
         Http.getInstance().post(Url.HTTP_WATERING_INFO, null, data => {
             this.info = data.data
-            this.getKattle()
+            if (this.info.isGetKattle) {
+                this.drawTree()
+                this.drawPeach()
+            } else {
+                this.getKattle()
+            }
         })
     }
 
@@ -105,48 +111,42 @@ class PeachScene extends Scene {
      * 领取水壶动画
      */
     private getKattle() {
-        // 每天领取水壶
-        if (!this.info.isGetKattle) {
-            let group = new eui.Group()
-            this.addChild(group)
-            // 领取水壶
-            let emptyKattle = Util.createBitmapByName('kettle_empty_png')
-            emptyKattle.scaleX = 0
-            emptyKattle.scaleY = 0
-            emptyKattle.x = 350
-            emptyKattle.y = 700
-            // 设置水壶缩放点为中心
-            emptyKattle.anchorOffsetX = emptyKattle.width / 2
-            emptyKattle.anchorOffsetY = emptyKattle.height / 2
-            egret.Tween.get(emptyKattle)
-                .to({ scaleX: 1, scaleY: 1 }, 1000).wait(1000)
-                .call(() => {
-                    // 水壶晃动动画
-                    egret.Tween.get(emptyKattle, { loop: true })
-                        .to({ rotation: 10 }, 150)
-                        .to({ rotation: -10 }, 150)
-                        .to({ rotation: 10 }, 150)
-                        .to({ rotation: -10 }, 150)
-                        .wait(1000)
-                    // 领取水壶提示背景
-                    this.showTip(420, 720, '请点击领取水壶', group)
-                })
-            emptyKattle.touchEnabled = true
-            group.addChild(emptyKattle)
+        let group = new eui.Group()
+        this.addChild(group)
+        // 领取水壶
+        let emptyKattle = Util.createBitmapByName('kettle_empty_png')
+        emptyKattle.scaleX = 0
+        emptyKattle.scaleY = 0
+        emptyKattle.x = 350
+        emptyKattle.y = 700
+        // 设置水壶缩放点为中心
+        emptyKattle.anchorOffsetX = emptyKattle.width / 2
+        emptyKattle.anchorOffsetY = emptyKattle.height / 2
+        egret.Tween.get(emptyKattle)
+            .to({ scaleX: 1, scaleY: 1 }, 1000).wait(1000)
+            .call(() => {
+                // 水壶晃动动画
+                egret.Tween.get(emptyKattle, { loop: true })
+                    .to({ rotation: 10 }, 150)
+                    .to({ rotation: -10 }, 150)
+                    .to({ rotation: 10 }, 150)
+                    .to({ rotation: -10 }, 150)
+                    .wait(1000)
+                // 领取水壶提示背景
+                this.showTip(420, 720, '请点击水壶去浇水吧', group)
+            })
+        emptyKattle.touchEnabled = true
+        group.addChild(emptyKattle)
 
-            // 领取水壶
-            emptyKattle.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-                this.removeChild(group) // 删除空水壶
-                Http.getInstance().post(Url.HTTP_WATERING_DO, null, json => {
-                    this.curPeachInfo = json.data
-                    this.drawTree()  // 开始画树
-                    this.kettleAni()  // 开始浇水动画
-                })
-            }, this)
-        } else {
-            this.drawTree()
-            this.drawPeach()
-        }
+        // 领取水壶
+        emptyKattle.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            this.removeChild(group) // 删除空水壶
+            Http.getInstance().post(Url.HTTP_WATERING_DO, null, json => {
+                this.curPeachInfo = json.data
+                this.drawTree()  // 开始画树
+                this.kettleAni()  // 开始浇水动画
+            })
+        }, this)
     }
 
     /**
@@ -187,11 +187,6 @@ class PeachScene extends Scene {
         kettle.x = 380
         kettle.y = this.stage.stageHeight - 884
         kettleGroup.addChild(kettle)
-
-        // 为你的桃树浇水吧
-        let right_tip = new eui.Group()
-        kettleGroup.addChild(right_tip)
-        this.showTip(390, this.stage.stageHeight - 174, '为你的桃树浇水吧', right_tip)
 
         // 浇水成功提示
         let wateringTip = new eui.Group()
@@ -313,7 +308,7 @@ class PeachScene extends Scene {
             egret.Tween.get(evt.target)
                 .to({ x: 640, y: 310, scaleX: 0.2, scaleY: 0.2, visible: false }, 1500)
                 .call(() => {
-                    Http.getInstance().post(Url.HTTP_WATERING_PICK, {id: item.id}, data => {
+                    Http.getInstance().post(Url.HTTP_WATERING_PICK, { id: item.id }, data => {
                         if (data.data != -1) {
                             this.showScore(this.userInfo.score += 15, true)
                             if (--this.count <= 0) {

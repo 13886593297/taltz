@@ -155,12 +155,14 @@ class Util {
      */
     public static setCache(key: string, value: any) {
         //TODO 
+        window.localStorage.setItem(key, value)
     }
     /**
      * 获取本地缓存数据
      */
     public static getCache(key: string) {
         //TODO
+        return window.localStorage.getItem(key)
     }
 
 

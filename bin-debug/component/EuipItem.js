@@ -24,19 +24,21 @@ var EquipItem = (function (_super) {
         else {
             listBg = Util.createBitmapByName('equip_bg_mp4_png');
         }
+        this.width = listBg.width;
+        this.height = listBg.height;
         this.addChild(listBg);
         var title = new egret.TextField();
-        if (this.data.title.length >= 8) {
-            title.text = this.data.title.substr(0, 6) + '...';
+        if (this.data.title.length >= 11) {
+            title.text = this.data.title.substr(0, 9) + '...';
         }
         else {
             title.text = this.data.title;
         }
-        title.size = 24;
-        title.width = 140;
+        title.size = 30;
+        title.width = 300;
         title.textColor = 0xffffff;
-        title.x = 125;
-        title.y = 34;
+        title.x = 90;
+        title.y = 22;
         this.addChild(title);
         var time = new egret.TextField();
         time.text = this.data.publicTime;
@@ -47,9 +49,9 @@ var EquipItem = (function (_super) {
             time.text = y + '年' + m + '月' + d + '日';
         }
         time.textColor = 0xffffff;
-        time.x = 390;
-        time.y = 65;
-        time.size = 26;
+        time.x = 500;
+        time.y = 75;
+        time.size = 16;
         this.addChild(time);
     };
     return EquipItem;

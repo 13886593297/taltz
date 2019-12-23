@@ -161,7 +161,7 @@ class RankScene extends Scene {
         num.text = rank.serialNo
         num.textColor = rank.serialNo == 1 ? 0xd7a83f : rank.serialNo == 2 ? 0xbebebe : rank.serialNo == 3 ? 0xb77e43 : 0x077424
         num.bold = true
-        num.size = 50
+        num.size = rank.serialNo < 100 ? 50 : 38
         num.x = 65
         num.y = 20
         num.width = 66
@@ -182,7 +182,10 @@ class RankScene extends Scene {
         } else {
             userInfo.text = rank.teamName
             userInfo.size = 44
-            userInfo.y = 75
+            userInfo.y = 50
+            userInfo.width = 300
+            userInfo.height = 90
+            userInfo.verticalAlign = 'middle'
         }
         userInfo.x = 145
         rankGroup.addChild(userInfo)
@@ -192,15 +195,15 @@ class RankScene extends Scene {
         if (type == 1) {
             achiRate.textFlow = [
                 { text: '个人达标率：\n' },
-                { text: '个人积分：' }
+                { text: '个人当月积分：' }
             ]
-            achiRate.x = 385
+            achiRate.x = 340
             achiRate.y = 75
             achiRate.size = 20
             achiRate.lineSpacing = 15
         } else {
             achiRate.text = '团队达标率'
-            achiRate.x = 485
+            achiRate.x = 460
             achiRate.y = 120
             achiRate.size = 22
         }
@@ -209,15 +212,15 @@ class RankScene extends Scene {
         let achiRateNum = new egret.TextField()
         if (type == 1) {
             achiRateNum.textFlow = [
-                { text: rank.achiRate + '%\n' },
+                { text: rank.achiRate.toFixed(2) + '%\n' },
                 { text: rank.score + '' }
             ]
-            achiRateNum.x = 495
+            achiRateNum.x = 470
             achiRateNum.size = 36
             achiRateNum.y = 65
         } else {
-            achiRateNum.text = rank.achiRate + '%'
-            achiRateNum.x = 475
+            achiRateNum.text = rank.achiRate ? rank.achiRate.toFixed(2) + '%' : '0%'
+            achiRateNum.x = 450
             achiRateNum.width = 150
             achiRateNum.textAlign = egret.HorizontalAlign.CENTER
             achiRateNum.size = 42

@@ -89,19 +89,18 @@ var Sign = (function (_super) {
             label.size = 26;
             group.addChild(label);
         }
-        var height = 80; // 每个数字的高度
+        var height = 72; // 每个数字的高度
         var curDate = new Date();
+        // 当前日期
         var currentDay = curDate.getDate();
-        /* 获取当前月份 */
-        var curMonth = curDate.getMonth();
-        /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
-        curDate.setMonth(curMonth + 1);
-        /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
+        // 获取这个月有多少天，将月份下移到下一个月份，同时将日期设置为0；由于Date里的日期是1~31，所以Date对象自动跳转到上一个月的最后一天；getDate（）获取天数即可。
+        curDate.setMonth(curDate.getMonth() + 1);
         curDate.setDate(0);
-        /* 返回当月的天数 */
         var days = curDate.getDate();
+        // 获取第一天星期几
         curDate.setDate(1);
-        var week1 = curDate.getDay();
+        // 返回的是0-6，设置0为7
+        var week1 = curDate.getDay() == 0 ? 7 : curDate.getDay();
         var max = week1 + days;
         for (var i = 0; i < max; i++) {
             if (i >= week1) {
@@ -119,27 +118,32 @@ var Sign = (function (_super) {
                 group.addChild(singItem);
             }
         }
-        var top = 100 + Math.ceil(max / 7) * height;
-        this.createSignText(top);
+        this.createSignText();
     };
-    Sign.prototype.createSignText = function (top) {
+    Sign.prototype.createSignText = function () {
         var group = new eui.Group();
-        group.y = top + 300;
+        group.y = 780;
         this._myGroup.addChild(group);
         var text1 = new egret.TextField();
         text1.textFlow = [
-            { text: ' ' + this.signData.signtTotal + ' ', style: { 'size': 50, 'underline': true } },
-            { text: '天', style: { 'size': 40 } },
-            { text: '累计签到', style: { 'size': 30 } }
+            {
+                text: ' ' + this.signData.signtTotal + ' ',
+                style: { size: 50, underline: true }
+            },
+            { text: '天', style: { size: 40 } },
+            { text: '累计签到', style: { size: 30 } }
         ];
         text1.x = 150;
         text1.y = 20;
         group.addChild(text1);
         var text2 = new egret.TextField();
         text2.textFlow = [
-            { text: ' ' + this.signData.signAllTotal + ' ', style: { 'size': 50, 'underline': true } },
-            { text: '人', style: { 'size': 40 } },
-            { text: '今日签到', style: { 'size': 30 } }
+            {
+                text: ' ' + this.signData.signAllTotal + ' ',
+                style: { size: 50, underline: true }
+            },
+            { text: '人', style: { size: 40 } },
+            { text: '今日签到', style: { size: 30 } }
         ];
         text2.x = 420;
         text2.y = 20;

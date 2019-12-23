@@ -1,7 +1,7 @@
 /**
  * 每日签到组件
  * 半透明背景、背景、标头、日历  关闭按钮
- * 
+ *
  */
 class Sign extends egret.DisplayObjectContainer {
     private readonly WEEK = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
@@ -21,7 +21,6 @@ class Sign extends egret.DisplayObjectContainer {
         this.signed = signedData
         this.init()
     }
-
 
     public init() {
         let stage = ViewManager.getInstance().stage
@@ -45,7 +44,11 @@ class Sign extends egret.DisplayObjectContainer {
         group.scaleY = 0
         this.addChild(group)
         this._myGroup = group
-        egret.Tween.get(group).to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.backInOut)
+        egret.Tween.get(group).to(
+            { scaleX: 1, scaleY: 1 },
+            300,
+            egret.Ease.backInOut
+        )
 
         // 签到背景
         var signBg = Util.createBitmapByName('green_small_bg_png')
@@ -60,11 +63,20 @@ class Sign extends egret.DisplayObjectContainer {
         closeButton.x = 580
         closeButton.y = 180
         closeButton.touchEnabled = true
-        closeButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            Util.playMusic('model_select_mp3')
-            eui.UIEvent.dispatchUIEvent(this, eui.UIEvent.CLOSING, true, true)
-            this.parent.removeChild(this)
-        }, this)
+        closeButton.addEventListener(
+            egret.TouchEvent.TOUCH_TAP,
+            () => {
+                Util.playMusic('model_select_mp3')
+                eui.UIEvent.dispatchUIEvent(
+                    this,
+                    eui.UIEvent.CLOSING,
+                    true,
+                    true
+                )
+                this.parent.removeChild(this)
+            },
+            this
+        )
 
         this.createCalendar()
     }
@@ -75,8 +87,8 @@ class Sign extends egret.DisplayObjectContainer {
         group.y = 180
         this._myGroup.addChild(group)
 
-        let width = 70  // 每个日期的宽度
-        let left = 140  // 最初的左边距
+        let width = 70 // 每个日期的宽度
+        let left = 140 // 最初的左边距
 
         // 创建星期头部
         for (let i = 0; i < this.WEEK.length; i++) {
@@ -90,19 +102,18 @@ class Sign extends egret.DisplayObjectContainer {
             group.addChild(label)
         }
 
-        let height = 80  // 每个数字的高度
+        let height = 72 // 每个数字的高度
         let curDate = new Date()
+        // 当前日期
         let currentDay = curDate.getDate()
-        /* 获取当前月份 */
-        let curMonth = curDate.getMonth()
-        /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
-        curDate.setMonth(curMonth + 1)
-        /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
+        // 获取这个月有多少天，将月份下移到下一个月份，同时将日期设置为0；由于Date里的日期是1~31，所以Date对象自动跳转到上一个月的最后一天；getDate（）获取天数即可。
+        curDate.setMonth(curDate.getMonth() + 1)
         curDate.setDate(0)
-        /* 返回当月的天数 */
         let days = curDate.getDate()
+        // 获取第一天星期几
         curDate.setDate(1)
-        let week1 = curDate.getDay()
+        // 返回的是0-6，设置0为7
+        let week1 = curDate.getDay() == 0 ? 7 : curDate.getDay()
         let max = week1 + days
         for (let i = 0; i < max; i++) {
             if (i >= week1) {
@@ -116,25 +127,27 @@ class Sign extends egret.DisplayObjectContainer {
                 }
                 let singItem = new SignItem(day, sign)
                 singItem.x = left + ((i - 1) % 7) * width
-                singItem.y = Math.ceil(i / 7) * height + 100;
+                singItem.y = Math.ceil(i / 7) * height + 100
                 group.addChild(singItem)
             }
         }
 
-        let top = 100 + Math.ceil(max / 7) * height
-        this.createSignText(top)
+        this.createSignText()
     }
 
-    private createSignText(top) {
+    private createSignText() {
         let group = new eui.Group()
-        group.y = top + 300
+        group.y = 780
         this._myGroup.addChild(group)
 
         let text1 = new egret.TextField()
         text1.textFlow = [
-            { text: ' ' + this.signData.signtTotal + ' ', style: { 'size': 50, 'underline': true } },
-            { text: '天', style: { 'size': 40 } },
-            { text: '累计签到', style: { 'size': 30 } }
+            {
+                text: ' ' + this.signData.signtTotal + ' ',
+                style: { size: 50, underline: true }
+            },
+            { text: '天', style: { size: 40 } },
+            { text: '累计签到', style: { size: 30 } }
         ]
         text1.x = 150
         text1.y = 20
@@ -142,9 +155,12 @@ class Sign extends egret.DisplayObjectContainer {
 
         let text2 = new egret.TextField()
         text2.textFlow = [
-            { text: ' ' + this.signData.signAllTotal + ' ', style: { 'size': 50, 'underline': true } },
-            { text: '人', style: { 'size': 40 } },
-            { text: '今日签到', style: { 'size': 30 } }
+            {
+                text: ' ' + this.signData.signAllTotal + ' ',
+                style: { size: 50, underline: true }
+            },
+            { text: '人', style: { size: 40 } },
+            { text: '今日签到', style: { size: 30 } }
         ]
         text2.x = 420
         text2.y = 20
@@ -162,7 +178,6 @@ class Sign extends egret.DisplayObjectContainer {
         group.addChild(notes)
     }
 }
-
 
 class SignItem extends egret.DisplayObjectContainer {
     private text
@@ -187,7 +202,11 @@ class SignItem extends egret.DisplayObjectContainer {
             //当前签到中
             if (this.sign == 2) {
                 icon.alpha = 0
-                egret.Tween.get(icon).to({ alpha: 1 }, 3000, egret.Ease.backInOut)
+                egret.Tween.get(icon).to(
+                    { alpha: 1 },
+                    3000,
+                    egret.Ease.backInOut
+                )
             }
         }
 
