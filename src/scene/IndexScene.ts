@@ -23,6 +23,7 @@ class IndexScene extends Scene {
                 ViewManager.getInstance().changeScene(scene)
             }, this)
             this.userView = user
+            this.initData()
         })
 
         let url = window.location.href.split('#')[0]
@@ -32,7 +33,9 @@ class IndexScene extends Scene {
                 Util.registerShare(null, ShareType.NORMAL)
             }, 1000)
         })
+    }
 
+    private initData() {
         // 初始化游戏数据
         Http.getInstance().post(Url.HTTP_GAME_INIT, "", json => {
             Http.getInstance().post(Url.HTTP_SIGN, {}, data => {
