@@ -127,7 +127,6 @@ var IndexScene = (function (_super) {
                 case 4:
                     var escene = new EquipmentScene();
                     ViewManager.getInstance().changeScene(escene);
-                    // this.addChild(new AlertPanel("装备库资料准备中", 1120))
                     break;
             }
         };

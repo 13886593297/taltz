@@ -120,7 +120,6 @@ class IndexScene extends Scene {
                 case 4:
                     let escene = new EquipmentScene()
                     ViewManager.getInstance().changeScene(escene)
-                    // this.addChild(new AlertPanel("装备库资料准备中", 1120))
                     break
             }
         }

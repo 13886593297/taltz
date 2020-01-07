@@ -10,7 +10,7 @@
 	],
 	"game": [
 		"bin-debug/scene/Scene.js",
-		"bin-debug/model/Enum.js",
+		"bin-debug/Config.js",
 		"bin-debug/CTitle.js",
 		"bin-debug/DataManager.js",
 		"bin-debug/LoadingUI.js",
@@ -46,7 +46,7 @@
 		"bin-debug/event/TitleEvent.js",
 		"bin-debug/model/Answers.js",
 		"bin-debug/model/Common.js",
-		"bin-debug/Config.js",
+		"bin-debug/util/Util.js",
 		"bin-debug/model/Room.js",
 		"bin-debug/model/Subject.js",
 		"bin-debug/model/User.js",
@@ -83,6 +83,6 @@
 		"bin-debug/scene/pk/TeamMatchScene.js",
 		"bin-debug/scene/pk/TeamResultScene.js",
 		"bin-debug/util/Base64.js",
-		"bin-debug/util/Util.js"
+		"bin-debug/model/Enum.js"
 	]
 }
