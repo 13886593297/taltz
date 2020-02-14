@@ -122,9 +122,9 @@ class Sign extends egret.DisplayObjectContainer {
                 if (this.signed.indexOf(day) > -1) {
                     sign = 1
                 }
-                if (currentDay == day) {
-                    sign = 2
-                }
+                // if (currentDay == day) {
+                //     sign = 2
+                // }
                 let singItem = new SignItem(day, sign)
                 singItem.x = left + ((i - 1) % 7) * width
                 singItem.y = Math.ceil(i / 7) * height + 100
@@ -199,15 +199,15 @@ class SignItem extends egret.DisplayObjectContainer {
             icon.y = (this.H - icon.height) / 2
             this.addChild(icon)
 
-            //当前签到中
-            if (this.sign == 2) {
-                icon.alpha = 0
-                egret.Tween.get(icon).to(
-                    { alpha: 1 },
-                    3000,
-                    egret.Ease.backInOut
-                )
-            }
+            // //当前签到中
+            // if (this.sign == 2) {
+            //     icon.alpha = 0
+            //     egret.Tween.get(icon).to(
+            //         { alpha: 1 },
+            //         3000,
+            //         egret.Ease.backInOut
+            //     )
+            // }
         }
 
         let label = new egret.TextField()

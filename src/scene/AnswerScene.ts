@@ -40,16 +40,18 @@ class AnswerScene extends Scene {
         super.setBackground()
         this.start = +new Date()
 
-        let title = this.trainTitle(this.levelData.flag, this.levelData.name)
-        title.x = 180
-        title.y = 25
-        this.addChild(title)
+        if (this.type != 9) {
+            let title = this.trainTitle(this.levelData.flag, this.levelData.name)
+            title.x = 180
+            title.y = 25
+            this.addChild(title)
+        }
 
         //进度条
-        if (this.type == 1) {
+        if (this.type == 1 || this.type == 9) {
             // 进度条
             let pBar = new eui.ProgressBar()
-            pBar.maximum = 10//设置进度条的最大值
+            pBar.maximum = this.answers.questions.length < 10 ? this.answers.questions.length : 10//设置进度条的最大值
             pBar.minimum = 1//设置进度条的最小值
             pBar.width = 430
             pBar.height = 40
@@ -97,7 +99,7 @@ class AnswerScene extends Scene {
         this.addChild(myScroller)
         this.scroller = myScroller
 
-        if (this.type == 1) {
+        if (this.type == 1 || this.type == 9) {
             let favorButton = new XButton('加入收藏')
             favorButton.x = this.stage.stageWidth / 2 - favorButton.width - 10
             favorButton.y = 1040
@@ -187,14 +189,15 @@ class AnswerScene extends Scene {
                 isEnd = true
             }
             if (isEnd && this.isNext) {
-                if (this.type == 1) {
+                if (this.type == 1 || this.type == 9) {
                     Http.getInstance().post(Url.HTTP_TRAIN_END, { lifecycleid: this.answers.lifecycleId }, (json) => {
                         DataManager.getInstance().updateUserInfo(json.data.userBase)
                         let params = {
                             result: json.data,
                             errors: this.errors,
                             levelData: this.levelData,
-                            lifecycleid: this.answers.lifecycleId
+                            lifecycleid: this.answers.lifecycleId,
+                            type: this.type
                         }
                         let result = new ResultScene(params)
                         ViewManager.getInstance().changeScene(result)
@@ -224,7 +227,7 @@ class AnswerScene extends Scene {
                     let curerntTime = + new Date()
                     let useTime = (curerntTime - this.start) / 1000
                     let params = {
-                        "levelid": this.levelData.levelid,
+                        "levelid": this.type == 9 ? -1 : this.levelData.levelid,
                         "lifecycleid": this.answers.lifecycleId,
                         "qid": qid,
                         "serialno": this.curIdx,
@@ -270,7 +273,7 @@ class AnswerScene extends Scene {
             let scene = new AnalysisScene(this.curSubject, '题目分析')
             ViewManager.getInstance().changeScene(scene)
         }, this)
-        if (this.type == 1) {
+        if (this.type == 1 || this.type == 9) {
             analysisButton.visible = false
         }
     }
@@ -323,7 +326,7 @@ class AnswerScene extends Scene {
         this.commitButton.labelDisplay.text = '提交'
         this.isNext = false
         this.curIdx = this.curIdx + 1
-        if (this.type == 1) {
+        if (this.type == 1 || this.type == 9) {
             this.numberText.text = `Q${this.curIdx}`
         }
         if (this._progress) this._progress.value = this.curIdx
@@ -345,7 +348,7 @@ class AnswerScene extends Scene {
         topic.x = (this.stage.stageWidth - topic.width) / 2
         this.topic = topic
         this.topicGroup.addChild(topic)
-        if (this.type == 1) {
+        if (this.type == 1 || this.type == 9) {
             this.analysisButton.visible = false
         }
         this.scroller.viewport.scrollV = 0

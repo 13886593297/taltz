@@ -17,6 +17,7 @@ var DataManager = (function (_super) {
         var _this = _super.call(this) || this;
         _this.equipment = null;
         _this.hasShowRanker = false;
+        _this.hasShowSignIn = false;
         _this.pkData = {};
         return _this;
     }

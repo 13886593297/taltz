@@ -107,6 +107,7 @@ class Url {
     //游戏首页
     public static readonly HTTP_GAME_INIT = "/game/api/index/init";
     public static readonly HTTP_SIGN = "/game/api/index/sign";
+    public static readonly HTTP_SIGNINFO = "/game/api/index/signinfo";
 
     public static readonly HTTP_TEAM_RANK = '/game/api/index/teamrank'
 
@@ -132,6 +133,9 @@ class Url {
 
     //训练场
     public static readonly HTTP_TRAIN_START = "/game/api/train/start";
+
+    //每日任务
+    public static readonly HTTP_DAILYTASKS_START = "/game/api/dailytasks/start";
 
     //提交答案
     public static readonly HTTP_TRAIN_SUBMIT = "/game/api/train/submitquestion";

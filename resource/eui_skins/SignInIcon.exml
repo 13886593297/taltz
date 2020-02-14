@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="SignInIconSkin" width="372" height="120" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16dc5e11dd2" ></w:Config>
+	<e:Image id="btnClose" source="dailyTasks_float_icon_1_png" y="0"/>
+	<e:Image id="btnGoto" source="dailyTasks_float_icon_2_png" x="51" y="0"/>
+	<e:Image id="btnOpen" source="dailyTasks_float_icon_3_png" x="261" y="0"/>
+</e:Skin>

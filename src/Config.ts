@@ -19,5 +19,5 @@ class Config{
     public static readonly COLOR_ORANGE = 0xF46C22;
     public static readonly COLOR_YELLOW = 0xABBF11;
     public static readonly COLOR_BLUE = 0x1570C7;
-    public static readonly DEBUG = true;
+    public static readonly DEBUG = false;
 }

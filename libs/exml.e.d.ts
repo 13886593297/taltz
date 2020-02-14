@@ -8,6 +8,12 @@ declare module skins{
 }
 declare class CTitleSkin extends eui.Skin{
 }
+declare class DailyTasks13Skin extends eui.Skin{
+}
+declare class DailyTasks24Skin extends eui.Skin{
+}
+declare class DailyTasks5Skin extends eui.Skin{
+}
 declare module skins{
 	class HScrollBarSkin extends eui.Skin{
 	}
@@ -27,6 +33,8 @@ declare module skins{
 	}
 }
 declare class SearchInputSkin extends eui.Skin{
+}
+declare class SignInIconSkin extends eui.Skin{
 }
 declare module skins{
 	class ToggleSwitchSkin extends eui.Skin{

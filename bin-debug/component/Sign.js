@@ -109,9 +109,9 @@ var Sign = (function (_super) {
                 if (this.signed.indexOf(day) > -1) {
                     sign = 1;
                 }
-                if (currentDay == day) {
-                    sign = 2;
-                }
+                // if (currentDay == day) {
+                //     sign = 2
+                // }
                 var singItem = new SignItem(day, sign);
                 singItem.x = left + ((i - 1) % 7) * width;
                 singItem.y = Math.ceil(i / 7) * height + 100;
@@ -182,11 +182,15 @@ var SignItem = (function (_super) {
             icon.x = (this.W - icon.width) / 2;
             icon.y = (this.H - icon.height) / 2;
             this.addChild(icon);
-            //当前签到中
-            if (this.sign == 2) {
-                icon.alpha = 0;
-                egret.Tween.get(icon).to({ alpha: 1 }, 3000, egret.Ease.backInOut);
-            }
+            // //当前签到中
+            // if (this.sign == 2) {
+            //     icon.alpha = 0
+            //     egret.Tween.get(icon).to(
+            //         { alpha: 1 },
+            //         3000,
+            //         egret.Ease.backInOut
+            //     )
+            // }
         }
         var label = new egret.TextField();
         label.text = this.text;

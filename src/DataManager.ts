@@ -17,6 +17,7 @@ class DataManager extends egret.EventDispatcher {
     private pkModel;
 
     public hasShowRanker = false;
+    public hasShowSignIn = false;
 
     /**
      * 房间列表信息

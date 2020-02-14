@@ -12,9 +12,19 @@ var EquipList = (function (_super) {
     __extends(EquipList, _super);
     function EquipList(config) {
         var _this = _super.call(this) || this;
+        _this.isFromDY = false;
         _this.config = config;
         return _this;
     }
+    EquipList.prototype.onBack = function () {
+        if (this.isFromDY) {
+            var index = new IndexScene();
+            ViewManager.getInstance().changeScene(index);
+        }
+        else {
+            ViewManager.getInstance().back();
+        }
+    };
     EquipList.prototype.init = function () {
         _super.prototype.setBackground.call(this);
         var bd = Util.createBitmapByName('equip_bg_' + this.config.type + '_01_png');
@@ -25,6 +35,17 @@ var EquipList = (function (_super) {
     EquipList.prototype.changeTypeList = function (config) {
         var _this = this;
         Http.getInstance().post(Url.HTTP_EQUIP_LIST, { catid: config.type }, function (data) {
+            Http.getInstance().post(Url.HTTP_GAME_INIT, "", function (json) {
+                var curDate = new Date();
+                var week = curDate.getDay();
+                // week = 6
+                if (json.data.isNeedSign && (week == 1 || week == 3)) {
+                    var i = Util.getDailyTaskID();
+                    if (i == config.id) {
+                        Http.getInstance().post(Url.HTTP_SIGN, {}, function (data) { });
+                    }
+                }
+            });
             var group = new eui.Group();
             group.width = _this.stage.stageWidth;
             _this.addChild(group);

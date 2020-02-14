@@ -105,6 +105,7 @@ var Url = (function () {
     //游戏首页
     Url.HTTP_GAME_INIT = "/game/api/index/init";
     Url.HTTP_SIGN = "/game/api/index/sign";
+    Url.HTTP_SIGNINFO = "/game/api/index/signinfo";
     Url.HTTP_TEAM_RANK = '/game/api/index/teamrank';
     Url.HTTP_NOTICE = '/game/api/index/notice';
     Url.HTTP_BANNNER = '/game/api/index/adbanner';
@@ -119,6 +120,8 @@ var Url = (function () {
     Url.HTTP_USER_BASE_INFO = "/game/api/user/baseinfo";
     //训练场
     Url.HTTP_TRAIN_START = "/game/api/train/start";
+    //每日任务
+    Url.HTTP_DAILYTASKS_START = "/game/api/dailytasks/start";
     //提交答案
     Url.HTTP_TRAIN_SUBMIT = "/game/api/train/submitquestion";
     Url.HTTP_TRAIN_END = "/game/api/train/end";

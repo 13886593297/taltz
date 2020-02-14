@@ -1,9 +1,19 @@
 
 class EquipList extends Scene {
     private config
+    public isFromDY: boolean = false
     constructor(config) {
         super()
         this.config = config
+    }
+
+    public onBack() {
+        if (this.isFromDY) {
+            let index = new IndexScene();
+            ViewManager.getInstance().changeScene(index);
+        } else {
+            ViewManager.getInstance().back();
+        }
     }
 
     public init() {
@@ -16,6 +26,18 @@ class EquipList extends Scene {
 
     private changeTypeList(config) {
         Http.getInstance().post(Url.HTTP_EQUIP_LIST, { catid: config.type }, data => {
+            Http.getInstance().post(Url.HTTP_GAME_INIT, "", (json) => {
+                let curDate = new Date();
+                let week = curDate.getDay();
+                // week = 6
+                if (json.data.isNeedSign && (week == 1 || week == 3)) {
+                    let i = Util.getDailyTaskID();
+                    if (i == config.id) {
+                        Http.getInstance().post(Url.HTTP_SIGN, {}, (data) => { });
+                    }
+                }
+            });
+
             var group = new eui.Group()
             group.width = this.stage.stageWidth
             this.addChild(group)

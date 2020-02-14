@@ -10,15 +10,20 @@ class ErrorScene extends Scene {
     private title
     private content
     private result
-
     private nextButton
+    private trainButton
+    private type
 
-    constructor(errors) {
+    constructor(errors, type?) {
         super()
         this.errors = errors
+        this.type = type
     }
 
     public init() {
+        if (this.type == 9) {
+            this.close_btn = false
+        }
         super.setBackground()
         let title: egret.Bitmap = Util.createBitmapByName('title_error_png')
         title.y = 20
@@ -81,17 +86,30 @@ class ErrorScene extends Scene {
         }, this)
         this.nextButton = next
 
-        let train = Util.createBitmapByName('continueTrain_png')
+        let train = Util.createBitmapByName(this.type == 9 ? 'dailyTasks_tryAgain1_png' : 'continueTrain_png')
         train.x = this.stage.stageWidth / 2 + 10
         train.y = 1000
         this.addChild(train)
         train.touchEnabled = true
         train.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            ViewManager.getInstance().back(4)
+            if (this.type == 9) {
+                let i = Util.getDailyTaskID()
+                Http.getInstance().post(Url.HTTP_DAILYTASKS_START, { questionAttrIds: EquipmentConfigs[i].qaids }, (data) => {
+                    let answer = new Answers()
+                    answer.lifecycleId = data.data.lifecycleId
+                    answer.questions = data.data.questions.slice(0, 5)
+                    let scene = new AnswerScene(answer, this.type)
+                    ViewManager.getInstance().changeScene(scene)
+                })
+            } else {
+                ViewManager.getInstance().back(4)
+            }
         }, this)
+        this.trainButton = train
 
         if (this.curIdx >= this.errors.length) {
             this.nextButton.visible = false
+            this.trainButton.x = (this.stage.stageWidth - this.trainButton.width) / 2
         }
     }
 
@@ -118,6 +136,7 @@ class ErrorScene extends Scene {
 
         if (this.curIdx >= this.errors.length) {
             this.nextButton.visible = false
+            this.trainButton.x = (this.stage.stageWidth - this.trainButton.width) / 2
         }
     }
 }

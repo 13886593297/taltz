@@ -10,7 +10,7 @@
 	],
 	"game": [
 		"bin-debug/scene/Scene.js",
-		"bin-debug/util/Util.js",
+		"bin-debug/model/Answers.js",
 		"bin-debug/CTitle.js",
 		"bin-debug/DataManager.js",
 		"bin-debug/LoadingUI.js",
@@ -20,6 +20,10 @@
 		"bin-debug/TrainTitle.js",
 		"bin-debug/ViewManager.js",
 		"bin-debug/component/Confirm.js",
+		"bin-debug/component/DailyTasks13.js",
+		"bin-debug/component/DailyTasks24.js",
+		"bin-debug/component/DailyTasks5.js",
+		"bin-debug/component/DialogContainer.js",
 		"bin-debug/component/EuipItem.js",
 		"bin-debug/component/LevelView.js",
 		"bin-debug/component/LineInfo.js",
@@ -34,6 +38,7 @@
 		"bin-debug/component/SearchInput.js",
 		"bin-debug/component/SharePanel.js",
 		"bin-debug/component/Sign.js",
+		"bin-debug/component/SignInIcon.js",
 		"bin-debug/component/Text.js",
 		"bin-debug/component/Title.js",
 		"bin-debug/component/Topic.js",
@@ -44,7 +49,7 @@
 		"bin-debug/event/NetEvent.js",
 		"bin-debug/event/SceneEvent.js",
 		"bin-debug/event/TitleEvent.js",
-		"bin-debug/model/Answers.js",
+		"bin-debug/Config.js",
 		"bin-debug/model/Common.js",
 		"bin-debug/model/Enum.js",
 		"bin-debug/model/Room.js",
@@ -83,6 +88,6 @@
 		"bin-debug/scene/pk/TeamMatchScene.js",
 		"bin-debug/scene/pk/TeamResultScene.js",
 		"bin-debug/util/Base64.js",
-		"bin-debug/Config.js"
+		"bin-debug/util/Util.js"
 	]
 }

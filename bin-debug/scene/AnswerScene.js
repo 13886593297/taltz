@@ -31,15 +31,17 @@ var AnswerScene = (function (_super) {
         this.close_btn = false;
         _super.prototype.setBackground.call(this);
         this.start = +new Date();
-        var title = this.trainTitle(this.levelData.flag, this.levelData.name);
-        title.x = 180;
-        title.y = 25;
-        this.addChild(title);
+        if (this.type != 9) {
+            var title = this.trainTitle(this.levelData.flag, this.levelData.name);
+            title.x = 180;
+            title.y = 25;
+            this.addChild(title);
+        }
         //进度条
-        if (this.type == 1) {
+        if (this.type == 1 || this.type == 9) {
             // 进度条
             var pBar = new eui.ProgressBar();
-            pBar.maximum = 10; //设置进度条的最大值
+            pBar.maximum = this.answers.questions.length < 10 ? this.answers.questions.length : 10; //设置进度条的最大值
             pBar.minimum = 1; //设置进度条的最小值
             pBar.width = 430;
             pBar.height = 40;
@@ -80,7 +82,7 @@ var AnswerScene = (function (_super) {
         myScroller.viewport = group;
         this.addChild(myScroller);
         this.scroller = myScroller;
-        if (this.type == 1) {
+        if (this.type == 1 || this.type == 9) {
             var favorButton = new XButton('加入收藏');
             favorButton.x = this.stage.stageWidth / 2 - favorButton.width - 10;
             favorButton.y = 1040;
@@ -165,14 +167,15 @@ var AnswerScene = (function (_super) {
                 isEnd = true;
             }
             if (isEnd && _this.isNext) {
-                if (_this.type == 1) {
+                if (_this.type == 1 || _this.type == 9) {
                     Http.getInstance().post(Url.HTTP_TRAIN_END, { lifecycleid: _this.answers.lifecycleId }, function (json) {
                         DataManager.getInstance().updateUserInfo(json.data.userBase);
                         var params = {
                             result: json.data,
                             errors: _this.errors,
                             levelData: _this.levelData,
-                            lifecycleid: _this.answers.lifecycleId
+                            lifecycleid: _this.answers.lifecycleId,
+                            type: _this.type
                         };
                         var result = new ResultScene(params);
                         ViewManager.getInstance().changeScene(result);
@@ -202,7 +205,7 @@ var AnswerScene = (function (_super) {
                     var curerntTime = +new Date();
                     var useTime = (curerntTime - _this.start) / 1000;
                     var params = {
-                        "levelid": _this.levelData.levelid,
+                        "levelid": _this.type == 9 ? -1 : _this.levelData.levelid,
                         "lifecycleid": _this.answers.lifecycleId,
                         "qid": qid_1,
                         "serialno": _this.curIdx,
@@ -245,7 +248,7 @@ var AnswerScene = (function (_super) {
             var scene = new AnalysisScene(_this.curSubject, '题目分析');
             ViewManager.getInstance().changeScene(scene);
         }, this);
-        if (this.type == 1) {
+        if (this.type == 1 || this.type == 9) {
             analysisButton.visible = false;
         }
     };
@@ -292,7 +295,7 @@ var AnswerScene = (function (_super) {
         this.commitButton.labelDisplay.text = '提交';
         this.isNext = false;
         this.curIdx = this.curIdx + 1;
-        if (this.type == 1) {
+        if (this.type == 1 || this.type == 9) {
             this.numberText.text = "Q" + this.curIdx;
         }
         if (this._progress)
@@ -315,7 +318,7 @@ var AnswerScene = (function (_super) {
         topic.x = (this.stage.stageWidth - topic.width) / 2;
         this.topic = topic;
         this.topicGroup.addChild(topic);
-        if (this.type == 1) {
+        if (this.type == 1 || this.type == 9) {
             this.analysisButton.visible = false;
         }
         this.scroller.viewport.scrollV = 0;
