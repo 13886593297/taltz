@@ -71,6 +71,44 @@ var Sign = (function (_super) {
         }, this);
         this.createCalendar();
     };
+    Sign.prototype.createSignText = function () {
+        var group = new eui.Group();
+        group.y = 780;
+        this._myGroup.addChild(group);
+        var text1 = new egret.TextField();
+        text1.textFlow = [
+            {
+                text: ' ' + this.signData.signtTotal + ' ',
+                style: { size: 50, underline: true }
+            },
+            { text: '天', style: { size: 40 } },
+            { text: '累计签到', style: { size: 30 } }
+        ];
+        text1.x = 150;
+        text1.y = 20;
+        group.addChild(text1);
+        var text2 = new egret.TextField();
+        text2.textFlow = [
+            {
+                text: ' ' + this.signData.signAllTotal + ' ',
+                style: { size: 50, underline: true }
+            },
+            { text: '人', style: { size: 40 } },
+            { text: '今日签到', style: { size: 30 } }
+        ];
+        text2.x = 420;
+        text2.y = 20;
+        group.addChild(text2);
+        var userinfo = DataManager.getInstance().getUser();
+        var notes = new egret.TextField();
+        notes.text = '你已持续达标' + userinfo.contSignTotal + '天';
+        notes.bold = true;
+        notes.x = 230;
+        notes.y = 250;
+        notes.size = 40;
+        notes.textColor = 0x3a9e53;
+        group.addChild(notes);
+    };
     // 创建日历
     Sign.prototype.createCalendar = function () {
         var group = new eui.Group();
@@ -119,44 +157,6 @@ var Sign = (function (_super) {
             }
         }
         this.createSignText();
-    };
-    Sign.prototype.createSignText = function () {
-        var group = new eui.Group();
-        group.y = 780;
-        this._myGroup.addChild(group);
-        var text1 = new egret.TextField();
-        text1.textFlow = [
-            {
-                text: ' ' + this.signData.signtTotal + ' ',
-                style: { size: 50, underline: true }
-            },
-            { text: '天', style: { size: 40 } },
-            { text: '累计签到', style: { size: 30 } }
-        ];
-        text1.x = 150;
-        text1.y = 20;
-        group.addChild(text1);
-        var text2 = new egret.TextField();
-        text2.textFlow = [
-            {
-                text: ' ' + this.signData.signAllTotal + ' ',
-                style: { size: 50, underline: true }
-            },
-            { text: '人', style: { size: 40 } },
-            { text: '今日签到', style: { size: 30 } }
-        ];
-        text2.x = 420;
-        text2.y = 20;
-        group.addChild(text2);
-        var userinfo = DataManager.getInstance().getUser();
-        var notes = new egret.TextField();
-        notes.text = '你已持续达标' + userinfo.contSignTotal + '天';
-        notes.bold = true;
-        notes.x = 230;
-        notes.y = 250;
-        notes.size = 40;
-        notes.textColor = 0x3a9e53;
-        group.addChild(notes);
     };
     return Sign;
 }(egret.DisplayObjectContainer));

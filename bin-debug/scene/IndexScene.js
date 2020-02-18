@@ -73,49 +73,48 @@ var IndexScene = (function (_super) {
         });
         // 初始化游戏数据
         Http.getInstance().post(Url.HTTP_GAME_INIT, "", function (json) {
+            var curDate = new Date();
+            var week = curDate.getDay();
             if (json.data.isNeedSign) {
-                var curDate = new Date();
-                var week = curDate.getDay();
-                // week = 6
                 if (week == 6 || week == 0) {
                     Http.getInstance().post(Url.HTTP_SIGN, {}, function (data) { });
                 }
                 else {
                     _this.showSignInIcon();
                 }
-                if (!DataManager.getInstance().hasShowSignIn) {
-                    Http.getInstance().post(Url.HTTP_SIGNINFO, {}, function (data) {
-                        DataManager.getInstance().setSign(data.data);
-                        //需要签到
-                        //更新用户数据
-                        Http.getInstance().post(Url.HTTP_USER_BASE_INFO, "", function (info) {
-                            DataManager.getInstance().updateUserInfo(info.data);
-                            _this.userView.refresh();
-                        });
-                        var sign = new Sign();
-                        _this.addChildAt(sign, 100);
-                        _this.sign = sign;
-                        sign.addEventListener(eui.UIEvent.CLOSING, function () {
-                            _this.sign = null;
+            }
+            if (!DataManager.getInstance().hasShowSignIn) {
+                Http.getInstance().post(Url.HTTP_SIGNINFO, {}, function (data) {
+                    DataManager.getInstance().setSign(data.data);
+                    //需要签到
+                    //更新用户数据
+                    Http.getInstance().post(Url.HTTP_USER_BASE_INFO, "", function (info) {
+                        DataManager.getInstance().updateUserInfo(info.data);
+                        _this.userView.refresh();
+                    });
+                    var sign = new Sign();
+                    _this.addChildAt(sign, 100);
+                    _this.sign = sign;
+                    sign.addEventListener(eui.UIEvent.CLOSING, function () {
+                        _this.sign = null;
+                        if (json.data.isNeedSign) {
+                            _this.showDailyTasks();
+                        }
+                    }, _this);
+                    var timer = new egret.Timer(5000, 1);
+                    //注册事件侦听器
+                    timer.addEventListener(egret.TimerEvent.TIMER, function () {
+                        if (_this.sign) {
+                            _this.removeChild(_this.sign);
                             if (json.data.isNeedSign) {
                                 _this.showDailyTasks();
                             }
-                        }, _this);
-                        var timer = new egret.Timer(5000, 1);
-                        //注册事件侦听器
-                        timer.addEventListener(egret.TimerEvent.TIMER, function () {
-                            if (_this.sign) {
-                                _this.removeChild(_this.sign);
-                                if (json.data.isNeedSign) {
-                                    _this.showDailyTasks();
-                                }
-                            }
-                        }, _this);
-                        //开始计时
-                        timer.start();
-                    });
-                    DataManager.getInstance().hasShowSignIn = true;
-                }
+                        }
+                    }, _this);
+                    //开始计时
+                    timer.start();
+                });
+                DataManager.getInstance().hasShowSignIn = true;
             }
         });
         var url = window.location.href.split('#')[0];

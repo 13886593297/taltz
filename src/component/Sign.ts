@@ -81,6 +81,49 @@ class Sign extends egret.DisplayObjectContainer {
         this.createCalendar()
     }
 
+    private createSignText() {
+        let group = new eui.Group()
+        group.y = 780
+        this._myGroup.addChild(group)
+
+        let text1 = new egret.TextField()
+        text1.textFlow = [
+            {
+                text: ' ' + this.signData.signtTotal + ' ',
+                style: { size: 50, underline: true }
+            },
+            { text: '天', style: { size: 40 } },
+            { text: '累计签到', style: { size: 30 } }
+        ]
+        text1.x = 150
+        text1.y = 20
+        group.addChild(text1)
+
+        let text2 = new egret.TextField()
+        text2.textFlow = [
+            {
+                text: ' ' + this.signData.signAllTotal + ' ',
+                style: { size: 50, underline: true }
+            },
+            { text: '人', style: { size: 40 } },
+            { text: '今日签到', style: { size: 30 } }
+        ]
+        text2.x = 420
+        text2.y = 20
+        group.addChild(text2)
+
+        let userinfo = DataManager.getInstance().getUser()
+
+        let notes = new egret.TextField()
+        notes.text = '你已持续达标' + userinfo.contSignTotal + '天'
+        notes.bold = true
+        notes.x = 230
+        notes.y = 250
+        notes.size = 40
+        notes.textColor = 0x3a9e53
+        group.addChild(notes)
+    }
+
     // 创建日历
     private createCalendar() {
         let group = new eui.Group()
@@ -133,49 +176,6 @@ class Sign extends egret.DisplayObjectContainer {
         }
 
         this.createSignText()
-    }
-
-    private createSignText() {
-        let group = new eui.Group()
-        group.y = 780
-        this._myGroup.addChild(group)
-
-        let text1 = new egret.TextField()
-        text1.textFlow = [
-            {
-                text: ' ' + this.signData.signtTotal + ' ',
-                style: { size: 50, underline: true }
-            },
-            { text: '天', style: { size: 40 } },
-            { text: '累计签到', style: { size: 30 } }
-        ]
-        text1.x = 150
-        text1.y = 20
-        group.addChild(text1)
-
-        let text2 = new egret.TextField()
-        text2.textFlow = [
-            {
-                text: ' ' + this.signData.signAllTotal + ' ',
-                style: { size: 50, underline: true }
-            },
-            { text: '人', style: { size: 40 } },
-            { text: '今日签到', style: { size: 30 } }
-        ]
-        text2.x = 420
-        text2.y = 20
-        group.addChild(text2)
-
-        let userinfo = DataManager.getInstance().getUser()
-
-        let notes = new egret.TextField()
-        notes.text = '你已持续达标' + userinfo.contSignTotal + '天'
-        notes.bold = true
-        notes.x = 230
-        notes.y = 250
-        notes.size = 40
-        notes.textColor = 0x3a9e53
-        group.addChild(notes)
     }
 }
 
