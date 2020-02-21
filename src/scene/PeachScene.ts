@@ -210,6 +210,11 @@ class PeachScene extends Scene {
         water_success_text.textColor = 0x7fc871
         wateringTip.addChild(water_success_text)
 
+        let isQuit = false
+        this.addEventListener(egret.Event.REMOVED,() => {
+            isQuit = true
+        }, this)
+
         // 浇水动画完成后显示浇水成功提示，再开始绘制桃子
         egret.Tween.get(kettleGroup)
             .to({ alpha: 1 }, 500).wait(2000)
@@ -217,6 +222,7 @@ class PeachScene extends Scene {
                 egret.Tween.get(wateringTip)
                     .to({ alpha: 1 }, 500).wait(1000)
                     .to({ alpha: 0 }, 500).call(() => {
+                        if (isQuit) return
                         this.drawPeach()
                     })
             })
