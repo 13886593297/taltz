@@ -17,46 +17,20 @@ var LineInfo = (function (_super) {
         return _this;
     }
     LineInfo.prototype.init = function () {
-        var stage = ViewManager.getInstance().stage;
-        this.width = 650;
-        this.anchorOffsetX = 325;
-        this.x = 375; //stage.stageWidth/2;
-        var topline = Util.createBitmapByName("result_line_top_png");
-        topline.width = 450;
-        this.addChild(topline);
-        var textField = new egret.TextField();
-        this.textField = textField;
-        textField.text = this.text;
-        // textField.textColor = Config.COLOR_YELLOW;
-        textField.width = 420;
-        textField.size = 26;
-        var height = textField.numLines * 50;
-        this.height = height;
-        textField.textAlign = egret.HorizontalAlign.CENTER;
-        textField.verticalAlign = egret.VerticalAlign.MIDDLE;
-        textField.x = 115;
-        textField.lineSpacing = 10;
-        textField.y = 20;
-        // textField.height = 60
-        this.addChild(textField);
-        var bottomline = Util.createBitmapByName("result_line_bottom_png");
-        // bottomline.anchorOffsetX = 225;
-        // bottomline.rotation = 180;
-        bottomline.x = 190;
-        bottomline.y = height - 20;
-        this.bottomLine = bottomline;
-        this.addChild(bottomline);
+        var stageW = ViewManager.getInstance().stage.stageWidth;
+        var tip = new egret.TextField;
+        tip.text = this.text;
+        tip.width = 440;
+        tip.x = (stageW - tip.width) / 2;
+        tip.y = 680;
+        tip.textColor = Config.COLOR_MAINCOLOR;
+        tip.size = 40;
+        tip.textAlign = 'center';
+        this.tip = tip;
+        this.addChild(tip);
     };
     LineInfo.prototype.setText = function (text) {
-        if (this.textField)
-            this.textField.text = text;
-    };
-    LineInfo.prototype.setTextFlow = function (textFlow) {
-        if (this.textField)
-            this.textField.textFlow = textFlow;
-        this.height = this.textField.textHeight + 30;
-        this.bottomLine.y = this.height - 25;
-        console.log('this.height:', this.height);
+        this.tip.text = text;
     };
     return LineInfo;
 }(eui.Group));

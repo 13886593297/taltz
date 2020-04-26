@@ -24,17 +24,21 @@ var RankScene = (function (_super) {
         var _this = this;
         _super.prototype.setBackground.call(this);
         Util.setTitle('排行榜');
+        this._width = this.stage.stageWidth;
+        this._height = this.stage.stageHeight;
         this.initTitle();
         // 请求个人数据
         this.getRank(Url.HTTP_PERSON_RANK_LIST, this.personPage, this.size)
             .then(function (data) {
-            _this.personRank = data;
+            _this.personRank = data.list;
+            _this.personPage = data.page;
             _this.initRanker(_this.currentIdx);
         });
         // 请求战队数据
         this.getRank(Url.HTTP_TEAM_RANK_LIST, this.teamPage, this.size)
             .then(function (data) {
-            _this.teamRank = data;
+            _this.teamRank = data.list;
+            _this.teamPage = data.page;
         });
     };
     /**
@@ -44,16 +48,18 @@ var RankScene = (function (_super) {
      * @param size 每页显示多少条
      */
     RankScene.prototype.getRank = function (url, page, size) {
-        var _this = this;
         return new Promise(function (resolve) {
             Http.getInstance().post(url, { page: page, size: size }, function (json) {
-                if (json.data.length == _this.size) {
-                    _this.personPage += 1;
+                if (json.data.length == size) {
+                    page += 1;
                 }
                 else {
-                    _this.personPage = -1;
+                    page = -1;
                 }
-                resolve(json.data);
+                resolve({
+                    list: json.data,
+                    page: page
+                });
             });
         });
     };
@@ -65,8 +71,8 @@ var RankScene = (function (_super) {
         this.addChild(selfRank);
         var teamRank = Util.createBitmapByName('rank_title_team_png');
         this.addChild(teamRank);
-        selfRank.x = this.stage.stageWidth / 2 - selfRank.width - 10;
-        teamRank.x = this.stage.stageWidth / 2 + 5;
+        selfRank.x = this._width / 2 - selfRank.width - 10;
+        teamRank.x = this._width / 2 + 5;
         teamRank.y = selfRank.y = y;
         teamRank.touchEnabled = selfRank.touchEnabled = true;
         teamRank.filters = [grayFilter];
@@ -100,8 +106,8 @@ var RankScene = (function (_super) {
         this.addItem(rankDatas, type);
         var myScroller = new eui.Scroller();
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-        myScroller.width = this.stage.stageWidth;
-        myScroller.height = this.stage.stageHeight - 200;
+        myScroller.width = this._width;
+        myScroller.height = this._height - 200;
         myScroller.y = 150;
         //设置viewport
         myScroller.viewport = group;
@@ -109,7 +115,7 @@ var RankScene = (function (_super) {
         this.scrollView = myScroller;
         // 上滑加载更多
         myScroller.addEventListener(eui.UIEvent.CHANGE_END, function () {
-            if (myScroller.viewport.scrollV + 1050 >= myScroller.viewport.contentHeight) {
+            if (myScroller.viewport.scrollV + _this._height >= myScroller.viewport.contentHeight) {
                 _this.loadMoreData();
             }
         }, this);
@@ -120,7 +126,7 @@ var RankScene = (function (_super) {
             var rank = data_1[_i];
             var rankItem = this.rankItemTemplate(type, rank, y);
             y += 200;
-            rankItem.height = 250;
+            rankItem.height = 200;
             this.groupView.addChild(rankItem);
         }
     };
@@ -129,15 +135,18 @@ var RankScene = (function (_super) {
         if (this.currentIdx == 1 && this.personPage > 0) {
             this.getRank(Url.HTTP_PERSON_RANK_LIST, this.personPage, this.size)
                 .then(function (data) {
-                _this.personRank.concat(data);
-                _this.addItem(data, 1, _this.scrollView.viewport.contentHeight);
+                console.log(data);
+                _this.personRank.concat(data.list);
+                _this.personPage = data.page;
+                _this.addItem(data.list, 1, _this.scrollView.viewport.contentHeight);
             });
         }
         if (this.currentIdx == 2 && this.teamPage > 0) {
             this.getRank(Url.HTTP_TEAM_RANK_LIST, this.teamPage, this.size)
                 .then(function (data) {
-                _this.teamRank.concat(data);
-                _this.addItem(data, 2, _this.scrollView.viewport.contentHeight);
+                _this.teamRank.concat(data.list);
+                _this.teamPage = data.page;
+                _this.addItem(data.list, 2, _this.scrollView.viewport.contentHeight);
             });
         }
     };
@@ -146,7 +155,7 @@ var RankScene = (function (_super) {
         rankGroup.y = y;
         // 排名背景
         var rankBg = Util.createBitmapByName('rank_item_bg_png');
-        rankGroup.x = (this.stage.stageWidth - rankBg.width) / 2;
+        rankGroup.x = (this._width - rankBg.width) / 2;
         rankGroup.width = rankBg.width;
         rankGroup.addChild(rankBg);
         // 排名皇冠
@@ -169,12 +178,12 @@ var RankScene = (function (_super) {
         num.textAlign = egret.HorizontalAlign.CENTER;
         num.verticalAlign = egret.VerticalAlign.MIDDLE;
         rankGroup.addChild(num);
-        // 组名
+        // 组名 用户名
         var userInfo = new egret.TextField();
         if (type == 1) {
             userInfo.textFlow = [
                 { text: rank.teamName + '\n', style: { size: 28 } },
-                { text: rank.userName, style: { size: 40 } }
+                { text: Util.getStrByWith(rank.userName, 160, 40), style: { size: 40 } }
             ];
             userInfo.y = 60;
             userInfo.lineSpacing = 10;

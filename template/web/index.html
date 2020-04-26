@@ -119,7 +119,7 @@
     <script src="./libs/socket/socket.io.js"></script>
     <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
     <script>
-        var vConsole = new VConsole();
+        new VConsole();
 
         function GetRequest() {
             var url = location.search; //获取url中"?"符后的字串
@@ -228,8 +228,6 @@
         }
 
         function connectSocket(url) {
-            console.log('链接' + url);
-            console.log(io);
             var socket = io(url);
             return socket;
         }
@@ -237,13 +235,10 @@
         pushHistory();
 
         window.addEventListener("popstate", function (e) {
-            console.log("返回")
             weui.confirm('确认要退出游戏吗？', function () {
-                console.log("1")
                 history.go(-1)
                 wx.closeWindow();
             }, function () {
-                console.log("2")
                 pushHistory();
             });
         }, false);
@@ -255,9 +250,6 @@
             };
             window.history.pushState(state, "title", "#");
         }
-
-        // var vConsole = new VConsole();
-
 
         /*
          * 注意：
@@ -309,9 +301,9 @@
 
         function onMenuShareTimeline(title, link, imgUrl, callback) {
             wx.onMenuShareTimeline({
-                title: '净阶战队邀请您！',
-                link: 'https://gamiwechat-taltz-q.lillyadmin.cn',
-                imgUrl: 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
+                title: title || '净阶战队邀请您！',
+                link: link || 'https://gamiwechat-taltz-q.lillyadmin.cn',
+                imgUrl: imgUrl || 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
                 trigger: function (res) {
                     // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                 },

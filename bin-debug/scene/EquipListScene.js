@@ -87,6 +87,8 @@ var EquipList = (function (_super) {
         return function () {
             if (item.url && item.url.toLowerCase().trim().endsWith('.pdf')) {
                 window.location.href = item.url;
+                // Util.onStopMusic();
+                // showIFrame(item.url+"&wm="+DataManager.getInstance().getUser().thUserId, "返回列表", 2, item.publicTime);
             }
             else {
                 Http.getInstance().post(Url.HTTP_EQUIP_DETAIL, { conid: item.contentId }, function (data) {
@@ -94,6 +96,7 @@ var EquipList = (function (_super) {
                     var s1 = base.decode(data.data.contentTxt);
                     Util.onStopMusic();
                     showIFrame(_this.config.bg.slice(0, -4), s1, item.publicTime);
+                    // showIFrame(this.config.bg.slice(0, -4), s1, 1, item.publicTime)
                 });
             }
         };

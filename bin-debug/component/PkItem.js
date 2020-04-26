@@ -17,31 +17,26 @@ var PkItem = (function (_super) {
         return _this;
     }
     PkItem.prototype.init = function () {
-        var stage = ViewManager.getInstance().stage;
-        this.width = 513;
-        this.height = 261;
-        this.anchorOffsetX = this.width / 2;
-        this.x = stage.stageWidth / 2;
-        var bg = Util.createBitmapByName("pk_bg_png");
-        bg.width = this.width;
-        bg.height = this.height;
-        this.addChild(bg);
+        var stageW = ViewManager.getInstance().stage.stageWidth;
         var icon = Util.createBitmapByName(this.data.icon);
-        icon.width = this.data.iconWidth;
-        icon.anchorOffsetX = icon.width / 2;
-        icon.anchorOffsetY = 70;
-        icon.x = 100;
-        icon.y = this.height / 2;
+        icon.x = (stageW - icon.width) / 2;
         this.addChild(icon);
-        var title = new egret.TextField();
-        title.text = this.data.title;
-        title.width = this.width / 2;
-        title.height = this.height;
-        title.x = 190;
-        title.y = -25;
-        title.verticalAlign = egret.VerticalAlign.MIDDLE;
-        title.size = 50;
-        this.addChild(title);
+        if (this.data.title) {
+            var titleBg = Util.createBitmapByName('pk_list_text_bg_png');
+            titleBg.x = (stageW - titleBg.width) / 2;
+            titleBg.y = icon.height + 20;
+            this.addChild(titleBg);
+            var title = new egret.TextField();
+            title.text = this.data.title;
+            title.width = titleBg.width;
+            title.height = titleBg.height;
+            title.x = titleBg.x;
+            title.y = titleBg.y - 5;
+            title.verticalAlign = egret.VerticalAlign.MIDDLE;
+            title.textAlign = 'center';
+            title.size = 30;
+            this.addChild(title);
+        }
     };
     return PkItem;
 }(eui.Group));

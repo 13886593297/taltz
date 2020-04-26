@@ -357,42 +357,41 @@ class DataManager extends egret.EventDispatcher {
         console.log('users', roomUsers);
         this.roomData.users = roomUsers;
 
-        /**
         
-        
-                this.roomData.pkResult = {
-                    winner: 1, // 0 平局 1：绿队 2蓝队 
-                    end: 0,//比赛未结束 1 已结束
-                    mvp: [2, 6],
-                    score: {
-                        1: 5,
-                        2: 3
-                    },
-                    result: {
-                        1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 4, 7: 2, 8: 4, 9: 1, 10: 5
-                    }
-                }
-                this.roomData.pkData = {
-                    pkCode: 1233333,
-                    pkType: 2,
-                    questions: [{ id: 961 }, { id: 962 }, { id: 963 }],
-                    users: {
-                        1: {
-                            nickName: '张三', avatar: null, status: 1, position: 1,
-                        },
-                        2: {
-                            nickName: '王五', avatar: null, status: 1, position: 6,
-                        },
-                    },
-                    result: {
-                        score: {
-                            1: 50,
-                            2: 30
-                        },
-                        winner: 1,
-                    }
-                }
-         */
+        // test begin
+        // this.roomData.pkResult = {
+        //     winner: 2, // 0 平局 1：绿队 2蓝队 
+        //     end: 1,//比赛未结束 1 已结束
+        //     mvp: [2, 6],
+        //     score: {
+        //         1: 5,
+        //         2: 3
+        //     },
+        //     result: {
+        //         1: 1, 2: 4, 3: 3, 4: 4, 5: 5, 6: 4, 7: 2, 8: 4, 9: 1, 10: 5
+        //     }
+        // }
+        // this.roomData.pkData = {
+        //     pkCode: 1233333,
+        //     pkType: 2,
+        //     questions: [{ id: 961 }, { id: 962 }, { id: 963 }],
+        //     users: {
+        //         1: {
+        //             nickName: '周武Zhou Wu周武Zhou Wu', avatar: 'http://127.0.0.1:8360/uploads/avatar/13886593297_avatar.jpg', status: 1, position: 1,
+        //         },
+        //         2: {
+        //             nickName: '王五', avatar: 'http://127.0.0.1:8360/uploads/avatar/13886593297_avatar.jpg', status: 1, position: 6,
+        //         },
+        //     },
+        //     result: {
+        //         score: {
+        //             1: 50,
+        //             2: -30
+        //         },
+        //         winner: 1,
+        //     }
+        // }
+        // test end
     }
 
     /**更新房间自己的数据 */

@@ -7,24 +7,30 @@ class RankScene extends Scene {
     private teamPage = 1
     private personPage = 1
     private scrollView
+    private _width
+    private _height
 
     public init() {
         super.setBackground()
         Util.setTitle('排行榜')
+        this._width = this.stage.stageWidth
+        this._height = this.stage.stageHeight
 
         this.initTitle()
 
         // 请求个人数据
         this.getRank(Url.HTTP_PERSON_RANK_LIST, this.personPage, this.size)
             .then(data => {
-                this.personRank = data
+                this.personRank = data.list
+                this.personPage = data.page
                 this.initRanker(this.currentIdx)
             })
 
         // 请求战队数据
         this.getRank(Url.HTTP_TEAM_RANK_LIST, this.teamPage, this.size)
             .then(data => {
-                this.teamRank = data
+                this.teamRank = data.list
+                this.teamPage = data.page
             })
     }
 
@@ -37,12 +43,15 @@ class RankScene extends Scene {
     private getRank(url, page, size): any {
         return new Promise(resolve => {
             Http.getInstance().post(url, { page, size }, json => {
-                if (json.data.length == this.size) {
-                    this.personPage += 1
+                if (json.data.length == size) {
+                    page += 1
                 } else {
-                    this.personPage = -1
+                    page = -1
                 }
-                resolve(json.data)
+                resolve({
+                    list: json.data, 
+                    page
+                })
             })
         })
     }
@@ -56,8 +65,8 @@ class RankScene extends Scene {
 
         let teamRank = Util.createBitmapByName('rank_title_team_png')
         this.addChild(teamRank)
-        selfRank.x = this.stage.stageWidth / 2 - selfRank.width - 10
-        teamRank.x = this.stage.stageWidth / 2 + 5
+        selfRank.x = this._width / 2 - selfRank.width - 10
+        teamRank.x = this._width / 2 + 5
         teamRank.y = selfRank.y = y
         teamRank.touchEnabled = selfRank.touchEnabled = true
         teamRank.filters = [grayFilter]
@@ -95,8 +104,8 @@ class RankScene extends Scene {
         this.addItem(rankDatas, type)
         var myScroller: eui.Scroller = new eui.Scroller()
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-        myScroller.width = this.stage.stageWidth
-        myScroller.height = this.stage.stageHeight - 200
+        myScroller.width = this._width
+        myScroller.height = this._height - 200
         myScroller.y = 150
         //设置viewport
         myScroller.viewport = group
@@ -105,7 +114,7 @@ class RankScene extends Scene {
 
         // 上滑加载更多
         myScroller.addEventListener(eui.UIEvent.CHANGE_END, () => {
-            if (myScroller.viewport.scrollV + 1050 >= myScroller.viewport.contentHeight) {
+            if (myScroller.viewport.scrollV + this._height >= myScroller.viewport.contentHeight) {
                 this.loadMoreData()
             }
         }, this)
@@ -115,7 +124,7 @@ class RankScene extends Scene {
         for (let rank of data) {
             let rankItem = this.rankItemTemplate(type, rank, y)
             y += 200
-            rankItem.height = 250
+            rankItem.height = 200
             this.groupView.addChild(rankItem)
         }
     }
@@ -124,16 +133,19 @@ class RankScene extends Scene {
         if (this.currentIdx == 1 && this.personPage > 0) {
             this.getRank(Url.HTTP_PERSON_RANK_LIST, this.personPage, this.size)
                 .then(data => {
-                    this.personRank.concat(data)
-                    this.addItem(data, 1, this.scrollView.viewport.contentHeight)
+                    console.log(data)
+                    this.personRank.concat(data.list)
+                    this.personPage = data.page
+                    this.addItem(data.list, 1, this.scrollView.viewport.contentHeight)
                 })
         }
 
         if (this.currentIdx == 2 && this.teamPage > 0) {
             this.getRank(Url.HTTP_TEAM_RANK_LIST, this.teamPage, this.size)
                 .then(data => {
-                    this.teamRank.concat(data)
-                    this.addItem(data, 2, this.scrollView.viewport.contentHeight)
+                    this.teamRank.concat(data.list)
+                    this.teamPage = data.page
+                    this.addItem(data.list, 2, this.scrollView.viewport.contentHeight)
                 })
         }
     }
@@ -144,7 +156,7 @@ class RankScene extends Scene {
 
         // 排名背景
         let rankBg = Util.createBitmapByName('rank_item_bg_png')
-        rankGroup.x = (this.stage.stageWidth - rankBg.width) / 2
+        rankGroup.x = (this._width - rankBg.width) / 2
         rankGroup.width = rankBg.width
         rankGroup.addChild(rankBg)
 
@@ -170,12 +182,12 @@ class RankScene extends Scene {
         num.verticalAlign = egret.VerticalAlign.MIDDLE
         rankGroup.addChild(num)
 
-        // 组名
+        // 组名 用户名
         let userInfo = new egret.TextField()
         if (type == 1) {
             userInfo.textFlow = [
                 { text: rank.teamName + '\n', style: { size: 28 } },
-                { text: rank.userName, style: { size: 40 } }
+                { text: Util.getStrByWith(rank.userName, 160, 40), style: { size: 40 } }
             ]
             userInfo.y = 60
             userInfo.lineSpacing = 10

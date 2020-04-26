@@ -21,6 +21,8 @@ var TeamRankScene = (function (_super) {
     TeamRankScene.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this);
+        this._width = this.stage.stageWidth;
+        this._height = this.stage.stageHeight;
         var bg = Util.createBitmapByName("teamRank_png");
         this.addChild(bg);
         //请求团队数据
@@ -43,8 +45,8 @@ var TeamRankScene = (function (_super) {
         this.addItem(this.personRank);
         var myScroller = new eui.Scroller();
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-        myScroller.width = this.stage.stageWidth;
-        myScroller.height = this.stage.stageHeight - 200;
+        myScroller.width = this._width;
+        myScroller.height = this._height - 200;
         myScroller.y = 150;
         //设置viewport
         myScroller.viewport = group;
@@ -52,18 +54,19 @@ var TeamRankScene = (function (_super) {
         this.scrollView = myScroller;
         // 上滑加载更多
         myScroller.addEventListener(eui.UIEvent.CHANGE_END, function () {
-            if (myScroller.viewport.scrollV + 1050 >= myScroller.viewport.contentHeight) {
+            if (myScroller.viewport.scrollV + _this._height >= myScroller.viewport.contentHeight) {
                 _this.loadMoreData();
             }
         }, this);
     };
     TeamRankScene.prototype.addItem = function (data, y) {
         if (y === void 0) { y = 60; }
+        console.log(data);
         for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
             var rank = data_1[_i];
             var rankItem = this.rankItemTemplate(rank, y);
             y += 200;
-            rankItem.height = 250;
+            rankItem.height = 200;
             this.groupView.addChild(rankItem);
         }
     };
@@ -72,7 +75,7 @@ var TeamRankScene = (function (_super) {
         rankGroup.y = y;
         // 排名背景
         var rankBg = Util.createBitmapByName('rank_item_bg_png');
-        rankGroup.x = (this.stage.stageWidth - rankBg.width) / 2;
+        rankGroup.x = (this._width - rankBg.width) / 2;
         rankGroup.width = rankBg.width;
         rankGroup.addChild(rankBg);
         // 排名皇冠
@@ -99,7 +102,7 @@ var TeamRankScene = (function (_super) {
         var userInfo = new egret.TextField();
         userInfo.textFlow = [
             { text: item.teamName + '\n', style: { size: 28 } },
-            { text: item.userName, style: { size: 40 } }
+            { text: Util.getStrByWith(item.userName, 160, 40), style: { size: 40 } }
         ];
         userInfo.y = 60;
         userInfo.lineSpacing = 10;
@@ -131,6 +134,7 @@ var TeamRankScene = (function (_super) {
         var _this = this;
         if (this.personPage > 0) {
             Http.getInstance().post(Url.HTTP_TEAM_PERSON_RANK_LIST, { tid: this.teamid, page: this.personPage, size: this.size }, function (json) {
+                console.log(json);
                 if (json.data.length == _this.size) {
                     _this.personPage += 1;
                 }
@@ -138,7 +142,7 @@ var TeamRankScene = (function (_super) {
                     _this.personPage = -1;
                 }
                 _this.personRank.concat(json.data);
-                _this.addItem(_this.personRank);
+                _this.addItem(json.data, _this.scrollView.viewport.contentHeight);
             });
         }
     };

@@ -1,60 +1,56 @@
+class VProgress extends eui.Group {
+    private thumb
+    private max
+    private process_text
 
-class VProgress extends eui.Group{
-
-
-    private thumb;
-    private type;
-    private max;
-
-    private readonly config = {
-        "1":{
-            bg:'v_progress_bg_png',
-            thumb:'v_progress_thumb_png'
-        },
-        "2":{
-            bg:'v_progress_bg2_png',
-            thumb:'v_progress_thumb2_png'
-        }
+    constructor(max = 10) {
+        super()
+        this.max = max
+        this.init()
     }
 
-    constructor(type=1,max=10){
-        super();
-        this.type = type;
-        this.max = max;
-        this.init();
+    public init() {
+        this.width = 40
+        this.height = 430
+
+        let bg = Util.createBitmapByName('pk_progress_bg_png')
+        bg.width = this.width
+        bg.height = this.height
+        this.addChild(bg)
+
+        let thumb = Util.createBitmapByName('pk_thumb_pb_png')
+        thumb.fillMode = egret.BitmapFillMode.REPEAT
+        thumb.height = 43
+        thumb.y = bg.height - thumb.height
+        this.addChild(thumb)
+
+        let shape: egret.Shape = new egret.Shape()
+        shape.graphics.beginFill(0xff0000, 1)
+        shape.graphics.drawRoundRect(0, 0, this.width, this.height, 26, 26)
+        shape.graphics.endFill()
+        this.addChild(shape)
+        thumb.mask = shape
+        this.thumb = thumb
+
+        let process_text = new egret.TextField
+        process_text.text = '1/' + this.max
+        process_text.x = 6
+        process_text.y = this.height + 40
+        process_text.width = 100
+        process_text.height = 50
+        process_text.anchorOffsetX = 50
+        process_text.anchorOffsetY = 25
+        process_text.rotation = 90
+        process_text.textColor = 0x36b134
+        this.addChild(process_text)
+        this.process_text = process_text
     }
 
-    public init(){
-
-        this.width = 26
-        this.height = 600;
-
-        let bg = Util.createBitmapByName(this.config[this.type].bg)
-        bg.width = this.width;
-        bg.height = this.height;
-        this.addChild(bg);
-
-        let thumb = Util.createBitmapByName(this.config[this.type].thumb)
-        thumb.fillMode = egret.BitmapFillMode.REPEAT;
-        thumb.height = 250;
-        thumb.y = bg.height - thumb.height;
-        this.addChild(thumb);
-        var shape:egret.Shape = new egret.Shape();
-        shape.graphics.beginFill( 0xff0000, 1);
-        shape.graphics.drawRoundRect(0 ,0,26,600 ,26 ,26)
-        shape.graphics.endFill();
-        this.addChild(shape);
-        thumb.mask = shape;
-        this.thumb = thumb;
-    } 
-
-
-
-    public setRate(rate){
-        let height = this.height*rate/this.max;
-        this.thumb.height = height;
-        this.thumb.y = this.height - height;
+    public setRate(rate) {
+        if (rate > 10) return
+        let height = this.height * rate / this.max
+        this.thumb.height = height
+        this.thumb.y = this.height - height
+        this.process_text.text = rate + '/' + this.max
     }
-
-
 }

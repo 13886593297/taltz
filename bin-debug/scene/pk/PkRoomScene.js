@@ -13,18 +13,8 @@ var PkRoomScene = (function (_super) {
     function PkRoomScene(model) {
         var _this = _super.call(this) || this;
         _this.titles = {
-            '6': [
-                { text: "10人房", style: { "size": 28, bold: true, textColor: 0xffffff } },
-                { text: " | ", style: { "size": 30, textColor: 0xffffff } },
-                { text: "6", style: { "size": 38, bold: true, textColor: Config.COLOR_YELLOW } },
-                { text: "人房", style: { "size": 34, bold: true, textColor: Config.COLOR_YELLOW } }
-            ],
-            '10': [
-                { text: "10", style: { "size": 38, bold: true, textColor: Config.COLOR_YELLOW } },
-                { text: "人房", style: { "size": 34, textColor: Config.COLOR_YELLOW } },
-                { text: " | ", style: { "size": 28 } },
-                { text: "6人房", style: { "size": 30, bold: true } }
-            ],
+            '6': ['room_six_png', 'room_ten_gray_png'],
+            '10': ['room_six_gray_png', 'room_ten_png'],
         };
         _this.roomList = {
             6: [],
@@ -33,9 +23,63 @@ var PkRoomScene = (function (_super) {
         _this.canJump = false;
         _this.name = "room";
         _this.model = model;
-        _this.roomNumber = RoomNumber.TEN;
+        _this.roomNumber = RoomNumber.SIX;
         return _this;
     }
+    PkRoomScene.prototype.init = function () {
+        var _this = this;
+        _super.prototype.setBackground.call(this);
+        this.initEvent();
+        var y = 100;
+        var roomSix = new Title(this.titles[this.roomNumber][0]);
+        roomSix.x = this.stage.stageWidth / 2 - roomSix.width - 20;
+        roomSix.y = y;
+        this.addChild(roomSix);
+        roomSix.touchEnabled = true;
+        roomSix.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            if (_this.roomNumber == RoomNumber.TEN) {
+                _this.roomNumber = RoomNumber.SIX;
+                _this.initTitle(roomSix, roomTen);
+            }
+        }, this);
+        var roomTen = new Title(this.titles[this.roomNumber][1]);
+        roomTen.x = this.stage.stageWidth / 2 + 10;
+        roomTen.y = y;
+        this.addChild(roomTen);
+        roomTen.touchEnabled = true;
+        roomTen.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            if (_this.roomNumber == RoomNumber.SIX) {
+                _this.roomNumber = RoomNumber.TEN;
+                _this.initTitle(roomSix, roomTen);
+            }
+        }, this);
+        var roomView = new eui.Group();
+        roomView.width = this.stage.stageWidth;
+        // roomView.y = 200
+        var myScroller = new eui.Scroller();
+        //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
+        myScroller.width = this.stage.stageWidth;
+        myScroller.height = this.stage.stageHeight - 400;
+        myScroller.y = 250;
+        //设置viewport
+        myScroller.viewport = roomView;
+        this.addChild(myScroller);
+        this.scrollView = myScroller;
+        this.roomView = roomView;
+        // let data= {"code":0,"data":[{"tableNo":"11001","joinNum":1,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11002","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11003","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11004","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11005","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11006","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11007","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11008","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11009","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11010","joinNum":0,"watchNum":0,"maxJoin":10,"status":0}]}
+        // this.roomList[this.roomNumber] = data.data 
+        // this.updateRoomList()
+    };
+    PkRoomScene.prototype.initTitle = function (roomSix, roomTen) {
+        roomSix.updateTitle(this.titles[this.roomNumber][0]);
+        roomTen.updateTitle(this.titles[this.roomNumber][1]);
+        if (this.roomList[this.roomNumber].length > 0) {
+            this.updateRoomList();
+        }
+        else {
+            SocketX.getInstance().sendMsg(NetEvent.TEAM_ROOM_LIST, { tableType: this.getTableType() });
+        }
+    };
     PkRoomScene.prototype.getTableType = function () {
         switch (this.model) {
             case PkModel.ANSWER:
@@ -97,8 +141,8 @@ var PkRoomScene = (function (_super) {
         }, this, 'room');
         SocketX.getInstance().addEventListener(NetEvent.TEAM_JOIN_IN, function (data) {
             //加入房间 跳转页面
-            //  DataManager.getInstance().setRoomData(item.roomId, this.model, item.roomNumber, JoinType.JOIN);
-            //                 DataManager.getInstance().setRoomUser({});
+            //  DataManager.getInstance().setRoomData(item.roomId, this.model, item.roomNumber, JoinType.JOIN)
+            //                 DataManager.getInstance().setRoomUser({})
             if (data.data.errCode && data.data.errCode > 0) {
                 var confirm_1 = new Confirm(data.data.errMsg, '重新选择', '进入旁观');
                 _this.addChild(confirm_1);
@@ -153,43 +197,6 @@ var PkRoomScene = (function (_super) {
             ViewManager.getInstance().changeScene(battleScene);
         }
     };
-    PkRoomScene.prototype.init = function () {
-        var _this = this;
-        this.initEvent();
-        var y = 80;
-        var title = new Title('');
-        this.addChild(title);
-        title.y = y;
-        var titleText = this.titles[this.roomNumber];
-        title.updateTitle(titleText);
-        title.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            _this.roomNumber = _this.roomNumber == RoomNumber.SIX ? RoomNumber.TEN : RoomNumber.SIX;
-            var titleText = _this.titles[_this.roomNumber];
-            title.updateTitle(titleText);
-            if (_this.roomList[_this.roomNumber].length > 0) {
-                _this.updateRoomList();
-            }
-            else {
-                SocketX.getInstance().sendMsg(NetEvent.TEAM_ROOM_LIST, { tableType: _this.getTableType() });
-            }
-        }, this);
-        var roomView = new eui.Group();
-        roomView.width = this.stage.stageWidth;
-        // roomView.y = 200;
-        var myScroller = new eui.Scroller();
-        //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-        myScroller.width = this.stage.stageWidth;
-        myScroller.height = this.stage.stageHeight - 300;
-        myScroller.y = 200;
-        //设置viewport
-        myScroller.viewport = roomView;
-        this.addChild(myScroller);
-        this.scrollView = myScroller;
-        this.roomView = roomView;
-        // let data= {"code":0,"data":[{"tableNo":"11001","joinNum":1,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11002","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11003","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11004","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11005","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11006","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11007","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11008","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11009","joinNum":0,"watchNum":0,"maxJoin":10,"status":0},{"tableNo":"11010","joinNum":0,"watchNum":0,"maxJoin":10,"status":0}]}
-        // this.roomList[this.roomNumber] = data.data; 
-        // this.updateRoomList();
-    };
     PkRoomScene.prototype.updateScene = function () {
         this.updateRoomList();
     };
@@ -205,17 +212,18 @@ var PkRoomScene = (function (_super) {
                 item.model = this_1.model;
                 item.roomNumber = this_1.roomNumber;
                 var roomItem = new RoomItem(item);
+                roomItem.x = (this_1.stage.stageWidth - roomItem.width) / 2;
                 roomItem.y = y;
                 this_1.roomView.addChild(roomItem);
                 roomItem.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
                     //根据item 状态进行判断
                     console.log(item);
-                    // let teamMatch = new TeamMatchScene();
-                    // //  let teamMatch = new TeamBattleScene();
-                    // ViewManager.getInstance().changeScene(teamMatch);
+                    // let teamMatch = new TeamMatchScene()
+                    // //  let teamMatch = new TeamBattleScene()
+                    // ViewManager.getInstance().changeScene(teamMatch)
                     _this.tableNo = item.tableNo;
                     if (item.status == RoomStatus.PK) {
-                        var confirm_2 = new Confirm('比赛进行中 \n是否进入观战模式');
+                        var confirm_2 = new Confirm("\u623F\u95F4" + item.tableNo + "\u6BD4\u8D5B\u8FDB\u884C\u4E2D\n\u662F\u5426\u8FDB\u5165\u89C2\u6218\u6A21\u5F0F\uFF1F");
                         _this.addChild(confirm_2);
                         confirm_2.addEventListener(ConfirmEvent.CONFIRM_BUTTON_YES, function () {
                             _this.joinType = JoinType.OBSEVER;
@@ -223,7 +231,7 @@ var PkRoomScene = (function (_super) {
                         }, _this);
                     }
                     else {
-                        var confirm_3 = new Confirm('请选择您进入房间的角色身份', '我是参赛者', '我是旁观者');
+                        var confirm_3 = new Confirm('请选择您进入房间的\n角色身份', '参赛者', '旁观者');
                         _this.addChild(confirm_3);
                         confirm_3.addEventListener(ConfirmEvent.CONFIRM_BUTTON_YES, function () {
                             //TODO  发送进入房间时间
@@ -237,7 +245,7 @@ var PkRoomScene = (function (_super) {
                         }, _this);
                     }
                 }, this_1);
-                y += 200;
+                y += 180;
                 this_1.roomListViews[item.tableNo] = roomItem;
             };
             var this_1 = this;
@@ -254,76 +262,66 @@ var RoomItem = (function (_super) {
     __extends(RoomItem, _super);
     function RoomItem(data) {
         var _this = _super.call(this) || this;
-        _this.models = {
-            "3": "抢答题",
-            "4": "知识题"
-        };
         _this.data = data;
         _this.init();
         return _this;
     }
     RoomItem.prototype.init = function () {
-        this.width = 750;
-        this.height = 160;
-        var stage = ViewManager.getInstance().stage;
-        this.x = stage.stageWidth / 2 - 375;
-        var bg = Util.createBitmapByName('bg_level_pass_png');
-        bg.width = 700;
-        bg.x = 25;
-        bg.height = 160;
+        var bg = Util.createBitmapByName('pk_team_list_bg_png');
+        this.width = bg.width;
+        this.height = bg.height;
         this.addChild(bg);
-        var roomText = new egret.TextField();
-        roomText.x = 65;
-        roomText.y = 30;
-        roomText.textColor = Config.COLOR_YELLOW;
-        roomText.verticalAlign = egret.VerticalAlign.MIDDLE;
-        var model = this.models[this.data.model];
-        roomText.textFlow = [
-            { text: model, style: { "size": 28 } },
-            { text: "  房间号: ", style: { "size": 28 } },
-            { text: "" + this.data.tableNo, style: { "size": 38, bold: true } }
-        ];
+        var roomText = new egret.TextField;
+        roomText.text = '房间号';
+        roomText.x = 60;
+        roomText.y = 18;
         this.addChild(roomText);
-        var numberText = new egret.TextField();
-        numberText.x = 65;
-        numberText.y = 90;
-        // numberText.textColor = Config.COLOR_YELLOW;
-        numberText.size = 32;
+        var roomNumber = new egret.TextField;
+        roomNumber.text = this.data.tableNo;
+        roomNumber.width = 100;
+        roomNumber.x = 150;
+        roomNumber.y = 18;
+        roomNumber.textAlign = 'right';
+        this.addChild(roomNumber);
+        var numberText = new egret.TextField;
+        numberText.x = 60;
+        numberText.y = 85;
+        numberText.size = 24;
         var watchNum = this.data.watchNum < 0 ? 0 : this.data.watchNum;
         var joinNum = this.data.joinNum < 0 ? 0 : this.data.joinNum;
         numberText.textFlow = [
-            { text: "观 战: " },
-            { text: watchNum + "\u4EBA    ", style: { "size": 34, } },
-            { text: joinNum + "/" + this.data.maxJoin, style: { "size": 32, } }
+            { text: "\u89C2\u6218" + watchNum + "\u4EBA          " },
+            { text: joinNum + "/" + this.data.maxJoin }
         ];
         this.numberText = numberText;
         this.addChild(numberText);
-        var text = "战场等待中";
-        if (this.data.status == RoomStatus.PK) {
-            text = "团队pk中";
-        }
-        var statusText = new egret.TextField();
-        statusText.height = 160;
-        statusText.verticalAlign = egret.VerticalAlign.MIDDLE;
-        statusText.width = 300;
+        var statusText = new egret.TextField;
+        statusText.text = this.data.status == RoomStatus.PK ? "团队pk中" : "战场等待中";
+        statusText.x = 290;
+        statusText.width = 270;
+        statusText.height = 150;
         statusText.textAlign = egret.HorizontalAlign.RIGHT;
-        statusText.x = 350;
-        statusText.text = text;
-        statusText.size = 42;
+        statusText.verticalAlign = egret.VerticalAlign.MIDDLE;
         this.addChild(statusText);
         this.statusText = statusText;
+        var icon = new egret.Bitmap();
+        icon.texture = RES.getRes(this.data.status == RoomStatus.PK ? 'pk_icon_fighting_png' : 'pk_icon_wait_png');
+        icon.x = this.data.status == RoomStatus.PK ? 570 : 580;
+        icon.y = 57;
+        this.addChild(icon);
+        this.icon = icon;
     };
     RoomItem.prototype.update = function (data) {
         this.data = data;
         var watchNum = this.data.watchNum < 0 ? 0 : this.data.watchNum;
         var joinNum = this.data.joinNum < 0 ? 0 : this.data.joinNum;
         this.numberText.textFlow = [
-            { text: "观 战: " },
-            { text: watchNum + "\u4EBA    ", style: { "size": 34, } },
-            { text: joinNum + "/" + this.data.maxJoin, style: { "size": 32, } }
+            { text: "\u89C2\u6218" + watchNum + "\u4EBA          " },
+            { text: joinNum + "/" + this.data.maxJoin }
         ];
-        var text = this.data.status == RoomStatus.PK ? "团队pk中" : "战场等待中";
-        this.statusText = text;
+        this.statusText = this.data.status == RoomStatus.PK ? "团队pk中" : "战场等待中";
+        this.icon.texture = RES.getRes(this.data.status == RoomStatus.PK ? 'pk_icon_fighting_png' : 'pk_icon_wait_png');
+        this.icon.x = this.data.status == RoomStatus.PK ? 570 : 580;
     };
     return RoomItem;
 }(eui.Group));

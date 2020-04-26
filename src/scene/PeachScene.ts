@@ -93,7 +93,10 @@ class PeachScene extends Scene {
         avatarGroup.addChild(avatar_bg)
 
         // 头像
-        Util.setUserImg(this.userInfo.avatar, 108, 11, 5, avatarGroup)
+        let avatar = Util.setUserImg(this.userInfo.avatar, 108)
+        avatar.x = 11
+        avatar.y = 5
+        avatarGroup.addChild(avatar)
 
         // 积分文字
         let scoreText = new egret.TextField()

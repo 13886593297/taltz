@@ -22,6 +22,7 @@ class ResultScene extends Scene {
 
     public init() {
         super.setBackground()
+        this.isBackHome = true
 
         if (this.type != 9) {
             let group = new eui.Group()
@@ -185,9 +186,5 @@ class ResultScene extends Scene {
         textField.verticalAlign = egret.VerticalAlign.MIDDLE
         group.addChild(textField)
         return group
-    }
-
-    public onBack() {
-        ViewManager.getInstance().jumpHome()
     }
 }

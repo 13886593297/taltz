@@ -31,31 +31,30 @@ var EquipSearch = (function (_super) {
         var _this = this;
         Http.getInstance().post(Url.HTTP_EQUIP_SEARCH, { keywords: this.keywords }, function (data) {
             var group = new eui.Group();
-            group.width = _this.stage.stageWidth;
             _this.addChild(group);
             var bg = Util.createBitmapByName('search_result_bg_png');
-            bg.y = 320;
             bg.x = (_this.stage.stageWidth - bg.width) / 2;
+            bg.y = 320;
             _this.addChild(bg);
             var title = new egret.TextField();
             title.text = '搜索结果列表';
+            title.width = 450;
             title.textColor = 0x7fc871;
             title.size = 32;
-            title.x = 150;
+            title.x = (_this.stage.stageWidth - title.width) / 2;
             title.y = 365;
             _this.addChild(title);
             var y = 0;
+            var scale = 0.75;
             if (data.data != null) {
                 var list = data.data;
                 for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
                     var item = list_1[_i];
                     var equipItem = new EquipItem(item);
-                    equipItem.width = 490;
-                    equipItem.height = 60;
-                    equipItem.scaleX = .75;
-                    equipItem.scaleY = .75;
+                    equipItem.scaleX = scale;
+                    equipItem.scaleY = scale;
                     equipItem.y = y;
-                    y += equipItem.height + 30;
+                    y += equipItem.height * scale;
                     equipItem.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onSeeItemDetail(item), _this);
                     group.addChild(equipItem);
                 }
@@ -74,8 +73,8 @@ var EquipSearch = (function (_super) {
             //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
             myScroller.width = 490;
             myScroller.height = 310;
+            myScroller.x = (_this.stage.stageWidth - myScroller.width) / 2;
             myScroller.y = 430;
-            myScroller.x = 130;
             //设置viewport
             myScroller.viewport = group;
             _this.addChild(myScroller);

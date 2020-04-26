@@ -16,6 +16,8 @@ var Scene = (function (_super) {
         _this.close_btn = 'close_png'; // 关闭按钮
         _this.isnSpecialReturn = false;
         _this.isBackHome = false;
+        _this.backPage = false;
+        _this.flag = true;
         _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.initScene, _this);
         _this.addEventListener(egret.Event.REMOVED_FROM_STAGE, _this.release, _this);
         return _this;
@@ -37,13 +39,22 @@ var Scene = (function (_super) {
         this.addChild(nav_bg);
         nav_bg.touchEnabled = true;
         nav_bg.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            if (!_this.flag)
+                return;
+            _this.flag = false;
             hideIFrame();
             if (_this.isBackHome) {
                 ViewManager.getInstance().jumpHome();
             }
+            else if (_this.backPage) {
+                ViewManager.getInstance().backByName(_this.backPage);
+            }
             else {
                 _this.onBack();
             }
+            setTimeout(function () {
+                _this.flag = true;
+            }, 300);
         }, this);
     };
     Scene.prototype.setBackground = function (bg) {

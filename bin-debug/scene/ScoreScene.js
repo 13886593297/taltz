@@ -16,6 +16,7 @@ var ScoreScene = (function (_super) {
     ScoreScene.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this);
+        this.isBackHome = true;
         var shareGroup = new eui.Group();
         this.addChild(shareGroup);
         // 玩家信息
@@ -48,9 +49,6 @@ var ScoreScene = (function (_super) {
         var trainResult = user.trainResult;
         var rateValue = Math.round(trainResult.trainCorrectCount * 100 / trainResult.trainTotalCount);
         Util.registerShare(shareGroup, ShareType.TRAIN_RESULT, user.nickName, rateValue + '%');
-    };
-    ScoreScene.prototype.onBack = function () {
-        ViewManager.getInstance().jumpHome();
     };
     return ScoreScene;
 }(Scene));

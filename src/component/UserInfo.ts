@@ -107,11 +107,10 @@ class UserInfo extends eui.Group {
         this.group.addChild(iconGroup)
 
         // 头像
-        if (this.type == 'score') {
-            Util.setUserImg(this.userinfo.avatar, 157, 109, 114, this.group)
-        } else {
-            Util.setUserImg(this.userinfo.avatar, 157, 30, 30, this.group)
-        }
+        let avatar = Util.setUserImg(this.userinfo.avatar, 157)
+        avatar.x = this.type == 'score' ? 109 : 30
+        avatar.y = this.type == 'score' ? 114 : 30
+        this.group.addChild(avatar)
 
         // 桃子森林
         var peachWord: egret.Bitmap = Util.createBitmapByName('peachWord_png')
@@ -130,7 +129,6 @@ class UserInfo extends eui.Group {
 
         //人名
         let name = new egret.TextField()
-        name.text = this.userinfo.nickName
         name.textColor = 0xffffff
         if (this.type == 'score') {
             name.x = 410
@@ -144,6 +142,7 @@ class UserInfo extends eui.Group {
             name.width = 220
             name.height = 60
         }
+        name.text = Util.getStrByWith(this.userinfo.nickName, name.width - 40, name.size)
         name.textAlign = egret.HorizontalAlign.CENTER
         name.verticalAlign = egret.VerticalAlign.MIDDLE
         iconGroup.addChild(name)

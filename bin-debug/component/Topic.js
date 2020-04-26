@@ -13,13 +13,14 @@ r.prototype = e.prototype, t.prototype = new r();
  */
 var Topic = (function (_super) {
     __extends(Topic, _super);
-    function Topic(subject, width) {
+    function Topic(subject, width, isTeamAnswer) {
         if (width === void 0) { width = 633; }
         var _this = _super.call(this) || this;
         _this.options = {};
         _this.canSelected = true;
         _this.subject = subject;
         _this.width = width;
+        _this.isTeamAnswer = isTeamAnswer;
         if (_this.subject.type == TopicType.BLANK) {
             _this.initBlank();
         }
@@ -34,7 +35,7 @@ var Topic = (function (_super) {
         var qtitle = new egret.TextField();
         qtitle.y = 10;
         qtitle.width = this.width;
-        qtitle.textColor = 0x36b134;
+        qtitle.textColor = Config.COLOR_MAINCOLOR;
         var titleText = this.subject.title;
         if (this.subject.type == TopicType.MULTIPLE) {
             titleText += "(多选题)";
@@ -42,6 +43,12 @@ var Topic = (function (_super) {
         this.title = qtitle;
         qtitle.text = titleText;
         qtitle.size = 36;
+        if (this.width < 600 && this.width > 400) {
+            qtitle.size = 30;
+        }
+        else if (this.width < 400) {
+            qtitle.size = 24;
+        }
         qtitle.lineSpacing = 10;
         qtitle.textAlign = egret.HorizontalAlign.CENTER;
         this.addChild(qtitle);
@@ -49,7 +56,7 @@ var Topic = (function (_super) {
         var optionNumArr = ['A', 'B', 'C', 'D'];
         this.subject.options.forEach(function (item, i) {
             if (item.name && item.name.length >= 1) {
-                var topicItem = new TopicItem(optionNumArr[i], item, _this.width);
+                var topicItem = new TopicItem(optionNumArr[i], item, _this.width, _this.isTeamAnswer);
                 topicItem.y = y;
                 topicItem.x = 0;
                 _this.addChild(topicItem);
@@ -236,7 +243,10 @@ var Topic = (function (_super) {
      * 设置正确选项
      */
     Topic.prototype.setCorrectItem = function () {
-        this.options[this.subject.result].setStatus(TopicItem.STATUS_CORRECT);
+        var _this = this;
+        this.subject.result.split(',').map(function (key) {
+            _this.options[key].setStatus(TopicItem.STATUS_CORRECT);
+        });
     };
     return Topic;
 }(eui.Group));
@@ -249,7 +259,7 @@ var TopicType;
 })(TopicType || (TopicType = {}));
 var TopicItem = (function (_super) {
     __extends(TopicItem, _super);
-    function TopicItem(optionNum, option, width) {
+    function TopicItem(optionNum, option, width, isTeamAnswer) {
         if (width === void 0) { width = 633; }
         var _this = _super.call(this) || this;
         _this.BG_RES = ['option_normal_png', 'option_select_png', 'option_error_png', 'option_ok_png', 'option_ok_png'];
@@ -257,22 +267,43 @@ var TopicItem = (function (_super) {
         _this.width = width;
         _this.option = option;
         _this.optionNum = optionNum;
+        _this.isTeamAnswer = isTeamAnswer;
         _this.status = TopicItem.STATUS_NORMAL;
         _this.touchEnabled = true;
-        var line = Math.ceil(_this.option.name.length / 14);
-        _this.height = 82 + (line - 1) * 30;
         _this.init();
         return _this;
     }
     TopicItem.prototype.init = function () {
+        var x, width, size, height;
+        if (this.width < 600 && this.width > 400) {
+            x = 150;
+            width = 250;
+            size = 24;
+            height = 30;
+        }
+        else if (this.width < 400) {
+            x = 110;
+            width = 225;
+            size = 20;
+            height = 24;
+        }
+        else {
+            x = 150;
+            width = 420;
+            size = 30;
+            height = 36;
+        }
+        var line = Math.ceil(Util.getWidth(this.option.name, size) / width);
+        this.height = 82 + (line - 1) * height;
         this.initBg();
         // 答案内容
         var text = new egret.TextField();
         text.text = this.option.name;
-        text.width = 420;
-        text.lineSpacing = 10;
-        text.x = 150;
+        text.width = width;
         text.height = this.height;
+        text.lineSpacing = 10;
+        text.x = x;
+        text.size = size;
         text.textAlign = egret.HorizontalAlign.CENTER;
         text.verticalAlign = egret.VerticalAlign.MIDDLE;
         text.textColor = 0x79cd72;
@@ -284,13 +315,14 @@ var TopicItem = (function (_super) {
         this.prefix = prefix;
         prefix.width = 100;
         prefix.height = this.height;
-        prefix.size = 50;
+        prefix.size = 40;
         prefix.textAlign = egret.HorizontalAlign.CENTER;
         prefix.verticalAlign = egret.VerticalAlign.MIDDLE;
         this.addChild(prefix);
     };
     TopicItem.prototype.initBg = function () {
         var bg = Util.createBitmapByName(this.BG_RES[this.status]);
+        bg.width = this.width;
         bg.height = this.height;
         this.bg = bg;
         this.addChild(bg);
@@ -301,6 +333,12 @@ var TopicItem = (function (_super) {
         icon.x = 580;
         icon.y = this.height / 2;
         icon.anchorOffsetY = 24;
+        if (this.width < 600 && this.width > 400) {
+            icon.x = 400;
+        }
+        else if (this.width < 400) {
+            icon.x = 300;
+        }
         this.icon = icon;
         this.addChild(icon);
     };
@@ -331,6 +369,8 @@ var TopicItem = (function (_super) {
         else {
             this.text.textColor = 0xffffff;
         }
+        if (this.isTeamAnswer)
+            return;
         if (status == TopicItem.STATUS_OK || status == TopicItem.STATUS_ERROR) {
             this.icon.visible = true;
             this.icon.texture = RES.getRes(this.ICON_RES[status]);

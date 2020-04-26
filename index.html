@@ -94,6 +94,19 @@
             right: 12vw;
             font-size: 9px;
         }
+
+        /* #iframe_view {
+            width: 100%;
+            border: none;
+        }
+
+        #pdfloading {
+            height: 100%;
+            width:100%;
+            line-height: 300px;
+            text-align: center;
+            vertical-align: middle;
+        } */
     </style>
 </head>
 
@@ -112,14 +125,16 @@
         <img id="egretTitle" src="" alt="">
         <img id="back_button" onclick="onBack()" src="./resource/assets/close.png" alt="" />
         <div id="html_view"></div>
-    </div>
+        <!-- <iframe id="iframe_view"></iframe> -->
+        <!-- <div id="pdfloading" >加载中...</div> -->
+</div>
 
     <script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="./libs/socket/socket.io.js"></script>
     <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
     <script>
-        // var vConsole = new VConsole();
+        // new VConsole();
 
         function GetRequest() {
             var url = location.search; //获取url中"?"符后的字串
@@ -198,6 +213,46 @@
             document.getElementById("html_view").innerHTML = title + `<div id="egretTime">${time}</div>`;
         }
 
+        // function showIFrame(html, title, type, time) {
+        //     document.getElementById("egretFrame").style.display = "inline";
+        //     let html_view = document.getElementById("html_view");
+        //     let iframe = document.getElementById("iframe_view");
+        //     let pdfloading = document.getElementById("pdfloading");
+        //     if(type == 1){
+        //         html_view.style.height=(document.body.clientHeight) +"px";
+        //         iframe.style.display = 'none';
+        //         document.getElementById("egretTitle").src = './resource/assets/Equip/' + html + '_01.png'
+        //         document.getElementById("html_view").innerHTML = title + `<div id="egretTime">${time}</div>`
+        //     } else {
+        //         iframe.style.display = 'none';
+        //         pdfloading.style.display = 'block';
+        //         iframe.src = '/pdf/viewer.html?file='+html;
+        //         if (!/*@cc_on!@*/0) { //如果不是IE，IE的条件注释  
+        //             iframe.onload = function(){
+        //                 iframe.style.height=(document.body.clientHeight) +"px";
+        //                 html_view.innerHTML = '';
+        //                 html_view.style.height = 0;
+        //                 iframe.style.display = 'block';
+        //                 pdfloading.style.display = 'none';
+        //             };  
+        //         } else {  
+        //             iframe.onreadystatechange = function(){ // IE下的节点都有onreadystatechange这个事件  
+        //                 if (iframe.readyState == "complete"){
+        //                     iframe.style.height=(document.body.clientHeight) +"px";
+        //                     html_view.innerHTML = '';
+        //                     html_view.style.height = 0;
+        //                     iframe.style.display = 'block';
+        //                     pdfloading.style.display = 'none';
+        //                 }  
+        //             };  
+        //         }
+        //     }
+            
+        //     if (!title) title = "返回";
+        //     document.getElementById("back_button").innerHTML = title;
+            
+        // }
+
         function hideIFrame() {
             document.getElementById("egretFrame").style.display = "none";
         }
@@ -228,8 +283,6 @@
         }
 
         function connectSocket(url) {
-            console.log('链接' + url);
-            console.log(io);
             var socket = io(url);
             return socket;
         }
@@ -309,9 +362,9 @@
 
         function onMenuShareTimeline(title, link, imgUrl, callback) {
             wx.onMenuShareTimeline({
-                title: '净阶战队邀请您！',
-                link: 'https://gamiwechat-taltz-q.lillyadmin.cn',
-                imgUrl: 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
+                title: title || '净阶战队邀请您！',
+                link: link || 'https://gamiwechat-taltz-q.lillyadmin.cn',
+                imgUrl: imgUrl || 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
                 trigger: function (res) {
                     // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                 },

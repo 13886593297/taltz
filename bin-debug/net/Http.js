@@ -138,7 +138,6 @@ var Url = (function () {
     Url.HTTP_WATERING_INFO = '/game/api/watering/info';
     Url.HTTP_WATERING_DO = '/game/api/watering/do';
     Url.HTTP_WATERING_PICK = '/game/api/watering/pick';
-    Url.HTTP_PK_SOCKET = "http://xujiagui.vicp.cc:12631/proom";
     return Url;
 }());
 __reflect(Url.prototype, "Url");

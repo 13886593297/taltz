@@ -5,6 +5,7 @@ class ScoreScene extends Scene {
 
     public init() {
         super.setBackground()
+        this.isBackHome = true
 
         let shareGroup = new eui.Group()
         this.addChild(shareGroup)
@@ -45,9 +46,4 @@ class ScoreScene extends Scene {
         let rateValue = Math.round(trainResult.trainCorrectCount * 100 / trainResult.trainTotalCount)
         Util.registerShare(shareGroup, ShareType.TRAIN_RESULT, user.nickName, rateValue + '%')
     }
-
-    public onBack() {
-        ViewManager.getInstance().jumpHome()
-    }
-
 }

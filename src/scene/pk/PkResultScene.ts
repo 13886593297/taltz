@@ -1,411 +1,309 @@
-
 class PkResultScene extends Scene {
-
-
-    private result;
-    private shareGroup;
-    private back;
+    private result
+    private shareGroup
+    private back
     constructor(result, back = PkResultBackModel.BACK) {
-        super();
-        this.result = result;
-        this.back = back;
+        super()
+        this.result = result
+        // test begin
+        // this.result = {
+        //     receiver: {
+        //         pkResult: { scoretips: "超过8次,无积分", userAddScore: 0, userAnswerUseTimeTotal: 60 },
+        //         pkUser: { userId: "3", avatar: "http://thirdwx.qlogo.cn/mmopen/vi_32/cKqXyr3j6icxgs4TSy6cpMMkbsWXSdAfXqFkLysDgacAbrzulVqj6eulmZGRianMKqIlL8hWGAAToc8PkcTOGtgA/132", nickName: "希博士" }
+        //     },
+        //     sender: {
+        //         pkResult: { scoretips: "", userAddScore: 10, userAnswerUseTimeTotal: "18" },
+        //         pkUser: { userId: "ohggBuO6DyT39nB116p35TxAp-YQ", avatar: "http://thirdwx.qlogo.cn/mmopen/vi_32/cKqXyr3j6icxgs4TSy6cpMMkbsWXSdAfXqFkLysDgacAbrzulVqj6eulmZGRianMKqIlL8hWGAAToc8PkcTOGtgA/132", nickName: "黄欢" }
+        //     },
+        //     tipsMsg: '本局无效，友谊的小船荡呀荡，but你们都却没有答题',
+        //     status: 1
+        // }
+        // test end
+        this.back = back
     }
 
-
     public init() {
+        super.setBackground()
+        if (ViewManager.getInstance().views.length < 5) {
+            this.isBackHome = true
+        }
 
-        this.width = 750;
-        this.anchorOffsetX = 375;
-        this.x = this.stage.stageWidth / 2;
+        let shareGroup = new eui.Group()
+        this.addChild(shareGroup)
+        this.shareGroup = shareGroup
+        shareGroup.width = this.stage.stageWidth
 
-        // this.nav = '返回'
-        // if (this.back == PkResultBackModel.BACK_HOME) {
-        //     this.nav = '首页'
-        // }
+        let pkResult = this.result
 
+        // 玩家自己
+        let self = pkResult.sender
+        let selfScore = 0
+        let selfTime
+        let selfPkUser = null
+        if (self && self.pkResult && self.pkUser) {
+            selfPkUser = self.pkUser
+            selfScore = self.pkResult.userAddScore
+            selfTime = Util.converTimer(self.pkResult.userAnswerUseTimeTotal)
+        }
 
-        let shareGroup = new eui.Group();
-        this.shareGroup = shareGroup;
-        shareGroup.width = 750;
-        let sky = Util.createBitmapByName("bg_jpg");
-        shareGroup.addChildAt(sky, -2);
-        let stageW = this.stage.stageWidth;
-        let stageH = this.stage.stageHeight;
-        sky.width = stageW;
-        sky.height = stageH;
-        this.addChild(shareGroup);
+        let leftUser = new PkUser(selfPkUser, "left", selfScore + '分', selfTime)
+        leftUser.y = 120
+        shareGroup.addChild(leftUser)
 
-        let pkResult = this.result;
+        // 对手
+        let opponent = pkResult.receiver
+        let opponentScore = 0
+        let opponentTime
+        let opponentPkUser = null
+        if (opponent && opponent.pkResult && opponent.pkUser) {
+            opponentPkUser = opponent.pkUser
+            opponentScore = opponent.pkResult.userAddScore
+            opponentTime = Util.converTimer(opponent.pkResult.userAnswerUseTimeTotal)
+        }
 
-        let sender = pkResult.sender;
+        let rightUser = new PkUser(opponentPkUser, 'right', opponentScore + '分', opponentTime)
+        rightUser.x = this.stage.stageWidth - rightUser.width
+        rightUser.y = 120
+        shareGroup.addChild(rightUser)
 
-        let userinfo = DataManager.getInstance().getUser();
-
-        let senderScore = 0;
-        if (sender && sender.pkResult) senderScore = sender.pkResult.userAddScore
-
-        let leftUser = new PkUser(sender ? sender.pkUser : null, "left", senderScore + '分');
-        leftUser.y = 100;
-        let sUseTime = 0;
-        if (sender && sender.pkResult) sUseTime = sender.pkResult.userAnswerUseTimeTotal
-        let useTime = Util.converTimer(sUseTime);
-        leftUser.addPkTime(useTime)
-        shareGroup.addChild(leftUser);
-
-
-        let receiver = pkResult.receiver;
-
-
-        let score = 0;
-        if (receiver && receiver.pkResult) score = receiver.pkResult.userAddScore;
-
-        let rightUser = new PkUser(receiver ? receiver.pkUser : null, 'right', score + '分');
-        rightUser.y = 100;
-        rightUser.anchorOffsetX = 243;
-        rightUser.x = 750;
-
-        let rUseTime = 0;
-        if (receiver && receiver.pkResult) rUseTime = receiver.pkResult.userAnswerUseTimeTotal;
-        let receiverUseTime = Util.converTimer(rUseTime);
-        rightUser.addPkTime(receiverUseTime);
-        shareGroup.addChild(rightUser);
-
-        let pkVs = Util.createBitmapByName('pk_vs_png');
-        pkVs.anchorOffsetX = 128;
-        pkVs.anchorOffsetY = 86;
-        pkVs.x = 375;
-        pkVs.y = 240;
+        let pkVs = Util.createBitmapByName('pk_vs_png')
+        pkVs.x = (this.stage.stageWidth - pkVs.width) / 2
+        pkVs.y = 150
         shareGroup.addChild(pkVs)
 
-
-        let vs = new egret.TextField();
-        vs.text = "VS";
-        vs.width = 100;
-        vs.height = 100;
-        vs.anchorOffsetX = 50;
-        vs.anchorOffsetY = 50;
-        vs.y = 240
-        vs.x = 375;
-        vs.textAlign = egret.HorizontalAlign.CENTER;
-        vs.verticalAlign = egret.VerticalAlign.MIDDLE;
-
-        vs.size = 40;
-        shareGroup.addChild(vs);
-
+        // 无效局
         if (pkResult.status == PkResult.INVALID) {
-            let info = new LineInfo(pkResult.tipsMsg);
-            info.y = 600;
-            shareGroup.addChild(info);
-            return;
+            let tip = new LineInfo(pkResult.tipsMsg)
+            shareGroup.addChild(tip)
+            return
         }
 
-
-        //挑战成功界面
-        let grayFliters = Util.grayFliter();
-        let bg = Util.createBitmapByName('result_bg_png');
-        bg.width = 560
-        bg.height = 315
-        bg.anchorOffsetX = 280;
-        bg.x = 375;
-        bg.y = 450;
-        shareGroup.addChild(bg)
-
-
-        let resultText = "挑战成功！"
-        let music = "pass_mp3";
+        // 结果背景和音乐
+        let result_bg = 'pk_success_png'
+        let music = "pass_mp3"
         switch (pkResult.status) {
             case PkResult.SUCCESS:
-                break;
+                break
             case PkResult.DRAW:
-                resultText = "平局";
-                break;
+                result_bg = "pk_draw_png"
+                break
             case PkResult.FAIL:
-                resultText = "挑战失败！";
-                music = "nopass_mp3";
-                break;
+                result_bg = "pk_fail_png"
+                music = "nopass_mp3"
+                break
         }
-
+        let bg = Util.createBitmapByName(result_bg)
+        bg.x = (this.stage.stageWidth - bg.width) / 2
+        bg.y = 450
+        shareGroup.addChild(bg)
         Util.playMusic(music)
 
-        let text = new egret.TextField();
-        text.text = resultText;
-        text.width = 210;
-        text.anchorOffsetX = 105;
-        text.height = 90;
-        text.size = 40;
-        text.textAlign = egret.HorizontalAlign.CENTER;
-        text.verticalAlign = egret.VerticalAlign.MIDDLE;
-        text.x = bg.x;
-        text.y = bg.y + 110;
-        shareGroup.addChild(text);
+        let selfScoreDescription = this.scoreItem(self.pkUser.nickName, self.pkResult.userAddScore, self.pkResult.scoretips)
+        selfScoreDescription.y = 830
+        shareGroup.addChild(selfScoreDescription)
 
+        let opponentScoreDescription = this.scoreItem(
+            opponent ? opponent.pkUser.nickName : '???', 
+            opponent ? opponent.pkResult.userAddScore : 0, 
+            opponent ? opponent.pkResult.scoretips : null
+        )
+        opponentScoreDescription.y = 910
+        shareGroup.addChild(opponentScoreDescription)
 
-        let result = new eui.Group();
-        shareGroup.addChild(result);
-        result.y = 800;
-        let y = 0;
-
-        if (sender) {
-            let selfScoreText = `${sender.pkUser.nickName}:+${sender.pkResult.userAddScore}积分`
-            let selfScore = new LineInfo(selfScoreText)
-            if (sender.pkResult.userAddScore == 0) {
-                let textFlow;
-                if (sender.pkResult.scoretips) {
-                    textFlow = [
-                        { text: selfScoreText }
-                        , { text: `\n(${sender.pkResult.scoretips})`, style: { "size": 22 } }];
-                } else {
-                    textFlow = [
-                        { text: selfScoreText }
-                    ];
-                }
-                selfScore.setTextFlow(textFlow)
-                y += selfScore.height + 25;
-            } else {
-                y += 80;
-            }
-            console.log('y:', y);
-            result.addChild(selfScore);
-        }
-
-
-        if (receiver) {
-            let userTeamText = `${receiver.pkUser.nickName}:+${receiver.pkResult.userAddScore}积分`;
-
-            let userTeam = new LineInfo(userTeamText)
-            userTeam.y = y;
-            if (receiver.pkResult.userAddScore == 0) {
-                let textFlow = [
-                    { text: userTeamText }
-                    , { text: `\n(${receiver.pkResult.scoretips})`, style: { "size": 22 } }];
-                userTeam.setTextFlow(textFlow)
-                y += userTeam.height + 25;
-            } else {
-                y += 80;
-            }
-            result.addChild(userTeam);
-        }
-
-
-        if (pkResult.status == PkResult.FAIL) {
-            bg.filters = [grayFliters];
-            text.filters = [grayFliters];
-            result.filters = [grayFliters];
-        }
-
-        let saveButton = new XButton("保存图片");
-        saveButton.width = 325;
-        saveButton.x = 30;
-        saveButton.y = this.stage.stageHeight - 150;
-        this.addChild(saveButton);
+        let saveButton = Util.createBitmapByName('button_small_1_png')
+        saveButton.x = this.stage.stageWidth / 2 - saveButton.width - 30
+        saveButton.y = this.stage.stageHeight - 200
+        saveButton.touchEnabled = true
         saveButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            let alert = new AlertPanel("提示:请自行截图保存图片", 900)
-            this.addChild(alert);
-        }, this)
+            let alert = new AlertPanel("提示:请自行截图保存图片", this.stage.stageHeight - 80)
+            this.addChild(alert)
+        }, this) 
+        this.addChild(saveButton)
 
-
-        let shareButton = new XButton("分享");
-        shareButton.width = 325;
-        shareButton.anchorOffsetX = 325;
-        shareButton.x = 720;
-        shareButton.y = this.stage.stageHeight - 150;
+        let shareButton = Util.createBitmapByName('button_small_2_png')
+        shareButton.x = this.stage.stageWidth / 2 + 30
+        shareButton.y = saveButton.y
+        shareButton.touchEnabled = true
         shareButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            let tips = new SharePanel();
-            this.addChild(tips);
-        }, this);
-        this.addChild(shareButton);
-        Util.registerShare(this.shareGroup, ShareType.PK_BATTLE);
+            let tips = new SharePanel()
+            this.addChild(tips)
+        }, this)
+        this.addChild(shareButton)
+
+        Util.registerShare(this.shareGroup, ShareType.PK_BATTLE, self.pkUser.nickName, opponent.pkUser.nickName)
+    }
+
+    private scoreItem(name, score, scoretips) {
+        let group = new eui.Group
+        let bg = Util.drawRoundRect(3, Config.COLOR_MAINCOLOR, 0xffffff, 274, 60, 30)
+        group.width = bg.width
+        group.x = (this.stage.stageWidth - group.width) / 2
+        group.addChild(bg)
+        let nickName = new egret.TextField
+        nickName.text = name + ':'
+        nickName.width = 160
+        nickName.height = 24
+        nickName.x = 20
+        nickName.y = 20
+        nickName.size = 24
+        nickName.textColor = Config.COLOR_MAINCOLOR
+        group.addChild(nickName)
+
+        if (scoretips) {
+            nickName.y = 10
+            let tips = new egret.TextField
+            tips.text = '(' + scoretips + ')'
+            tips.width = bg.width
+            tips.y = 35
+            tips.textAlign = 'center'
+            tips.size = 20
+            tips.textColor = Config.COLOR_MAINCOLOR
+            group.addChild(tips)
+        }
+
+        let addScore = new egret.TextField
+        addScore.text = '+' + score + '分'
+        addScore.width = 70
+        addScore.height = nickName.height
+        addScore.x = 190
+        addScore.y = nickName.y
+        addScore.size = nickName.size
+        addScore.textAlign = 'right'
+        addScore.textColor = Config.COLOR_MAINCOLOR
+        group.addChild(addScore)
+        return group
     }
 
     public onBack() {
-        DataManager.getInstance().removePkData();
+        DataManager.getInstance().removePkData()
         switch (this.back) {
-
             case PkResultBackModel.BACK:
-                ViewManager.getInstance().back();
-                break;
+                ViewManager.getInstance().back()
+                break
             case PkResultBackModel.BACK_HOME:
-                ViewManager.getInstance().jumpHome();
-                break;
+                ViewManager.getInstance().jumpHome()
+                break
             case PkResultBackModel.BACK_PK:
-                ViewManager.getInstance().backByName('pkmodel');
-                break;
+                ViewManager.getInstance().backByName('pkmodel')
+                break
         }
     }
-
 }
-
-
-
 
 /**
  * 单人PK结果
  */
 class TeamKnowPkResultScene extends Scene {
-
-    private pkData;
-    private shareGroup;
-
-    /**
-     * 
-     * 
-     */
+    private pkData
     constructor() {
-        super();
+        super()
     }
 
-
     public init() {
+        super.setBackground()
+        this.close_btn = false
+
         //进入结果页面
         SocketX.getInstance().addEventListener(NetEvent.TEAM_PK_KNOW_RESULT, (data) => {
-            DataManager.getInstance().updateTeamKonwResult(data.data);
-            let scene = new TeamKnowResultScene();
-            ViewManager.getInstance().changeScene(scene);
+            DataManager.getInstance().updateTeamKonwResult(data.data)
+            let scene = new TeamKnowResultScene()
+            ViewManager.getInstance().changeScene(scene)
         }, this)
-        let roomData = DataManager.getInstance().getRoomData();
-        this.pkData = roomData.pkData;
 
-        this.width = 750;
-        this.anchorOffsetX = 375;
-        this.x = this.stage.stageWidth / 2;
-        // this.nav = '首页'
+        let roomData = DataManager.getInstance().getRoomData()
+        this.pkData = roomData.pkData
 
-        let shareGroup = new eui.Group();
-        this.shareGroup = shareGroup;
-        shareGroup.width = 750;
-        let sky = Util.createBitmapByName("bg_jpg");
-        shareGroup.addChildAt(sky, -2);
-        let stageW = this.stage.stageWidth;
-        let stageH = this.stage.stageHeight;
-        sky.width = stageW;
-        sky.height = stageH;
-        this.addChild(shareGroup);
-
-        let pkResult = this.pkData.result;
+        let pkResult = this.pkData.result
 
 
-        let leftUser = new PkUser(this.pkData.users[TeamType.GREEN], "left", pkResult.score[TeamType.GREEN] + '分');
-        leftUser.y = 100;
-        shareGroup.addChild(leftUser);
+        let leftUser = new PkUser(this.pkData.users[TeamType.GREEN], "teamLeft", pkResult.score[TeamType.GREEN] + '分', null, true)
+        leftUser.y = 100
+        this.addChild(leftUser)
 
+        let rightUser = new PkUser(this.pkData.users[TeamType.BLUE], 'right', pkResult.score[TeamType.BLUE] + '分', null, true)
+        rightUser.x = this.stage.stageWidth - rightUser.width
+        rightUser.y = 100
+        this.addChild(rightUser)
 
-        let rightUser = new PkUser(this.pkData.users[TeamType.BLUE], 'right', pkResult.score[TeamType.BLUE] + '分');
-        rightUser.y = 100;
-        rightUser.anchorOffsetX = 243;
-        rightUser.x = 750;
-
-        shareGroup.addChild(rightUser);
-
-        let pkVs = Util.createBitmapByName('pk_vs_png');
-        pkVs.anchorOffsetX = 128;
-        pkVs.anchorOffsetY = 86;
-        pkVs.x = 375;
-        pkVs.y = 240;
-        shareGroup.addChild(pkVs)
-
-
-        let vs = new egret.TextField();
-        vs.text = "VS";
-        vs.width = 100;
-        vs.height = 100;
-        vs.anchorOffsetX = 50;
-        vs.anchorOffsetY = 50;
-        vs.y = 240
-        vs.x = 375;
-        vs.textAlign = egret.HorizontalAlign.CENTER;
-        vs.verticalAlign = egret.VerticalAlign.MIDDLE;
-
-        vs.size = 40;
-        shareGroup.addChild(vs);
+        let pkVs = Util.createBitmapByName('pk_vs_png')
+        pkVs.x = (this.stage.stageWidth - pkVs.width) / 2
+        pkVs.y = 130
+        this.addChild(pkVs)
 
         //倒计时 15 秒进入 结果页
-        let timer = new egret.Timer(1000, 15);
+        let timer = new egret.Timer(1000, 15)
         timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, () => {
             SocketX.getInstance().sendMsg(NetEvent.TEAM_PK_KNOW_RESULT, { tableNo: roomData.tableNo, groupId: roomData.pkData.groupId })
-        }, this);
-        timer.start();
+        }, this)
+        timer.start()
 
-        let seeTeamResult = new XButton("查看比赛结果");
-        seeTeamResult.width = 400;
-        seeTeamResult.y = this.stage.stageHeight - 200;
-        seeTeamResult.x = this.stage.stageWidth / 2 - 200;
+        let seeTeamResult = Util.createBitmapByName('pk_result_btn_png')
+        seeTeamResult.x = (this.stage.stageWidth - seeTeamResult.width) / 2
+        seeTeamResult.y = this.stage.stageHeight - 150
+        seeTeamResult.touchEnabled = true
         seeTeamResult.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            timer.stop();
+            timer.stop()
             SocketX.getInstance().sendMsg(NetEvent.TEAM_PK_KNOW_RESULT, { tableNo: roomData.tableNo, groupId: roomData.pkData.groupId })
-        }, this);
-        this.addChild(seeTeamResult);
-
-
+        }, this)
+        this.addChild(seeTeamResult)
 
         if (pkResult.status == PkResult.INVALID) {
-            let info = new LineInfo(pkResult.tipsMsg);
-            info.y = 600;
-            shareGroup.addChild(info);
-            return;
+            let info = new LineInfo(pkResult.tipsMsg)
+            this.addChild(info)
+            return
         }
 
+        // 获胜背景
+        let resultBgArr = ['pk_winner_draw2_png', 'pk_winner_left2_png', 'pk_winner_right2_png']
+        let resultBg = Util.createBitmapByName(resultBgArr[pkResult.winner])
+        resultBg.x = (this.stage.stageWidth - resultBg.width) / 2
+        resultBg.y = 450
+        this.addChild(resultBg)
 
-        //挑战成功界面
-        let grayFliters = Util.grayFliter();
-        let bg = Util.createBitmapByName('result_bg_png');
-        bg.width = 560
-        bg.height = 315
-        bg.anchorOffsetX = 280;
-        bg.x = 375;
-        bg.y = 450;
-        shareGroup.addChild(bg)
-
-
-        let restultTexts = { 0: '平局', 1: '绿方代表获胜', 2: '蓝方代表获胜' };
-        let resultText = restultTexts[pkResult.winner]
-        let music = "pass_mp3";
+        let music = "pass_mp3"
         Util.playMusic(music)
 
-        let text = new egret.TextField();
-        text.text = resultText;
-        text.width = 210;
-        text.anchorOffsetX = 105;
-        text.height = 90;
-        text.size = 30;
-        text.textAlign = egret.HorizontalAlign.CENTER;
-        text.verticalAlign = egret.VerticalAlign.MIDDLE;
-        text.x = bg.x;
-        text.y = bg.y + 110;
-        shareGroup.addChild(text);
+        let selfScoreDescription = this.scoreItem(this.pkData.users[1].nickName, pkResult.score[1])
+        selfScoreDescription.y = 830
+        this.addChild(selfScoreDescription)
 
+        let opponentScoreDescription = this.scoreItem(this.pkData.users[2].nickName, pkResult.score[2])
+        opponentScoreDescription.y = 910
+        this.addChild(opponentScoreDescription)
+    }
 
-        let result = new eui.Group();
-        shareGroup.addChild(result);
-        result.y = 800;
-        let y = 0;
+    private scoreItem(name, score) {
+        let group = new eui.Group
+        let bg = Util.drawRoundRect(3, Config.COLOR_MAINCOLOR, 0xffffff, 274, 60, 30)
+        group.width = bg.width
+        group.x = (this.stage.stageWidth - group.width) / 2
+        group.addChild(bg)
+        let nickName = new egret.TextField
+        nickName.text = name + ':'
+        nickName.width = 160
+        nickName.height = 24
+        nickName.x = 20
+        nickName.y = 20
+        nickName.size = 24
+        nickName.textColor = Config.COLOR_MAINCOLOR
+        group.addChild(nickName)
 
-        let score = pkResult.score[TeamType.GREEN];
-        if (pkResult.score[TeamType.GREEN] > 0) {
-            score = '+' + score;
-        }
-
-        let greenScoreText = `${this.pkData.users[TeamType.GREEN].nickName}:${score}积分`
-        let greenScoreInfo = new LineInfo(greenScoreText)
-        result.addChild(greenScoreInfo);
-        y += 80;
-
-        let score1 = pkResult.score[TeamType.BLUE];
-        if (pkResult.score[TeamType.BLUE] > 0) {
-            score1 = '+' + score1;
-        }
-        let blueScoreText = `${this.pkData.users[TeamType.BLUE].nickName}:${score1}积分`;
-        let blueScoreInfo = new LineInfo(blueScoreText)
-        blueScoreInfo.y = y;
-        result.addChild(blueScoreInfo);
-
-
-
-
+        let addScore = new egret.TextField
+        addScore.text = score > 0 ? `+${score}分` : `${score}分`
+        addScore.width = 70
+        addScore.height = nickName.height
+        addScore.x = 190
+        addScore.y = nickName.y
+        addScore.size = nickName.size
+        addScore.textAlign = 'right'
+        addScore.textColor = Config.COLOR_MAINCOLOR
+        group.addChild(addScore)
+        return group
     }
 
     public onBack() {
-        DataManager.getInstance().removePkData();
-        ViewManager.getInstance().jumpHome();
+        DataManager.getInstance().removePkData()
+        ViewManager.getInstance().jumpHome()
     }
 }
 

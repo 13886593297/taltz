@@ -33,40 +33,57 @@ var Confirm = (function (_super) {
         this.addChild(mask);
         // 文字
         var text = new egret.TextField();
-        this.addChild(text);
-        text.width = 700;
-        text.x = stage.stageWidth / 2 - 350;
-        text.textAlign = egret.HorizontalAlign.CENTER;
-        text.size = 32;
-        text.bold = true;
         text.text = this.text;
-        text.lineSpacing = 20;
-        text.y = stage.stageHeight / 2 - 100;
-        var buttonY = stage.stageHeight / 2 + text.textHeight;
-        var ConfirmButton = new XButton(this.leftButtonText);
-        ConfirmButton.width = 330;
-        ConfirmButton.x = stage.stageWidth / 2 - 345;
-        ConfirmButton.y = buttonY;
-        this.addChild(ConfirmButton);
-        ConfirmButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+        text.width = stage.stageWidth;
+        text.textAlign = 'center';
+        text.lineSpacing = 10;
+        text.y = 50;
+        text.size = 40;
+        this.addChild(text);
+        // 确认按钮
+        var confirmButton = new CustomButton('pk_list_text_bg_png', this.leftButtonText, function () {
             var event = new ConfirmEvent(ConfirmEvent.CONFIRM_BUTTON_YES);
             _this.dispatchEvent(event);
             _this.parent.removeChild(_this);
-        }, this);
-        var CancelButton = new XButton(this.rightButtonText);
-        CancelButton.width = 330;
-        CancelButton.x = stage.stageWidth / 2 + 15;
-        CancelButton.y = buttonY;
-        this.addChild(CancelButton);
-        CancelButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+        });
+        confirmButton.x = stage.stageWidth / 2 - confirmButton.width - 10;
+        confirmButton.y = 200;
+        this.addChild(confirmButton);
+        // 取消按钮
+        var cancelButton = new CustomButton('pk_list_text_bg_png', this.rightButtonText, function () {
             var event = new ConfirmEvent(ConfirmEvent.CONFIRM_BUTTON_NO);
             _this.dispatchEvent(event);
             _this.parent.removeChild(_this);
-        }, this);
+        });
+        cancelButton.x = stage.stageWidth / 2 + 10;
+        cancelButton.y = confirmButton.y;
+        this.addChild(cancelButton);
     };
     return Confirm;
 }(eui.Group));
 __reflect(Confirm.prototype, "Confirm");
+var CustomButton = (function (_super) {
+    __extends(CustomButton, _super);
+    function CustomButton(bg, text, fn) {
+        var _this = _super.call(this) || this;
+        var btn_bg = Util.createBitmapByName(bg);
+        _this.width = btn_bg.width;
+        _this.height = btn_bg.height;
+        _this.addChild(btn_bg);
+        var content = new egret.TextField;
+        content.text = text;
+        content.width = btn_bg.width;
+        content.height = btn_bg.height - 10;
+        content.textAlign = 'center';
+        content.verticalAlign = 'middle';
+        _this.addChild(content);
+        _this.touchEnabled = true;
+        _this.addEventListener(egret.TouchEvent.TOUCH_TAP, fn, _this);
+        return _this;
+    }
+    return CustomButton;
+}(eui.Group));
+__reflect(CustomButton.prototype, "CustomButton");
 var ConfirmEvent = (function (_super) {
     __extends(ConfirmEvent, _super);
     function ConfirmEvent(type, bubbles, cancelable) {

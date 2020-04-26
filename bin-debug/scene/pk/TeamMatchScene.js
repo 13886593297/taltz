@@ -1,6 +1,3 @@
-/**
-*
-*/
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
@@ -23,10 +20,113 @@ var TeamMatchScene = (function (_super) {
         _this.showCountText = showTimeout;
         return _this;
     }
+    TeamMatchScene.prototype.init = function () {
+        var _this = this;
+        _super.prototype.setBackground.call(this);
+        this.close_btn = false;
+        this.initEvent();
+        var stageW = this.stage.stageWidth;
+        var roomData = DataManager.getInstance().getRoomData();
+        if (roomData.joinType === JoinType.OBSEVER) {
+            var observerTitle = Util.createBitmapByName('pk_observe_modal_png');
+            observerTitle.x = (stageW - observerTitle.width) / 2;
+            observerTitle.y = 45;
+            this.addChild(observerTitle);
+        }
+        var init_y = 200;
+        // 黄队
+        var yellowGroup = Util.createBitmapByName('pk_yellow_group_png');
+        yellowGroup.x = 50;
+        yellowGroup.y = init_y;
+        this.addChild(yellowGroup);
+        // 绿队
+        var greenGroup = Util.createBitmapByName('pk_green_group_png');
+        greenGroup.x = stageW / 2 + 150;
+        greenGroup.y = init_y;
+        this.addChild(greenGroup);
+        // 倒计时 
+        var countBg = Util.createBitmapByName('pk_time_bg_png');
+        countBg.x = (stageW - countBg.width) / 2;
+        countBg.y = init_y;
+        this.countBg = countBg;
+        this.countBg.visible = false;
+        this.addChild(countBg);
+        var countText = new egret.TextField();
+        countText.x = countBg.x;
+        countText.y = countBg.y;
+        countText.width = countBg.width;
+        countText.height = countBg.height - 10;
+        countText.textAlign = 'center';
+        countText.verticalAlign = 'middle';
+        countText.size = 26;
+        this.addChild(countText);
+        this.countText = countText;
+        this.countText.visible = false;
+        if (this.showCountText) {
+            this.showTimer(30);
+        }
+        var number = roomData.roomNumber == RoomNumber.SIX ? 3 : 5;
+        this.initUser();
+        // 显示条件 自己在战队中 但是未点击准备
+        if (roomData.joinType === JoinType.JOIN) {
+            // 准备按钮
+            var readyButton = Util.createBitmapByName('pk_ready_png');
+            readyButton.x = stageW / 2 + 20;
+            readyButton.y = this.stage.stageHeight - 150;
+            readyButton.touchEnabled = true;
+            this.addChild(readyButton);
+            this.readyButton = readyButton;
+            readyButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+                if (_this.isShowLoading)
+                    return;
+                SocketX.getInstance().sendMsg(NetEvent.TEAM_PK_READY, { tableNo: roomData.tableNo });
+            }, this);
+            // 交换位置提示
+            if (roomData.roomType === PkModel.ANSWER) {
+                var centerTextBg = Util.drawRoundRect(3, Config.COLOR_MAINCOLOR, 0xffffff, 100, 80, 30, 0);
+                centerTextBg.x = (stageW - centerTextBg.width) / 2;
+                centerTextBg.y = ((number - 1) * 160 + 128) / 2 + 300 - centerTextBg.height / 2;
+                this.addChild(centerTextBg);
+                var centerText = new egret.TextField();
+                centerText.text = '点击头像\n交换位置';
+                centerText.textColor = 0x7bbf71;
+                centerText.x = centerTextBg.x;
+                centerText.y = centerTextBg.y;
+                centerText.size = 18;
+                centerText.width = centerTextBg.width;
+                centerText.height = centerTextBg.height;
+                centerText.textAlign = 'center';
+                centerText.verticalAlign = 'middle';
+                this.addChild(centerText);
+            }
+            else {
+                var tip = Util.createBitmapByName('pk_seat_tip_png');
+                tip.x = (stageW - tip.width) / 2;
+                tip.y = number * 160 + 300;
+                this.addChild(tip);
+            }
+        }
+        else {
+            // setTimeout(() => {
+            //     let scene = new TeamKnowResultScene()
+            //     ViewManager.getInstance().changeScene(scene)
+            // }, 5000)
+        }
+        var leaveButton = Util.createBitmapByName('pk_leave_png');
+        leaveButton.x = roomData.joinType === JoinType.JOIN ? stageW / 2 - leaveButton.width - 20 : (stageW - leaveButton.width) / 2;
+        leaveButton.y = this.stage.stageHeight - 150;
+        leaveButton.touchEnabled = true;
+        this.leaveButton = leaveButton;
+        this.addChild(leaveButton);
+        leaveButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            var roomData = DataManager.getInstance().getRoomData();
+            SocketX.getInstance().sendMsg(NetEvent.TEAM_LEAVE_ROOM, { tableNo: roomData.tableNo, joinType: roomData.joinType });
+        }, this);
+    };
     TeamMatchScene.prototype.initEvent = function () {
         var _this = this;
         //需要出发的时间  1.准备 2.交换位置 3.离开房间 
-        // SocketX.getInstance().addEventListener(NetEvent.TEAM_PK_READY, () => { }, this);
+        // SocketX.getInstance().addEventListener(NetEvent.TEAM_PK_READY, () => { }, this)
         //监听加入事件
         SocketX.getInstance().addEventListener(NetEvent.TEAM_JOIN_BROADCAST, function (data) {
             // 更新用户
@@ -42,6 +142,7 @@ var TeamMatchScene = (function (_super) {
             if (data.data.ok)
                 _this.userViews[data.data.index].setReady();
             _this.readyButton.visible = false;
+            _this.leaveButton.x = (_this.stage.stageWidth - _this.leaveButton.width) / 2;
         }, this);
         //监听准备 广播
         SocketX.getInstance().addEventListener(NetEvent.TEAM_READY_BROADCAST, function (data) {
@@ -63,7 +164,7 @@ var TeamMatchScene = (function (_super) {
             DataManager.getInstance().updateUserLeave(data.data);
             _this.updateUserStatus(data.data.index);
         }, this);
-        //教官位置请求
+        //交换位置请求
         SocketX.getInstance().addEventListener(NetEvent.TEAM_CHANGE_POSITION, function (data) {
             if (_this.showConfirm && _this.confirm) {
                 _this.removeChild(_this.confirm);
@@ -72,7 +173,7 @@ var TeamMatchScene = (function (_super) {
             var nickName = sender.sendUserInfo.nickName;
             var roomData = DataManager.getInstance().getRoomData();
             //交换位置
-            var confirm = new Confirm(nickName + '发起位置交换', '拒绝', '同意');
+            var confirm = new Confirm(nickName + '发起了交换位置', '拒绝', '同意');
             _this.addChild(confirm);
             _this.showConfirm = true;
             _this.confirm = confirm;
@@ -102,8 +203,29 @@ var TeamMatchScene = (function (_super) {
                 //设置此人不能点击
                 var position = _this.userPositions[data.data.acceptUserId];
                 _this.userViews[position].setDisableClick();
-                var alert_1 = new AlertPanel("对方拒绝了您的位置请求！", true);
-                _this.addChild(alert_1);
+                var stage = ViewManager.getInstance().stage;
+                var group_1 = new eui.Group;
+                _this.addChild(group_1);
+                //背景
+                var mask = Util.createBitmapByName('mask_png');
+                mask.y = 0;
+                mask.x = 0;
+                mask.alpha = 0.5;
+                mask.width = stage.stageWidth;
+                mask.height = stage.stageHeight;
+                group_1.addChild(mask);
+                var alert_1 = Util.createBitmapByName('pk_alert_refuse_png');
+                alert_1.x = (_this.stage.stageWidth - alert_1.width) / 2;
+                alert_1.y = (_this.stage.stageHeight - alert_1.height) / 2;
+                group_1.addChild(alert_1);
+                var close_btn = Util.createBitmapByName('icon_err_png');
+                close_btn.x = alert_1.x + alert_1.width - close_btn.width;
+                close_btn.y = alert_1.y - 10;
+                group_1.addChild(close_btn);
+                close_btn.touchEnabled = true;
+                close_btn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+                    group_1.visible = false;
+                }, _this);
             }
         }, this);
         //位置交换广播
@@ -119,10 +241,12 @@ var TeamMatchScene = (function (_super) {
         }, this);
         //倒计时 
         SocketX.getInstance().addEventListener(NetEvent.TEAM_COUNT_DOWN_BROADCAST, function (data) {
+            console.log('倒计时-------->', data);
             if (data.data.type == 1) {
                 _this.showTimer(data.data.timeout);
             }
             else {
+                _this.countBg.visible = false;
                 _this.countText.visible = false;
                 _this.showCountText = false;
                 if (_this.timer)
@@ -155,36 +279,28 @@ var TeamMatchScene = (function (_super) {
     TeamMatchScene.prototype.showLoading = function () {
         var _this = this;
         this.isShowLoading = true;
-        console.log(this.isShowLoading, "显示等待狂");
         var text = "等待对方回应";
         var waittingNumber = 10;
-        if (!this.loadingView) {
-            var loading = new AlertLoading(waittingNumber + "\n" + text);
-            this.loadingView = loading;
-            this.addChild(loading);
-        }
+        var loading = new AlertLoading(waittingNumber + "\n" + text);
+        this.loadingView = loading;
+        this.addChild(loading);
         this.loadingView.visible = true;
-        if (!this.loadingTimer) {
-            var timer_1 = new egret.Timer(1000, 12);
-            this.loadingTimer = timer_1;
-            timer_1.addEventListener(egret.TimerEvent.TIMER, function () {
-                waittingNumber--;
-                if (waittingNumber <= 0) {
-                    timer_1.stop();
-                    _this.hideLoading();
-                    return;
-                }
-                if (_this.showLoading && _this.loadingView) {
-                    _this.loadingView.setText(waittingNumber + "\n" + text);
-                }
-                else {
-                    _this.loadingTimer.stop();
-                }
-            }, this);
-        }
-        else {
-            this.loadingTimer.reset();
-        }
+        var timer = new egret.Timer(1000, 10);
+        this.loadingTimer = timer;
+        timer.addEventListener(egret.TimerEvent.TIMER, function () {
+            waittingNumber--;
+            if (waittingNumber <= 0) {
+                _this.loadingTimer.stop();
+                _this.hideLoading();
+                return;
+            }
+            if (_this.showLoading && _this.loadingView) {
+                _this.loadingView.setText(waittingNumber + "\n" + text);
+            }
+            else {
+                _this.loadingTimer.stop();
+            }
+        }, this);
         this.loadingTimer.start();
     };
     TeamMatchScene.prototype.hideLoading = function () {
@@ -192,15 +308,15 @@ var TeamMatchScene = (function (_super) {
         if (this.loadingTimer)
             this.loadingTimer.stop();
         if (this.loadingView) {
-            // this.removeChild(this.loadingView);
+            // this.removeChild(this.loadingView)
             this.loadingView.visible = false;
-            ;
         }
     };
     TeamMatchScene.prototype.showTimer = function (timeout) {
         var _this = this;
         //开始倒计时
         this.showCountText = true;
+        this.countBg.visible = true;
         this.countText.visible = true;
         this.count = timeout;
         this.countText.text = timeout;
@@ -260,122 +376,20 @@ var TeamMatchScene = (function (_super) {
             }
         }
     };
-    TeamMatchScene.prototype.init = function () {
-        var _this = this;
-        // this.nav = "返回"
-        this.initEvent();
-        var top = 70;
-        var left = 30;
-        var greenText = new egret.TextField();
-        greenText.text = '绿队';
-        greenText.size = 40;
-        greenText.textColor = Config.COLOR_YELLOW;
-        greenText.x = left;
-        greenText.y = top;
-        this.addChild(greenText);
-        var blueText = new egret.TextField();
-        blueText.textColor = Config.COLOR_BLUE;
-        blueText.size = 40;
-        blueText.text = '蓝队';
-        blueText.x = this.stage.stageWidth - left;
-        blueText.width = 100;
-        blueText.anchorOffsetX = 100;
-        blueText.textAlign = egret.HorizontalAlign.RIGHT;
-        blueText.y = top;
-        this.addChild(blueText);
-        //倒计时 
-        var countText = new egret.TextField();
-        countText.size = 40;
-        countText.x = this.stage.stageWidth / 2;
-        countText.width = 100;
-        countText.anchorOffsetX = 50;
-        countText.textAlign = egret.HorizontalAlign.CENTER;
-        countText.y = top;
-        this.addChild(countText);
-        this.countText = countText;
-        this.countText.visible = false;
-        if (this.showCountText) {
-            this.showTimer(30);
-        }
-        var roomData = DataManager.getInstance().getRoomData();
-        var number = 5;
-        if (roomData.roomNumber == RoomNumber.SIX)
-            number = 3;
-        if (roomData.joinType === JoinType.OBSEVER) {
-            var modelText = new egret.TextField();
-            modelText.size = 25;
-            modelText.text = '旁观模式';
-            modelText.x = this.stage.stageWidth / 2;
-            modelText.width = 200;
-            modelText.anchorOffsetX = 100;
-            modelText.textAlign = egret.HorizontalAlign.CENTER;
-            modelText.y = 30;
-            this.addChild(modelText);
-        }
-        //抢答题
-        if (roomData.roomType === PkModel.ANSWER) {
-            var centerTextY = number * 95 + 150;
-            var centerText = new egret.TextField();
-            centerText.textColor = 0x82879b;
-            centerText.size = 30;
-            centerText.text = '点击头像\n交换位置';
-            centerText.x = this.stage.stageWidth / 2;
-            centerText.width = 250;
-            centerText.anchorOffsetX = 125;
-            centerText.textAlign = egret.HorizontalAlign.CENTER;
-            centerText.y = centerTextY;
-            this.addChild(centerText);
-        }
-        this.initUser();
-        var y = this.stage.stageHeight - 200;
-        //显示条件 自己在战队中 但是未点击准备
-        if (roomData.joinType === JoinType.JOIN) {
-            var readyButton = new XButton('准备');
-            readyButton.width = 500;
-            readyButton.y = y;
-            readyButton.anchorOffsetX = 250;
-            readyButton.x = this.stage.stageWidth / 2;
-            this.addChild(readyButton);
-            this.readyButton = readyButton;
-            readyButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-                console.log('点击准备');
-                if (_this.isShowLoading)
-                    return;
-                SocketX.getInstance().sendMsg(NetEvent.TEAM_PK_READY, { tableNo: roomData.tableNo });
-            }, this);
-        }
-        else {
-            // setTimeout(() => {
-            //     let scene = new TeamKnowResultScene();
-            //     ViewManager.getInstance().changeScene(scene);
-            // }, 5000);
-        }
-        var leaveButton = new XButton('离开');
-        leaveButton.width = 500;
-        leaveButton.anchorOffsetX = 250;
-        leaveButton.y = this.stage.stageHeight - 100;
-        leaveButton.x = this.stage.stageWidth / 2;
-        this.addChild(leaveButton);
-        leaveButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            var roomData = DataManager.getInstance().getRoomData();
-            SocketX.getInstance().sendMsg(NetEvent.TEAM_LEAVE_ROOM, { tableNo: roomData.tableNo, joinType: roomData.joinType });
-        }, this);
-    };
     TeamMatchScene.prototype.updateUser = function () {
         var _this = this;
         var roomData = DataManager.getInstance().getRoomData();
         var pkUser = roomData.users;
-        var number = 5;
-        if (roomData.roomNumber == RoomNumber.SIX)
-            number = 3;
+        var number = roomData.roomNumber == RoomNumber.SIX ? 3 : 5;
         var _loop_1 = function (key) {
             var user = pkUser[key];
-            if (user.position > roomData.roomNumber || user.position < 1)
+            if (user.position > roomData.roomNumber || user.position < 1) {
                 return "continue";
-            var postionY = 190 * (user.position - 1);
+            }
+            var postionY = 160 * (user.position - 1);
             var postionFlag = UserPositionType.LEFT;
             if (user.position > number) {
-                postionY = 190 * (user.position - number - 1);
+                postionY = 160 * (user.position - number - 1);
                 postionFlag = UserPositionType.RIGHT;
             }
             var userinfo = user.status == ReadyType.UNJOIN ? null : user.userInfo;
@@ -386,11 +400,11 @@ var TeamMatchScene = (function (_super) {
                 this_1.userPositions[userinfo.userId] = user.position;
             }
             this_1.userGroup.addChild(teamUser);
-            if (user.status == ReadyType.READYED)
+            if (user.status == ReadyType.READYED) {
                 teamUser.setReady();
+            }
             if (postionFlag == UserPositionType.RIGHT) {
-                teamUser.anchorOffsetX = 243;
-                teamUser.x = this_1.stage.stageWidth;
+                teamUser.x = this_1.stage.stageWidth - teamUser.width;
             }
             teamUser.addUserEventListener(function () {
                 console.log('点击用户', user);
@@ -403,7 +417,6 @@ var TeamMatchScene = (function (_super) {
                 if (self && self.status == ReadyType.READYED)
                     return;
                 var positionUser = DataManager.getInstance().getRoomUser(user.position);
-                console.log('positionUser', positionUser, 'self', self);
                 if (positionUser && positionUser.userInfo && self && positionUser.userInfo.userId == self.userId)
                     return;
                 switch (positionUser.status) {
@@ -439,43 +452,26 @@ var TeamMatchScene = (function (_super) {
     TeamMatchScene.prototype.initUser = function () {
         var roomData = DataManager.getInstance().getRoomData();
         var userGroup = new eui.Group();
-        userGroup.y = 150;
+        userGroup.y = 300;
         this.addChild(userGroup);
         this.userGroup = userGroup;
-        var number = 5;
-        if (roomData.roomNumber == RoomNumber.SIX)
-            number = 3;
+        var number = roomData.roomNumber == RoomNumber.SIX ? 3 : 5;
         this.updateUser();
-        var y = 150;
+        var y = 300;
         if (roomData.roomType === PkModel.KNOW) {
             for (var k = 0; k < number; k++) {
                 var pkVs = Util.createBitmapByName('pk_vs_png');
-                pkVs.width = 246;
-                pkVs.height = 166;
-                pkVs.anchorOffsetX = 123;
-                pkVs.anchorOffsetY = 83;
-                pkVs.x = this.stage.stageWidth / 2;
-                pkVs.y = y + 190 * k + 95;
+                pkVs.x = (this.stage.stageWidth - pkVs.width) / 2;
+                pkVs.y = y + 160 * k + pkVs.height / 2;
                 this.addChild(pkVs);
-                var pkText = new egret.TextField();
-                pkText.text = "VS";
-                pkText.size = 40;
-                pkText.width = 100;
-                pkText.textAlign = egret.HorizontalAlign.CENTER;
-                pkText.height = pkText.textHeight;
-                pkText.anchorOffsetX = 50;
-                pkText.anchorOffsetY = pkText.height / 2;
-                pkText.x = this.stage.stageWidth / 2;
-                pkText.y = y + 190 * k + 95;
-                this.addChild(pkText);
             }
         }
-        // if (roomData.joinType === JoinType.OBSEVER && roomData.roomType === PkModel.ANSWER) {
-        //     setTimeout(() => {
-        //         let teamMatch = new TeamBattleScene();
-        //         ViewManager.getInstance().changeScene(teamMatch);
-        //     }, 5000);
-        // }
+        // test begin
+        // setTimeout(() => {
+        //     let teamMatch = new TeamKnowBattleScene()
+        //     ViewManager.getInstance().changeScene(teamMatch)
+        // }, 2000)
+        // test end
     };
     return TeamMatchScene;
 }(Scene));

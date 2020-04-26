@@ -73,42 +73,116 @@ var Util = (function () {
         result.texture = texture;
         return result;
     };
-    /**
-     * 根据地址返回头像
-     * @param avatar 头像地址
-     * @param w 宽度
-     * @param x x坐标
-     * @param y y坐标
-     * @param scene this
-     */
-    Util.setUserImg = function (avatar, w, x, y, scene) {
+    Util.setUserImg0 = function (avatar, icon) {
         if (!avatar)
             return;
-        var icon = new egret.Bitmap();
-        icon.width = w;
-        icon.height = w;
-        icon.x = x;
-        icon.y = y;
-        // 遮罩
-        var circle = new egret.Shape();
-        circle.x = x;
-        circle.y = y;
-        circle.graphics.beginFill(0x0000ff);
-        circle.graphics.drawCircle(w / 2, w / 2, w / 2);
-        circle.graphics.endFill();
-        icon.mask = circle;
-        scene.addChild(circle);
+        var texture = Util.avatarTextures[avatar];
+        if (texture) {
+            icon.texture = texture;
+            return;
+        }
         var imgLoader = new egret.ImageLoader();
         imgLoader.crossOrigin = "anonymous"; // 跨域请求
         imgLoader.load(avatar); // 去除链接中的转义字符‘\’        
         imgLoader.once(egret.Event.COMPLETE, function (evt) {
             if (evt.currentTarget.data) {
-                var texture = new egret.Texture();
-                texture._setBitmapData(evt.currentTarget.data);
-                icon.texture = texture;
-                scene.addChild(icon);
+                egret.log("加载头像成功: ", evt.currentTarget.data);
+                var texture_1 = new egret.Texture();
+                texture_1._setBitmapData(evt.currentTarget.data);
+                Util.avatarTextures[avatar] = texture_1;
+                icon.texture = texture_1;
             }
         }, this);
+    };
+    /**
+     * 根据地址返回头像
+     * @param avatar 头像地址
+     * @param width 宽度
+     */
+    Util.setUserImg = function (avatar, width) {
+        if (!avatar)
+            return;
+        var group = new eui.Group();
+        var bitmap = new egret.Bitmap();
+        group.width = bitmap.width = width;
+        group.height = bitmap.height = width;
+        // 遮罩
+        var circle = new egret.Shape();
+        circle.graphics.beginFill(0x0000ff);
+        circle.graphics.drawCircle(width / 2, width / 2, width / 2);
+        circle.graphics.endFill();
+        bitmap.mask = circle;
+        group.addChild(circle);
+        var imgLoader = new egret.ImageLoader();
+        imgLoader.crossOrigin = 'anonymous'; // 跨域请求
+        imgLoader.load(avatar); // 去除链接中的转义字符‘\’
+        imgLoader.once(egret.Event.COMPLETE, function (evt) {
+            if (evt.currentTarget.data) {
+                var texture = new egret.Texture();
+                texture._setBitmapData(evt.currentTarget.data);
+                bitmap.texture = texture;
+                group.addChild(bitmap);
+            }
+        }, this);
+        return group;
+    };
+    /**
+     * 画圆角矩形
+     * @param lineWidth 边框宽度
+     * @param lineColor 边框颜色
+     * @param fillColor 填充颜色
+     * @param width 矩形宽
+     * @param height 矩形高
+     * @param ellipse 圆角宽高
+     */
+    Util.drawRoundRect = function (lineWidth, lineColor, fillColor, width, height, ellipse, alpha) {
+        if (alpha === void 0) { alpha = 1; }
+        var shp = new egret.Shape();
+        shp.graphics.lineStyle(lineWidth, lineColor);
+        shp.graphics.beginFill(fillColor, alpha);
+        shp.graphics.drawRoundRect(0, 0, width, height, ellipse, ellipse);
+        shp.graphics.endFill();
+        return shp;
+    };
+    /**
+     *
+     * @param desc
+     * @param width
+     * @param fontsize
+     */
+    Util.getStrByWith = function (desc, width, fontsize) {
+        var span = document.createElement('span');
+        span.style.visibility = 'hidden';
+        span.style.fontSize = fontsize + 'px';
+        span.style.whiteSpace = 'nowrap';
+        document.body.appendChild(span);
+        var temp = ''; // 存放截断字符串
+        for (var j = 0; j < desc.length; j++) {
+            // desc是目标字符串，
+            temp += desc[j];
+            span.innerText = temp;
+            if (span.offsetWidth > width) {
+                break;
+            }
+        }
+        document.body.removeChild(span);
+        return temp;
+    };
+    Util.getWidth = function (str, fontSize) {
+        var span = document.createElement('span');
+        span.style.visibility = 'hidden';
+        span.style.fontSize = fontSize + 'px';
+        span.style.whiteSpace = 'nowrap';
+        document.body.appendChild(span);
+        var width = 0;
+        var temp = '';
+        for (var j = 0; j < str.length; j++) {
+            temp += str[j];
+            span.innerText = temp;
+            width = span.offsetWidth;
+        }
+        document.body.removeChild(span);
+        return width;
     };
     /**
      * 获取配置资源
@@ -414,6 +488,7 @@ var Util = (function () {
             default:
                 link = url + "/game/index/share?code=" + code;
                 desc = this.formatString(desc, [name, value]);
+                title = this.formatString(title, [name, value]);
                 break;
         }
         var callback = function () {
@@ -497,7 +572,9 @@ var Util = (function () {
         var data1 = renderTexture2.toDataURL("image/png");
         shareGroup.removeChild(saveGroup);
         showIFrame('', "<div style='position:relative;'><img  style='width:100%;width:100%;position:absolute;top:0;left:0;' src='" + data1 + "'></img><img  style='width:100%;position:absolute;top:0;left:0;opacity:0.01' src='" + data + "'></img></div>", '');
+        // showIFrame('', "<div style='position:relative;'><img  style='width:100%;width:100%;position:absolute;top:0;left:0;' src='" + data1 + "'></img><img  style='width:100%;position:absolute;top:0;left:0;opacity:0.01' src='" + data + "'></img></div>", 1, '')
     };
+    Util.avatarTextures = {};
     Util.bgSoundPlaying = false;
     Util.isShowIframe = false;
     return Util;

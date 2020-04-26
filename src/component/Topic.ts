@@ -17,11 +17,13 @@ class Topic extends eui.Group {
 
     private textFlow
     private title
+    private isTeamAnswer
 
-    constructor(subject: Subject, width = 633) {
+    constructor(subject: Subject, width = 633, isTeamAnswer?) {
         super()
         this.subject = subject
         this.width = width
+        this.isTeamAnswer = isTeamAnswer
         if (this.subject.type == TopicType.BLANK) { //填空题
             this.initBlank()
         } else {//选择题
@@ -34,7 +36,7 @@ class Topic extends eui.Group {
         let qtitle = new egret.TextField()
         qtitle.y = 10
         qtitle.width = this.width
-        qtitle.textColor = 0x36b134
+        qtitle.textColor = Config.COLOR_MAINCOLOR
 
         let titleText = this.subject.title
         if (this.subject.type == TopicType.MULTIPLE) {//多选题
@@ -43,15 +45,21 @@ class Topic extends eui.Group {
         this.title = qtitle
         qtitle.text = titleText
         qtitle.size = 36
+        if (this.width < 600 && this.width > 400) {
+            qtitle.size = 30
+        } else if (this.width < 400) {
+            qtitle.size = 24
+        }
         qtitle.lineSpacing = 10
         qtitle.textAlign = egret.HorizontalAlign.CENTER
         this.addChild(qtitle)
+
         let y = qtitle.textHeight + 40
 
         let optionNumArr = ['A', 'B', 'C', 'D']
         this.subject.options.forEach((item, i) => {
             if (item.name && item.name.length >= 1) {
-                let topicItem = new TopicItem(optionNumArr[i], item, this.width)
+                let topicItem = new TopicItem(optionNumArr[i], item, this.width, this.isTeamAnswer)
                 topicItem.y = y
                 topicItem.x = 0
                 this.addChild(topicItem)
@@ -237,7 +245,9 @@ class Topic extends eui.Group {
      * 设置正确选项
      */
     public setCorrectItem() {
-        this.options[this.subject.result].setStatus(TopicItem.STATUS_CORRECT)
+        this.subject.result.split(',').map(key => {
+            this.options[key].setStatus(TopicItem.STATUS_CORRECT)
+        })
     }
 }
 
@@ -267,41 +277,63 @@ class TopicItem extends egret.DisplayObjectContainer {
     private status
     private optionNum
     private prefix
+    private isTeamAnswer
 
-    public constructor(optionNum, option, width = 633) {
+    public constructor(optionNum, option, width = 633, isTeamAnswer?) {
         super()
         this.width = width
         this.option = option
         this.optionNum = optionNum
+        this.isTeamAnswer = isTeamAnswer
         this.status = TopicItem.STATUS_NORMAL
         this.touchEnabled = true
-        let line = Math.ceil(this.option.name.length / 14)
-        this.height = 82 + (line - 1) * 30
         this.init()
     }
 
     public init() {
+        let x, width, size, height
+        if (this.width < 600 && this.width > 400) {
+            x = 150
+            width = 250
+            size = 24
+            height = 30
+        } else if (this.width < 400) {
+            x = 110
+            width = 225
+            size = 20
+            height = 24
+        } else {
+            x = 150
+            width = 420
+            size = 30
+            height = 36
+        }
+
+        let line = Math.ceil(Util.getWidth(this.option.name, size) / width)
+        this.height = 82 + (line - 1) * height
         this.initBg()
+
         // 答案内容
         let text = new egret.TextField()
         text.text = this.option.name
-        text.width = 420
-        text.lineSpacing = 10
-        text.x = 150
+        text.width = width
         text.height = this.height
+        text.lineSpacing = 10
+        text.x = x
+        text.size = size
         text.textAlign = egret.HorizontalAlign.CENTER
         text.verticalAlign = egret.VerticalAlign.MIDDLE
         text.textColor = 0x79cd72
         this.text = text
         this.addChild(text)
-
+        
         // 答案前缀
         let prefix = new egret.TextField()
         prefix.text = this.optionNum
         this.prefix = prefix
         prefix.width = 100
         prefix.height = this.height
-        prefix.size = 50
+        prefix.size = 40
         prefix.textAlign = egret.HorizontalAlign.CENTER
         prefix.verticalAlign = egret.VerticalAlign.MIDDLE
         this.addChild(prefix)
@@ -309,6 +341,7 @@ class TopicItem extends egret.DisplayObjectContainer {
 
     private initBg() {
         let bg = Util.createBitmapByName(this.BG_RES[this.status])
+        bg.width = this.width
         bg.height = this.height
 
         this.bg = bg
@@ -321,6 +354,11 @@ class TopicItem extends egret.DisplayObjectContainer {
         icon.x = 580
         icon.y = this.height / 2
         icon.anchorOffsetY = 24
+        if (this.width < 600 && this.width > 400) {
+            icon.x = 400
+        } else if (this.width < 400) {
+            icon.x = 300
+        }
         this.icon = icon
         this.addChild(icon)
     }
@@ -350,7 +388,7 @@ class TopicItem extends egret.DisplayObjectContainer {
         } else {
             this.text.textColor = 0xffffff
         }
-
+        if (this.isTeamAnswer) return
         if (status == TopicItem.STATUS_OK || status == TopicItem.STATUS_ERROR) {
             this.icon.visible = true
             this.icon.texture = RES.getRes(this.ICON_RES[status])

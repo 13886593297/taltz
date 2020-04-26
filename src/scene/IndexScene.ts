@@ -11,6 +11,7 @@ class IndexScene extends Scene {
     public init() {
         this.close_btn = false
         super.setBackground()
+        this.name = 'home' 
 
         // 获取用户信息
         Http.getInstance().post(Url.HTTP_USER_INFO, "", data => {
@@ -28,8 +29,7 @@ class IndexScene extends Scene {
         })
 
         //预加载排行榜
-        Http.getInstance().post(Url.HTTP_PERSON_RANK_LIST, { page: 1, size: 20 }, (json) => {
-        })
+        Http.getInstance().post(Url.HTTP_PERSON_RANK_LIST, { page: 1, size: 20 }, () => {})
 
     }
 
@@ -41,10 +41,10 @@ class IndexScene extends Scene {
             { bg: 'model_bg_3_png', y: 830, key: 3 },
             { bg: 'model_bg_4_png', y: 970, key: 4 },
         ]
-        let grayFilter = Util.grayFliter()
+        // let grayFilter = Util.grayFliter()
         for (let model of models) {
             let bg: egret.Bitmap = Util.createBitmapByName(model.bg)
-            if (model.key == 3) bg.filters = [grayFilter]
+            // if (model.key == 3) bg.filters = [grayFilter]
             bg.x = (this.stage.stageWidth - bg.width) / 2
             bg.y = model.y
             this.addChild(bg)
@@ -105,7 +105,7 @@ class IndexScene extends Scene {
                         }
                     }, this)
                     //开始计时
-                    timer.start()
+                    // timer.start()
                 })
                 DataManager.getInstance().hasShowSignIn = true
             }
@@ -131,7 +131,7 @@ class IndexScene extends Scene {
     private showDailyTasks() {
         let curDate = new Date()
         let week = curDate.getDay()
-        // week = 6
+        // week = 5
         let dialogContainer
         let ctr
         switch (week) {
@@ -169,8 +169,8 @@ class IndexScene extends Scene {
                     ViewManager.getInstance().changeScene(rankscene)
                     break
                 case 3:
-                    let alert = new AlertPanel("该功能暂未开放", 1120)
-                    this.addChild(alert)
+                    let pk = new PkListScene()
+                    ViewManager.getInstance().changeScene(pk)
                     break
                 case 4:
                     let escene = new EquipmentScene()

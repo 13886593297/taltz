@@ -25,6 +25,7 @@ var ResultScene = (function (_super) {
     ResultScene.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this);
+        this.isBackHome = true;
         if (this.type != 9) {
             var group = new eui.Group();
             group.x = 170;
@@ -174,9 +175,6 @@ var ResultScene = (function (_super) {
         textField.verticalAlign = egret.VerticalAlign.MIDDLE;
         group.addChild(textField);
         return group;
-    };
-    ResultScene.prototype.onBack = function () {
-        ViewManager.getInstance().jumpHome();
     };
     return ResultScene;
 }(Scene));

@@ -68,7 +68,7 @@ var ViewManager = (function () {
      */
     ViewManager.prototype.jumpHome = function () {
         var oldScene = this.getCurrentScene();
-        oldScene.parent.removeChild(oldScene);
+        oldScene && oldScene.parent && oldScene.parent.removeChild(oldScene);
         var home = this.views[0];
         if (home.name == 'home') {
             home.updateScene();
@@ -97,7 +97,7 @@ var ViewManager = (function () {
             // tw.to({ "alpha": 0 }, 100);
             tw.call(function () {
                 //加载完动画remove
-                oldScene_1.parent.removeChild(oldScene_1);
+                oldScene_1 && oldScene_1.parent && oldScene_1.parent.removeChild(oldScene_1);
                 //添加场景
                 _this.stage.addChild(newScene_1);
                 newScene_1.updateScene();
@@ -123,7 +123,7 @@ var ViewManager = (function () {
         }
         var length = this.views.length;
         var oldScene = this.views[length - 1];
-        oldScene.parent.removeChild(oldScene);
+        oldScene && oldScene.parent && oldScene.parent.removeChild(oldScene);
         if (index > -1) {
             var newScene = this.views[index];
             var tw = egret.Tween.get(newScene);

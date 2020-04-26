@@ -20,6 +20,7 @@ var IndexScene = (function (_super) {
         var _this = this;
         this.close_btn = false;
         _super.prototype.setBackground.call(this);
+        this.name = 'home';
         // 获取用户信息
         Http.getInstance().post(Url.HTTP_USER_INFO, "", function (data) {
             DataManager.getInstance().setUser(data.data);
@@ -35,8 +36,7 @@ var IndexScene = (function (_super) {
             _this.createLayout();
         });
         //预加载排行榜
-        Http.getInstance().post(Url.HTTP_PERSON_RANK_LIST, { page: 1, size: 20 }, function (json) {
-        });
+        Http.getInstance().post(Url.HTTP_PERSON_RANK_LIST, { page: 1, size: 20 }, function () { });
     };
     IndexScene.prototype.createLayout = function () {
         var _this = this;
@@ -47,12 +47,11 @@ var IndexScene = (function (_super) {
             { bg: 'model_bg_3_png', y: 830, key: 3 },
             { bg: 'model_bg_4_png', y: 970, key: 4 },
         ];
-        var grayFilter = Util.grayFliter();
+        // let grayFilter = Util.grayFliter()
         for (var _i = 0, models_1 = models; _i < models_1.length; _i++) {
             var model = models_1[_i];
             var bg = Util.createBitmapByName(model.bg);
-            if (model.key == 3)
-                bg.filters = [grayFilter];
+            // if (model.key == 3) bg.filters = [grayFilter]
             bg.x = (this.stage.stageWidth - bg.width) / 2;
             bg.y = model.y;
             this.addChild(bg);
@@ -112,7 +111,7 @@ var IndexScene = (function (_super) {
                         }
                     }, _this);
                     //开始计时
-                    timer.start();
+                    // timer.start()
                 });
                 DataManager.getInstance().hasShowSignIn = true;
             }
@@ -134,7 +133,7 @@ var IndexScene = (function (_super) {
     IndexScene.prototype.showDailyTasks = function () {
         var curDate = new Date();
         var week = curDate.getDay();
-        // week = 6
+        // week = 5
         var dialogContainer;
         var ctr;
         switch (week) {
@@ -159,7 +158,6 @@ var IndexScene = (function (_super) {
     };
     // 页面跳转
     IndexScene.prototype.onTouch = function (key) {
-        var _this = this;
         return function () {
             Util.playMusic('model_select_mp3');
             switch (key) {
@@ -172,8 +170,8 @@ var IndexScene = (function (_super) {
                     ViewManager.getInstance().changeScene(rankscene);
                     break;
                 case 3:
-                    var alert_1 = new AlertPanel("该功能暂未开放", 1120);
-                    _this.addChild(alert_1);
+                    var pk = new PkListScene();
+                    ViewManager.getInstance().changeScene(pk);
                     break;
                 case 4:
                     var escene = new EquipmentScene();

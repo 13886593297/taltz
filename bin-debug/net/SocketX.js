@@ -3,20 +3,21 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var SocketX = (function () {
     function SocketX() {
-        // let socket = io(Config.HOST + ':' + Config.PORT);
-        // this.socket = socket;
-        // this.addEventListener(NetEvent.ON_CONNENT,this.onConnect,this);
+        // let socket = io(Config.HOST + ':' + Config.PORT)
+        // this.socket = socket
+        // this.addEventListener(NetEvent.ON_CONNENT,this.onConnect,this)
         // this.addEventListener('name', (data) => {
-        //     console.log('name event lister', data);
+        //     console.log('name event lister', data)
         // })
         this.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIwLCJpYXQiOjE1NDgzMDU4NjEsImV4cCI6MTU0ODM5MjI2MX0.yYz1cwYudv5yMo_r90n6gYRW-wv5PJvFxrrHGYnZ2KE';
+        // private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOnsidXNlcklkIjoib2hnZ0J1TzZEeVQzOW5CMTE2cDM1VHhBcC1ZUSIsImF2YXRhciI6Imh0dHA6Ly90aGlyZHd4LnFsb2dvLmNuL21tb3Blbi92aV8zMi9jS3FYeXIzajZpY3hnczRUU3k2Y3BNTWtic1dYU2RBZlhxRmtMeXNEZ2FjQWJyenVsVnFqNmV1bG1aR1JpYW5NS3FJbEw4aFdHQUFUb2M4UGtjVE9HdGdBLzEzMiIsInNleCI6MiwibHYiOjEsInNjb3JlIjowLCJ0ZWFtSWQiOjAsInNpZ25Ub3RhbCI6MCwicGtUZWFtVG90YWwiOjAsInBrVGVhbURheSI6MH0sImlhdCI6MTU3NDkyNDI3MiwiZXhwIjoxNTc1MDEwNjcyfQ.zxIM-BjWTCzkwLEcpUlgBxg5L2dgIy_kz-fJ4-pmTQw'
         this.isconnect = false;
         this.lastMatch = 0;
         this.callbacks = {};
     }
     SocketX.prototype.close = function () {
         if (this.socket && this.socket.connect) {
-            console.log(this.socket.connect);
+            // console.log(this.socket.connect)
             this.socket.close();
             //清空值钱的监听事件
             this.callbacks = [];
@@ -27,21 +28,20 @@ var SocketX = (function () {
     SocketX.prototype.connect = function (type) {
         var _this = this;
         if (type === void 0) { type = PKTYPE.PERSON; }
-        console.log('调用connect接口');
+        // console.log('调用connect接口')
         if (this.socket && this.socket.connect)
             return;
         ViewManager.getInstance().showLoading('数据加载中...');
-        //
-        var host = Config.DEBUG ? 'http://xujiagui.vicp.cc:12631' : Util.getHost(); //Util.getConfig('host');//
+        var host = Config.DEBUG ? 'http://127.0.0.1:8360' : Util.getHost();
         var url = host + '/proom';
         if (type == PKTYPE.TEAM)
             url = host + '/troom';
-        var socket = connectSocket(url); //Url.HTTP_PK_SOCKET  
-        console.log('开始连接websocket:', url);
+        var socket = connectSocket(url);
+        // console.log('开始连接websocket:', url)
         this.socket = socket;
         socket.on(NetEvent.ON_CONNENT, function () {
             _this.isconnect = true;
-            console.log('链接成功！');
+            // console.log('链接成功！')
             var token = localStorage.getItem('token');
             if (Config.DEBUG) {
                 token = _this.token;
@@ -50,17 +50,17 @@ var SocketX = (function () {
         });
         //授权完成才会关闭
         // socket.on(NetEvent.PK_OAUTH, (data) => {
-        //     console.log(NetEvent.PK_OAUTH, '授权用户确定');
-        //     ViewManager.getInstance().hideLoading();
-        // });
+        //     console.log(NetEvent.PK_OAUTH, '授权用户确定')
+        //     ViewManager.getInstance().hideLoading()
+        // })
         this.addEventListener(NetEvent.PK_OAUTH, function (data) {
             ViewManager.getInstance().hideLoading();
         }, this, 'socket');
         this.addEventListener(NetEvent.RE_CONNENT, function () {
-            //    if(this.isconnect)  ViewManager.getInstance().hideLoading();
+            //    if(this.isconnect)  ViewManager.getInstance().hideLoading()
         }, this);
         this.addEventListener(NetEvent.DIS_CONNENT, function () {
-            // if(this.isconnect) ViewManager.getInstance().showLoading('哦噢,断线了，正在努力恢复中！');
+            // if(this.isconnect) ViewManager.getInstance().showLoading('哦噢,断线了，正在努力恢复中！')
         }, this);
     };
     /**
@@ -143,10 +143,10 @@ var SocketX = (function () {
         if (multFlag === void 0) { multFlag = null; }
         // if (thisObject == null) {
         //     this.socket.on(event, fn)
-        //     // this.socket.addEventListener(event, fn);
+        //     // this.socket.addEventListener(event, fn)
         // } else {
         //     this.socket.on(event, fn.bind(thisObject))
-        //     // this.socket.addEventListener(event, fn.bind(thisObject));
+        //     // this.socket.addEventListener(event, fn.bind(thisObject))
         // }
         var isregister = false;
         var key = event;
@@ -159,11 +159,11 @@ var SocketX = (function () {
             console.log(event, data);
             if (data && data.code > 0) {
                 // let alert = new AlertPanel(data.msg)
-                // ViewManager.getInstance().getCurrentScene().addChildAt(alert,200);
+                // ViewManager.getInstance().getCurrentScene().addChildAt(alert,200)
                 return showAlertButton(data.msg, '返回竞技场目录', function () {
                     ViewManager.getInstance().backByName('pklist');
                 });
-                // return;
+                // return
             }
             if (thisObject)
                 fn.bind(thisObject)(data);
@@ -173,7 +173,7 @@ var SocketX = (function () {
         //只注册一次监听事件
         if (isregister)
             return;
-        console.log('register listener event: ' + event);
+        // console.log('register listener event: ' + event)
         this.socket.on(event, function (data) {
             if (_this.callbacks[event]) {
                 _this.callbacks[event](data);

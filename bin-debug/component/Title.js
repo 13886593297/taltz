@@ -10,36 +10,22 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var Title = (function (_super) {
     __extends(Title, _super);
-    function Title(title) {
+    function Title(img) {
         var _this = _super.call(this) || this;
-        _this.title = title;
-        _this.height = 80;
+        _this.img = img;
         _this.init();
         return _this;
     }
     Title.prototype.init = function () {
-        var stage = ViewManager.getInstance().stage;
-        var bg = Util.createBitmapByName('pk_title_bg_png');
-        bg.width = 367;
-        bg.height = 95;
-        bg.x = stage.stageWidth / 2;
-        bg.anchorOffsetX = bg.width / 2;
+        var bg = new egret.Bitmap();
+        var texture = RES.getRes(this.img);
+        bg.texture = texture;
+        this.bg = bg;
+        this.width = bg.width;
         this.addChild(bg);
-        var textfield = new egret.TextField();
-        this.addChild(textfield);
-        this.titleText = textfield;
-        textfield.text = this.title;
-        textfield.width = stage.stageWidth;
-        textfield.height = this.height;
-        textfield.textColor = 0xF36C21;
-        textfield.textAlign = egret.HorizontalAlign.CENTER;
-        textfield.verticalAlign = egret.VerticalAlign.MIDDLE;
-        textfield.anchorOffsetX = 30;
-        textfield.size = 40;
-        textfield.y = 10;
     };
-    Title.prototype.updateTitle = function (textFlow) {
-        this.titleText.textFlow = textFlow;
+    Title.prototype.updateTitle = function (newImg) {
+        this.bg.texture = RES.getRes(newImg);
     };
     return Title;
 }(eui.Group));

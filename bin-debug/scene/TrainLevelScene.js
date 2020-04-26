@@ -12,6 +12,7 @@ var TrainLevelScene = (function (_super) {
     __extends(TrainLevelScene, _super);
     function TrainLevelScene(bandge) {
         var _this = _super.call(this) || this;
+        _this.flag1 = true;
         _this.bandge = bandge;
         return _this;
     }
@@ -58,6 +59,9 @@ var TrainLevelScene = (function (_super) {
             group.addChild(level);
             level.touchEnabled = true;
             level.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+                if (!_this.flag1)
+                    return;
+                _this.flag1 = false;
                 //请求数据
                 Util.playMusic('model_select_mp3');
                 if (currentLevel >= data.key) {
@@ -73,11 +77,15 @@ var TrainLevelScene = (function (_super) {
                             var alert_1 = new AlertPanel("提示:题库未设置", 150);
                             _this.addChild(alert_1);
                         }
+                        setTimeout(function () {
+                            _this.flag1 = true;
+                        }, 500);
                     });
                 }
                 else {
                     var alert_2 = new AlertPanel("提示:请先通关前面的关卡后再来哦", 150);
                     _this.addChild(alert_2);
+                    _this.flag1 = true;
                 }
             }, this_1);
             // 关卡之间的连接线条

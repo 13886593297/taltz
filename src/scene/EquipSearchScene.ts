@@ -26,33 +26,32 @@ class EquipSearch extends Scene {
     private changeTypeList() {
         Http.getInstance().post(Url.HTTP_EQUIP_SEARCH, { keywords: this.keywords }, data => {
             var group = new eui.Group()
-            group.width = this.stage.stageWidth
             this.addChild(group)
 
             let bg: egret.Bitmap = Util.createBitmapByName('search_result_bg_png')
-            bg.y = 320
             bg.x = (this.stage.stageWidth - bg.width) / 2
+            bg.y = 320
             this.addChild(bg)
 
             let title = new egret.TextField()
             title.text = '搜索结果列表'
+            title.width = 450
             title.textColor = 0x7fc871
             title.size = 32
-            title.x = 150
+            title.x = (this.stage.stageWidth - title.width) / 2
             title.y = 365
             this.addChild(title)
 
             let y = 0
+            let scale = 0.75
             if (data.data != null) {
                 let list = data.data
                 for (let item of list) {
                     let equipItem = new EquipItem(item)
-                    equipItem.width = 490
-                    equipItem.height = 60
-                    equipItem.scaleX = .75
-                    equipItem.scaleY = .75
+                    equipItem.scaleX = scale
+                    equipItem.scaleY = scale
                     equipItem.y = y
-                    y += equipItem.height + 30
+                    y += equipItem.height * scale
                     equipItem.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onSeeItemDetail(item), this)
                     group.addChild(equipItem)
                 }
@@ -71,8 +70,8 @@ class EquipSearch extends Scene {
             //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
             myScroller.width = 490
             myScroller.height = 310
+            myScroller.x = (this.stage.stageWidth - myScroller.width) / 2
             myScroller.y = 430
-            myScroller.x = 130
             //设置viewport
             myScroller.viewport = group
             this.addChild(myScroller)

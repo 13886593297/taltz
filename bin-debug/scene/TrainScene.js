@@ -21,6 +21,7 @@ var TrainScene = (function (_super) {
     TrainScene.prototype.init = function () {
         var _this = this;
         _super.prototype.setBackground.call(this);
+        this.name = 'trainScene';
         // 标题
         var title = Util.createBitmapByName('train_title_png');
         this.addChild(title);

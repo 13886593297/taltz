@@ -9,6 +9,7 @@ class TrainScene extends Scene {
 
     public init() {
         super.setBackground()
+        this.name = 'trainScene'
         // 标题
         let title = Util.createBitmapByName('train_title_png')
         this.addChild(title)

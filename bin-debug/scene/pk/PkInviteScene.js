@@ -18,53 +18,23 @@ var PkInviteScene = (function (_super) {
         return _this;
     }
     PkInviteScene.prototype.init = function () {
-        this.width = 750;
-        this.anchorOffsetX = 375;
-        this.x = this.stage.stageWidth / 2;
+        _super.prototype.setBackground.call(this);
+        this.close_btn = false;
+        var avatarGroup = new eui.Group;
+        avatarGroup.y = 20;
+        this.addChild(avatarGroup);
+        this.avatarGroup = avatarGroup;
         var userinfo = DataManager.getInstance().getUser();
-        console.log(userinfo, 'useringo');
         var leftUser = new PkUser(userinfo);
-        leftUser.y = 100;
-        this.addChild(leftUser);
+        avatarGroup.addChild(leftUser);
         var pkData = DataManager.getInstance().getPkData();
         var rightUser = new PkUser(pkData ? pkData.pkUser : null, 'right');
-        rightUser.y = 100;
-        rightUser.anchorOffsetX = 243;
-        rightUser.x = 750;
-        this.addChild(rightUser);
+        rightUser.x = this.stage.stageWidth - rightUser.width;
+        avatarGroup.addChild(rightUser);
         var pkVs = Util.createBitmapByName('pk_vs_png');
-        pkVs.anchorOffsetX = 128;
-        pkVs.anchorOffsetY = 86;
-        pkVs.width = 255;
-        pkVs.height = 172;
-        pkVs.x = 375;
-        pkVs.y = 240;
-        this.addChild(pkVs);
-        var vs = new egret.TextField();
-        switch (this.type) {
-            case InviteStatus.INVITING:
-            case InviteStatus.NOACCEPT:
-                vs.text = "等待对手加入";
-                break;
-            default:
-                vs.text = "VS";
-                break;
-        }
-        vs.width = 300;
-        vs.height = 100;
-        vs.anchorOffsetX = 150;
-        vs.anchorOffsetY = 50;
-        vs.y = 240;
-        vs.x = 375;
-        vs.textAlign = egret.HorizontalAlign.CENTER;
-        vs.verticalAlign = egret.VerticalAlign.MIDDLE;
-        vs.size = 34;
-        this.addChild(vs);
-        var buttonGroup = new eui.Group();
-        this.width = 750;
-        buttonGroup.y = 600;
-        this.buttonGroup = buttonGroup;
-        this.addChild(buttonGroup);
+        pkVs.x = (this.stage.stageWidth - pkVs.width) / 2;
+        pkVs.y = 30;
+        avatarGroup.addChild(pkVs);
         switch (this.type) {
             case InviteStatus.INVITING:
                 this.inviting();
@@ -80,6 +50,7 @@ var PkInviteScene = (function (_super) {
                 break;
             case InviteStatus.MATCHEND:
                 this.matchEnd();
+                this.avatarGroup.y = 460;
                 break;
             case InviteStatus.OBSERVE:
                 this.observe();
@@ -92,9 +63,15 @@ var PkInviteScene = (function (_super) {
                 break;
             case InviteStatus.INVALID_ERROR:
                 this.invalidError();
+                this.close_btn = 'close_png';
+                this.backPage = 'pkmodel';
+                this.avatarGroup.y = 120;
                 break;
             case InviteStatus.PK_END_WAIT:
                 this.pkEnd();
+                this.close_btn = 'close_png';
+                this.backPage = 'pkmodel';
+                this.avatarGroup.y = 120;
                 break;
             case InviteStatus.PK_NO_ANSWER:
                 this.pkNoAnswer();
@@ -112,16 +89,13 @@ var PkInviteScene = (function (_super) {
         text.text = "00:60";
         text.width = 750;
         text.textAlign = egret.HorizontalAlign.CENTER;
-        text.y = 400;
+        text.textColor = 0x989898;
+        text.y = 166;
         this.addChild(text);
         var timerNumber = 60;
         var timer = new egret.Timer(1000, 60);
-        this.timer = timer;
         timer.addEventListener(egret.TimerEvent.TIMER, function () {
             timerNumber--;
-            if (timerNumber == 10) {
-                // SocketX.getInstance().sendMsg(NetEvent.PK_MATCH,{robot:true});
-            }
             if (timerNumber < 10) {
                 text.text = "00:0" + timerNumber;
             }
@@ -146,124 +120,125 @@ var PkInviteScene = (function (_super) {
                     break;
             }
         });
-        var info = new LineInfo('等待好友60s进入');
-        info.y = 50;
-        this.buttonGroup.addChild(info);
-        // let backButton = new XButton('返回竞技场目录');
-        // backButton.width = 450;
-        // backButton.x = 150;
-        // backButton.y = 200
-        // backButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-        //     ViewManager.getInstance().back(2);
-        // }, this);
-        // this.buttonGroup.addChild(backButton);
+        var waitPic = Util.createBitmapByName('pk_end_wait_png');
+        waitPic.x = (this.stage.stageWidth - waitPic.width) / 2;
+        waitPic.y = 500;
+        this.addChild(waitPic);
+        var tip = new LineInfo("\u7B49\u5F85\u597D\u53CB\u8FDB\u5165\u6311\u6218");
+        this.addChild(tip);
     };
     PkInviteScene.prototype.noAccept = function () {
-        // let text = new egret.TextField();
-        // text.text = "您的好友正忙,请下次再邀请TA吧！"
-        // text.width = 350;
-        // text.x = 200;
-        // text.y = -100;
-        // this.buttonGroup.addChild(text);
-        var text = new egret.TextField();
+        var text = new egret.TextField;
         text.text = "您的好友正忙,请下次再邀请TA吧！";
-        text.width = 350;
-        text.textColor = Config.COLOR_YELLOW;
+        text.width = 440;
+        text.textColor = Config.COLOR_MAINCOLOR;
         text.textAlign = egret.HorizontalAlign.CENTER;
-        text.x = 200;
-        text.y = -50;
-        this.buttonGroup.addChild(text);
+        text.x = (this.stage.stageWidth - text.width) / 2;
+        text.y = 500;
+        this.addChild(text);
         var seconds = 5;
         var alert = new LineInfo(seconds + "\u79D2\u540E\u8FDB\u5165\u79BB\u7EBF\u7B54\u9898\u6A21\u5F0F\uFF01");
-        alert.y = 50;
-        this.buttonGroup.addChild(alert);
-        // let backButton = new XButton('返回竞技场目录');
-        // backButton.width = 450;
-        // backButton.x = 150;
-        // backButton.y = 150
-        // backButton.filters = [Util.grayFliter()];
-        // this.buttonGroup.addChild(backButton);
+        var timer = new egret.Timer(1000, 5);
+        timer.addEventListener(egret.TimerEvent.TIMER, function () {
+            seconds--;
+            alert.setText(seconds + "\u79D2\u540E\u8FDB\u5165\u79BB\u7EBF\u7B54\u9898\u6A21\u5F0F\uFF01");
+        }, this);
+        timer.start;
+        this.addChild(alert);
     };
     PkInviteScene.prototype.matchEnd = function () {
         //开始pk
         var pkData = DataManager.getInstance().getPkData();
-        var textValue = "匹配成功";
+        var resultBgName = 'match_title_01_png';
         if (!pkData || !pkData.pkUser) {
-            textValue = "离线PK";
+            resultBgName = 'match_title_02_png';
         }
-        var text = new egret.TextField();
-        text.text = textValue;
-        text.width = 350;
-        text.textColor = Config.COLOR_YELLOW;
-        text.size = 40;
-        text.textAlign = egret.HorizontalAlign.CENTER;
-        text.x = 200;
-        text.y = -50;
-        this.buttonGroup.addChild(text);
+        var resultBg = Util.createBitmapByName(resultBgName);
+        resultBg.x = (this.stage.stageWidth - resultBg.width) / 2;
+        resultBg.y = 580;
+        this.addChild(resultBg);
+        var tip = Util.createBitmapByName('pk_begin_png');
+        tip.x = (this.stage.stageWidth - tip.width) / 2;
+        tip.y = this.stage.stageHeight - 300;
+        this.addChild(tip);
         var seconds = 5;
-        var alert = new LineInfo(seconds + "\u79D2\u540E\u8FDB\u5165\u6E38\u620F");
-        alert.y = 50;
-        this.buttonGroup.addChild(alert);
-        // let timer = new egret.Timer(1000,5);
-        // timer.addEventListener(egret.TimerEvent.TIMER,()=>{
-        //     seconds--;
-        //     alert.setText(`${seconds}秒后进入游戏`)
-        // },this);
-        // timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,()=>{
-        //     let scene = new BattleScene();
-        //     ViewManager.getInstance().changeScene(scene);
-        // },this);
-        // timer.start();
+        var countDown = new egret.TextField;
+        countDown.text = '' + seconds;
+        countDown.x = tip.x;
+        countDown.y = tip.y;
+        countDown.width = 100;
+        countDown.height = tip.height - 5;
+        countDown.textAlign = 'center';
+        countDown.verticalAlign = 'middle';
+        countDown.size = 36;
+        this.addChild(countDown);
+        var timer = new egret.Timer(1000, 5);
+        timer.addEventListener(egret.TimerEvent.TIMER, function () {
+            seconds--;
+            countDown.text = '' + seconds;
+        }, this);
+        // test begin
+        // timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, () => {
+        //     let scene = new BattleScene()
+        //     ViewManager.getInstance().changeScene(scene)
+        // }, this)
+        // test end
+        timer.start();
     };
     /**
      * 旁观
      */
     PkInviteScene.prototype.observe = function () {
         var alert = new LineInfo("\u5BF9\u5C40\u8FDB\u884C\u4E2D");
-        alert.y = 50;
-        this.buttonGroup.addChild(alert);
+        this.addChild(alert);
     };
     /**
      * 无效局
      */
     PkInviteScene.prototype.invalid = function () {
         var info = new LineInfo('本局无效\n友谊的小船荡啊荡，\nbut 你们却都没答题!');
-        info.y = 50;
-        this.buttonGroup.addChild(info);
+        this.addChild(info);
     };
     /**
      * 无效局
      */
     PkInviteScene.prototype.errorMsg = function () {
         var info = new LineInfo(this.msg);
-        info.y = 50;
-        this.buttonGroup.addChild(info);
+        this.addChild(info);
     };
     /**
      * 无效局-全打错
      */
     PkInviteScene.prototype.invalidError = function () {
         var info = new LineInfo('本局无效\n棋逢对手，满盘皆错！\n两位赶快去温习一下再来挑战吧！');
-        info.y = 50;
-        this.buttonGroup.addChild(info);
+        this.addChild(info);
     };
     /**
      * 24小时未应答
      */
     PkInviteScene.prototype.pkNoAnswer = function () {
         var info = new LineInfo('您的好友24小时内未应答\n请确认TA是否被外星人绑架了');
-        info.y = 50;
-        this.buttonGroup.addChild(info);
+        this.addChild(info);
     };
     PkInviteScene.prototype.pkReject = function () {
         var info = new LineInfo('您的好友拒绝了您的邀请\n并向您发送了一波爱心');
-        info.y = 50;
-        this.buttonGroup.addChild(info);
+        this.addChild(info);
     };
     PkInviteScene.prototype.pkEnd = function () {
-        var info = new LineInfo('Skr! \n你的对手还在苦思答题中~\n请稍候。');
-        info.y = 50;
-        this.buttonGroup.addChild(info);
+        var waitPic = Util.createBitmapByName('pk_end_wait_png');
+        waitPic.x = (this.stage.stageWidth - waitPic.width) / 2;
+        waitPic.y = 500;
+        this.addChild(waitPic);
+        var info = new LineInfo('你的对手还在苦苦思索中\n请稍候...');
+        this.addChild(info);
+        // test begin
+        // let timer = new egret.Timer(3000, 1)
+        // timer.addEventListener(egret.TimerEvent.TIMER, () => {
+        //     let pk = new PkResultScene(1)
+        //     ViewManager.getInstance().changeScene(pk)
+        // }, this)
+        // timer.start()
+        // test end
     };
     PkInviteScene.prototype.onBack = function () {
         switch (this.type) {
@@ -277,18 +252,17 @@ var PkInviteScene = (function (_super) {
         }
     };
     PkInviteScene.prototype.waiting = function () {
-        var text = new egret.TextField();
-        text.text = "等待对手24小时进入PK";
-        text.width = 750;
-        text.size = 40;
-        text.textAlign = egret.HorizontalAlign.CENTER;
-        text.y = -100;
-        this.buttonGroup.addChild(text);
-        var backButton = new XButton('返回PK模式目录');
-        backButton.width = 450;
-        backButton.x = 150;
-        backButton.y = 150;
-        this.buttonGroup.addChild(backButton);
+        var waitPic = Util.createBitmapByName('pk_end_wait_png');
+        waitPic.x = (this.stage.stageWidth - waitPic.width) / 2;
+        waitPic.y = 500;
+        this.addChild(waitPic);
+        var info = new LineInfo('等待对手24小时进入挑战');
+        this.addChild(info);
+        var backButton = Util.createBitmapByName('pk_back_png');
+        backButton.x = (this.stage.stageWidth - backButton.width) / 2;
+        backButton.y = this.stage.stageHeight - 200;
+        backButton.touchEnabled = true;
+        this.addChild(backButton);
         backButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
             ViewManager.getInstance().backByName('pkmodel');
         }, this);
@@ -297,12 +271,11 @@ var PkInviteScene = (function (_super) {
      * 被邀请
      */
     PkInviteScene.prototype.accepted = function () {
-        var _this = this;
-        var y = 0;
-        var inviteButton = new XButton('接受邀请');
-        inviteButton.width = 450;
-        inviteButton.x = 150;
-        this.buttonGroup.addChild(inviteButton);
+        var inviteButton = Util.createBitmapByName('pk_accept_png');
+        inviteButton.x = this.stage.stageWidth / 2 - inviteButton.width - 30;
+        inviteButton.y = this.stage.stageHeight - 200;
+        inviteButton.touchEnabled = true;
+        this.addChild(inviteButton);
         var pkCode = DataManager.getInstance().getPkData().pkCode;
         inviteButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
             //TODO  接受邀请
@@ -315,26 +288,18 @@ var PkInviteScene = (function (_super) {
                 accept: true,
             });
         }, this);
-        y += 130;
-        var quitButton = new XButton('拒绝对战');
-        quitButton.width = 450;
-        quitButton.x = 150;
-        quitButton.y = y;
-        this.buttonGroup.addChild(quitButton);
-        //
+        var quitButton = Util.createBitmapByName('pk_refuse_png');
+        quitButton.x = this.stage.stageWidth / 2 + 30;
+        quitButton.y = inviteButton.y;
+        quitButton.touchEnabled = true;
+        this.addChild(quitButton);
         quitButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            console.log('quit ');
-            //TODO 拒绝邀请
-            var confirm = new Confirm('您确定拒绝对战吗？');
-            _this.addChild(confirm);
-            confirm.addEventListener(ConfirmEvent.CONFIRM_BUTTON_YES, function () {
-                SocketX.getInstance().sendMsg(NetEvent.PK_ACCEPT, {
-                    pkCode: pkCode,
-                    accept: false,
-                });
-                var scene = new IndexScene();
-                ViewManager.getInstance().changeScene(scene);
-            }, _this);
+            SocketX.getInstance().sendMsg(NetEvent.PK_ACCEPT, {
+                pkCode: pkCode,
+                accept: false,
+            });
+            var scene = new IndexScene();
+            ViewManager.getInstance().changeScene(scene);
         }, this);
     };
     return PkInviteScene;

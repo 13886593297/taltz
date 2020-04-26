@@ -5,6 +5,8 @@ class TeamRankScene extends Scene {
     private personPage = 1
     private scrollView
     private teamid
+    private _width
+    private _height
 
     constructor(teamid) {
         super()
@@ -13,6 +15,8 @@ class TeamRankScene extends Scene {
 
     public init() {
         super.setBackground()
+        this._width = this.stage.stageWidth
+        this._height = this.stage.stageHeight
 
         let bg = Util.createBitmapByName("teamRank_png")
         this.addChild(bg)
@@ -38,8 +42,8 @@ class TeamRankScene extends Scene {
 
         var myScroller: eui.Scroller = new eui.Scroller()
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-        myScroller.width = this.stage.stageWidth
-        myScroller.height = this.stage.stageHeight - 200
+        myScroller.width = this._width
+        myScroller.height = this._height - 200
         myScroller.y = 150
         //设置viewport
         myScroller.viewport = group
@@ -48,17 +52,18 @@ class TeamRankScene extends Scene {
 
         // 上滑加载更多
         myScroller.addEventListener(eui.UIEvent.CHANGE_END, () => {
-            if (myScroller.viewport.scrollV + 1050 >= myScroller.viewport.contentHeight) {
+            if (myScroller.viewport.scrollV + this._height >= myScroller.viewport.contentHeight) {
                 this.loadMoreData()
             }
         }, this)
     }
 
     private addItem(data, y = 60) {
+        console.log(data)
         for (let rank of data) {
             let rankItem = this.rankItemTemplate(rank, y)
             y += 200
-            rankItem.height = 250
+            rankItem.height = 200
             this.groupView.addChild(rankItem)
         }
     }
@@ -69,7 +74,7 @@ class TeamRankScene extends Scene {
 
         // 排名背景
         let rankBg = Util.createBitmapByName('rank_item_bg_png')
-        rankGroup.x = (this.stage.stageWidth - rankBg.width) / 2
+        rankGroup.x = (this._width - rankBg.width) / 2
         rankGroup.width = rankBg.width
 
         rankGroup.addChild(rankBg)
@@ -99,7 +104,7 @@ class TeamRankScene extends Scene {
         let userInfo = new egret.TextField()
         userInfo.textFlow = [
             { text: item.teamName + '\n', style: { size: 28 } },
-            { text: item.userName, style: { size: 40 } }
+            { text: Util.getStrByWith(item.userName, 160, 40), style: { size: 40 } }
         ]
         userInfo.y = 60
         userInfo.lineSpacing = 10
@@ -132,16 +137,16 @@ class TeamRankScene extends Scene {
     }
 
     private loadMoreData() {
-
         if (this.personPage > 0) {
             Http.getInstance().post(Url.HTTP_TEAM_PERSON_RANK_LIST, { tid: this.teamid, page: this.personPage, size: this.size }, (json) => {
+                console.log(json)
                 if (json.data.length == this.size) {
                     this.personPage += 1
                 } else {
                     this.personPage = -1
                 }
                 this.personRank.concat(json.data)
-                this.addItem(this.personRank)
+                this.addItem(json.data, this.scrollView.viewport.contentHeight)
             })
         }
     }

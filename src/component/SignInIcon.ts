@@ -49,7 +49,7 @@ class SignInIcon extends eui.Component implements eui.UIComponent {
                     });
                     break;
             }
+            egret.Tween.get(this).to({ x: -260 }, 600, egret.Ease.sineIn);
         }, this);
     }
-
 }

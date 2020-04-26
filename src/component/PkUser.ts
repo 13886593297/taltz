@@ -1,306 +1,220 @@
-
-
-
-
 class PkUser extends eui.Group {
-    private userinfo;
-    private type;
-    private score;
-    private color;
-    private scoreText;
+    private userinfo
+    private type
+    private score
+    private scoreText
+    private time
+    private team
 
-    constructor(userinfo, type = "left", score = null) {
-        super();
-        this.userinfo = userinfo;
-        this.type = type;
-        this.score = score;
-        this.init();
+    constructor(userinfo, type = "left", score = null, time?, team?) {
+        super()
+        this.userinfo = userinfo
+        this.type = type
+        this.score = score
+        this.time = time
+        this.team = team
+        this.init()
     }
-
-
 
     public init() {
-        let bgname = 'pk_user_bg_left_png';
-        let color = 0xabbf11;
+        let bgname = 'pk_user_bg_left_png'
         if (this.type == 'right') {
-            bgname = 'pk_user_bg_right_png';
-            color = 0x1670c1;
+            bgname = 'pk_user_bg_right_png'
+        } else if (this.type == 'teamLeft') {
+            bgname = 'pk_know_result_left_png'
         }
-        this.color = color;
         let bg = Util.createBitmapByName(bgname)
-        let width = 240;
-        let height = 283;
-        if (this.score) {
-            height = 340;
+        this.width = bg.width
+        this.addChild(bg)
+
+        // 头像
+        let avatar = Util.setUserImg(this.userinfo ? this.userinfo.avatar : 'pk_default_avatar_png', 112)
+        avatar.x = 170
+        avatar.y = 3
+        if (this.type == 'right') {
+            avatar.x = 3
         }
-        this.height = height;
-        this.width = width;
-        bg.width = width;
-        bg.height = height;
+        this.addChild(avatar)
 
-        this.addChild(bg);
-
-        let border: egret.Bitmap = Util.createBitmapByName('icon_border_png');
-        border.width = 164;
-        border.height = 164;
-        border.x = 38;
-        border.y = 30;
-        this.addChild(border);
-
-        let iconPath = this.userinfo ? 'icon_2_jpg' : 'user_unknow_jpg'
-        let icon: egret.Bitmap = Util.createBitmapByName(iconPath);
-        icon.width = 150;
-        icon.height = 140;
-        icon.x = border.x + 7
-        icon.y = border.y + 12
-        this.addChild(icon);
-
-        if (this.userinfo) {
-            // Util.setUserImg(this.userinfo.avatar, icon);
+        // 昵称
+        let name = new egret.TextField()
+        name.text = this.userinfo ? this.userinfo.nickName : '???'
+        name.width = 150
+        name.height = 24
+        name.x = 77
+        name.y = 150
+        if (this.type == 'right') {
+            name.x = 70
         }
+        name.textAlign = egret.HorizontalAlign.CENTER
+        name.verticalAlign = egret.VerticalAlign.MIDDLE
+        name.size = 24
+        this.addChild(name)
 
-
-
-        let shape = new egret.Shape();
-        this.addChild(shape);
-        let graphics = shape.graphics;
-        graphics.beginFill(0xff0000);
-        graphics.moveTo(icon.x, icon.y + 15);/// 设定显示区域
-        graphics.lineTo(icon.x, icon.y + icon.height);/// 设定显示区域
-        graphics.lineTo(icon.x + icon.width, icon.y + icon.height);/// 设定显示区域
-        graphics.lineTo(icon.x + icon.width, icon.y);/// 设定显示区域
-        graphics.lineTo(icon.x + 15, icon.y);/// 设定显示区域
-        graphics.lineTo(icon.x, icon.y + 15);/// 设定显示区域
-        graphics.endFill();
-        icon.mask = shape;
-
-        //人名
-
-
-        let name = new egret.TextField();
-        name.text = this.userinfo ? this.userinfo.nickName : '???';
-        name.width = 200;
-        name.wordWrap = false;
-        name.multiline = false;
-        name.x = 20;
-        name.textAlign = egret.HorizontalAlign.CENTER;
-        name.y = icon.y + 180;
-        name.size = 28;
-        this.addChild(name);
-
-        if (this.score) {
-
-            let line = Util.createBitmapByName('user_line_png');
-            line.width = bg.width;
-            line.y = name.y + 60;
-            this.addChild(line);
-
-            let shape: egret.Shape = new egret.Shape();
-            shape.graphics.beginFill(color);
-            shape.graphics.moveTo(0, line.y - 10);
-            shape.graphics.lineTo(0, line.y + 10);
-            shape.graphics.lineTo(80, line.y + 10);
-            shape.graphics.lineTo(80, line.y - 10);
-            shape.graphics.lineTo(0, line.y - 10);
-
-            shape.graphics.moveTo(160, line.y - 10);
-            shape.graphics.lineTo(160, line.y + 10);
-            shape.graphics.lineTo(240, line.y + 10);
-            shape.graphics.lineTo(240, line.y - 10);
-            shape.graphics.lineTo(160, line.y - 10);
-
-            shape.graphics.endFill();
-            this.addChild(shape);
-            line.mask = shape;
-            // shape.blendMode = egret.BlendMode.ERASE;
-
-
-            let score = new egret.TextField();
-            score.text = this.score;
-            score.textColor = 0x000000;
-            score.width = bg.width;
-            score.height = 50;
-            score.anchorOffsetY = 25;
-            score.y = line.y;
-            score.textAlign = egret.HorizontalAlign.CENTER;
-            score.verticalAlign = egret.VerticalAlign.MIDDLE;
-            score.size = 30;
-            this.addChild(score);
-            this.scoreText = score;
+        // 得分 用时
+        if (this.score && !this.team) {
+            let userScore = new egret.TextField
+            userScore.textFlow = [
+                { text: this.score + '\n', style: { textColor: 0x35ad3d, size: 36 } },
+                { text: this.time, style: { textColor: 0x959898, size: 26 } }
+            ]
+            userScore.width = 100
+            userScore.textAlign = 'center'
+            userScore.x = 100
+            userScore.y = bg.height + 15
+            if (this.team) {
+                userScore.textColor = 0xffffff
+                userScore.size = 44
+                userScore.x = 45
+                userScore.y = bg.y
+                userScore.height = 118
+                userScore.verticalAlign = 'middle'
+                if (this.type == 'right') {
+                    userScore.x = bg.x + 155
+                }
+            }
+            this.addChild(userScore)
+        } else {
+            let userScore = new egret.TextField
+            userScore.text = this.score
+            userScore.size = 44
+            userScore.x = 45
+            userScore.y = bg.y
+            userScore.height = 118
+            userScore.verticalAlign = 'middle'
+            if (this.type == 'right') {
+                userScore.x = bg.x + 155
+            }
+            this.addChild(userScore)
         }
-
-    }
-
-
-    public addPkTime(time) {
-
-
-        let letfTime = new egret.TextField();
-        letfTime.text = time;
-        letfTime.textColor = this.color;
-        letfTime.width = this.width;
-        letfTime.size = 40;
-        letfTime.bold = true;
-        letfTime.textAlign = egret.HorizontalAlign.CENTER;
-        letfTime.y = this.height + 10;
-        this.addChild(letfTime);
     }
 
     public setScore(score) {
-        this.scoreText.text = score;
+        this.scoreText.text = score
     }
 
 }
 
-
 class TeamUser extends eui.Group {
-    private userinfo;
-    private type: UserPositionType;
-    private score;
-    private color;
+    private userinfo
+    private type: UserPositionType
 
-    private rect;
-    private icon;
-    private nameText;
-    private readyImg;
-    private status;
+    private icon
+    private avatar
+    private nameText
+    private readyImg
+    private status
 
-    private clickTime;
-    private canClick = true;
+    private clickTime
+    private canClick = true
 
-    private resultImg;
+    private resultText
 
 
-    constructor(userinfo, type = UserPositionType.LEFT, rect = { width: 250, height: 185 }) {
-        super();
-        this.userinfo = userinfo || {};
-        this.type = type;
-        this.rect = rect;
-        this.init();
+    constructor(userinfo, type = UserPositionType.LEFT) {
+        super()
+        this.userinfo = userinfo || {}
+        // test begin
+        // this.userinfo.nickName = '周武Zhou Wu'
+        // this.userinfo.avatar = 'http://127.0.0.1:8360/uploads/avatar/13886593297_avatar.jpg'
+        // test end
+        this.type = type
+        this.init()
     }
 
-
     public init() {
-        let bgname = 'pk_user_bg_left_png';
-        let color = 0xabbf11;
+        let bgname = 'pk_yellow_list_png'
         if (this.type === UserPositionType.RIGHT) {
-            bgname = 'pk_user_bg_right_png';
-            color = 0x1670c1;
+            bgname = 'pk_green_list_png'
         }
-        this.color = color;
+
         let bg = Util.createBitmapByName(bgname)
-        let width = this.rect.width;
-        let height = this.rect.height;
-        this.height = height;
-        this.width = width;
-        bg.width = width;
-        bg.height = height;
+        this.width = bg.width
+        this.height = bg.height
+        this.addChild(bg)
 
-        this.addChild(bg);
-
-        let border: egret.Bitmap = Util.createBitmapByName('icon_border_png');
-        border.width = 115;
-        border.height = 115;
-        border.x = (this.width - border.width) / 2;
-        border.y = 10;
-        this.addChild(border);
-
-
-        let iconPath = 'icon_1_jpg';
-        if (this.userinfo.nickName) iconPath = 'icon_2_jpg';
-
-        let icon: egret.Bitmap = Util.createBitmapByName(iconPath);
-        icon.width = 100;
-        icon.height = 100;
-        icon.x = border.x + 7
-        icon.y = border.y + 7
-        this.addChild(icon);
-        // Util.setUserImg(this.userinfo.avatar, icon);
-        this.icon = icon;
-        icon.touchEnabled = true;
-
-        let shape = new egret.Shape();
-        this.addChild(shape);
-        let graphics = shape.graphics;
-        graphics.beginFill(0xff0000);
-        graphics.moveTo(icon.x, icon.y + 10);/// 设定显示区域
-        graphics.lineTo(icon.x, icon.y + icon.height);/// 设定显示区域
-        graphics.lineTo(icon.x + icon.width, icon.y + icon.height);/// 设定显示区域
-        graphics.lineTo(icon.x + icon.width, icon.y);/// 设定显示区域
-        graphics.lineTo(icon.x + 10, icon.y);/// 设定显示区域
-        graphics.lineTo(icon.x, icon.y + 10);/// 设定显示区域
-        graphics.endFill();
-        icon.mask = shape;
-
-        //人名
-        let name = new egret.TextField();
-        name.text = this.userinfo.nickName;
-        name.width = 200;
-        name.wordWrap = false;
-        name.multiline = false;
-        name.x = (this.width - name.width) / 2;
-        name.textAlign = egret.HorizontalAlign.CENTER;
-        name.y = icon.y + border.height;
-        name.size = 26;
-        this.addChild(name);
-        this.nameText = name;
-
-
-
-        let readyImg = Util.createBitmapByName('ready_png')
-        readyImg.width = 35;
-        readyImg.height = 35;
-        if (this.type == UserPositionType.LEFT) {
-            readyImg.x = 210;
-        } else {
-            readyImg.x = 20;
+        // 头像
+        let avatar = new egret.Bitmap()
+        avatar.width = avatar.height = 112
+        avatar.x = this.type == UserPositionType.LEFT ? 170 : 3
+        avatar.y = 3
+        this.addChild(avatar)
+        this.avatar = avatar
+        if (this.userinfo) {
+            Util.setUserImg0(this.userinfo.avatar, avatar)
         }
-        readyImg.y = 77;
-        this.readyImg = readyImg;
-        this.addChild(readyImg);
-        this.readyImg.visible = false;
+
+        let shape = new egret.Shape()
+        this.addChild(shape)
+        let graphics = shape.graphics
+        graphics.beginFill(0xffffff)
+        graphics.drawCircle(avatar.x + avatar.width / 2, avatar.y + avatar.height / 2, avatar.width / 2)
+        graphics.endFill()
+        avatar.mask = shape
+
+        // 人名
+        let name = new egret.TextField()
+        name.width = 150
+        name.size = 26
+        name.text = this.userinfo.nickName ? Util.getStrByWith(this.userinfo.nickName, name.width - 20, name.size) : ''
+        name.x = this.type == UserPositionType.LEFT ? 0 : 130
+        name.height = bg.height - 10
+        name.wordWrap = false
+        name.multiline = false
+        name.textAlign = this.type == UserPositionType.LEFT ? 'right' : 'left'
+        name.verticalAlign = 'middle'
+        this.addChild(name)
+        this.nameText = name
+
+        // 准备图标
+        let readyImg = Util.createBitmapByName('pk_icon_ready_png')
+        if (this.type == UserPositionType.LEFT) {
+            readyImg.x = 140
+        } else {
+            readyImg.x = 115
+        }
+        readyImg.y = 80
+        this.readyImg = readyImg
+        this.addChild(readyImg)
+        this.readyImg.visible = false
     }
 
     public addUserEventListener(callback, obj) {
 
-        this.icon.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            if (!this.canClick) return;
-            let current = new Date().getTime();
-            if (this.clickTime && current - this.clickTime < 1000) return;
-            this.clickTime = current;
-            // this.canClick = false;
-            callback.bind(obj)(this.userinfo);
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            if (!this.canClick) return
+            let current = new Date().getTime()
+            if (this.clickTime && current - this.clickTime < 1000) return
+            this.clickTime = current
+            // this.canClick = false
+            callback.bind(obj)(this.userinfo)
         }, this)
     }
 
     public resetClick() {
-        this.canClick = true;
+        this.canClick = true
         this.clickTime = 0
     }
 
-
     public setDisableClick() {
-        this.canClick = false;
+        this.canClick = false
     }
-
-
 
     /**
      * 更新用户信息
      */
     public updateUser(userinfo) {
-        this.userinfo = userinfo;
-         //清空头像
-        let texture: egret.Texture = RES.getRes('icon_1_jpg');
-        this.icon.texture = texture;
+        this.userinfo = userinfo
+        //清空头像
+        let texture = new egret.Texture()
+        this.avatar.texture = texture
         if (userinfo == null) {
-           
-            this.nameText.text = '';
-            this.readyImg.visible = false;
+            this.nameText.text = ''
+            this.readyImg.visible = false
             this.resetClick()
         } else {
-            this.nameText.text = userinfo.nickName;
-            // Util.setUserImg(userinfo.avatar, this.icon);
+            this.nameText.text = Util.getStrByWith(this.userinfo.nickName, 150 - 20, 26)
+            Util.setUserImg0(userinfo.avatar, this.avatar)
         }
     }
 
@@ -308,7 +222,7 @@ class TeamUser extends eui.Group {
      * 准备好
      */
     public setReady() {
-       this.readyImg.visible = true;;
+        this.readyImg.visible = true
     }
 
 
@@ -316,115 +230,84 @@ class TeamUser extends eui.Group {
      * 设置用户结果状态
      */
     public setWinnerStatus(status) {
-        if (this.status == status) return;
-        this.status = status;
-        if (this.resultImg) {
-            this.resultImg.parent.removeChild(this.resultImg);
-            this.resultImg = null;
+        if (this.status == status) return
+        this.status = status
+        if (this.resultText) {
+            this.resultText.parent.removeChild(this.resultText)
+            this.resultText = null
         }
-        let statusImgs = {
-            1: "result_win_png", 2: "result_draw_png", 3: "result_mvp_png"
+        let textObj = {
+            1: '成功',
+            2: '平局',
+            3: 'MVP',
+            4: '失败'
         }
-        let imgName = statusImgs[status];
-        if (imgName) {
 
-            let resultImg = Util.createBitmapByName(imgName);
-            resultImg.width = 100;
-            resultImg.height = 100;
-            resultImg.anchorOffsetX = 100;
-            resultImg.x = this.width;
-            this.addChild(resultImg)
-            this.resultImg = resultImg;
-        }
+        let text = new egret.TextField
+        text.text = textObj[status]
+        text.textColor = this.type == UserPositionType.LEFT ? 0x4b4c03 : 0xffffff
+        text.size = 20
+        text.x = this.type == UserPositionType.LEFT ? 100 : 130
+        text.y = 80
+        this.resultText = text
+        this.addChild(text)
+
         if (status === WinnerStatus.LOSE) {
-            let grayFilter = Util.grayFliter();
-            this.filters = [grayFilter];
+            let grayFilter = Util.grayFliter()
+            this.filters = [grayFilter]
         }
     }
-
-
-
 }
 
 
 class LiteTeamUser extends eui.Group {
-    private userinfo;
-    private type: UserPositionType;
-    private color;
+    private userinfo
+    private type: UserPositionType
 
     constructor(userinfo, type = UserPositionType.LEFT) {
-        super();
-        this.userinfo = userinfo;
-        this.type = type;
-        this.init();
+        super()
+        this.userinfo = userinfo || {}
+        // test begin
+        // this.userinfo.nickName = '周武'
+        // this.userinfo.avatar = 'http://127.0.0.1:8360/uploads/avatar/13886593297_avatar.jpg'
+        // test end
+        this.type = type
+        this.init()
     }
 
 
     public init() {
-        let bgname = 'pk_user_bg_left_png';
-        let color = 0xabbf11;
+        let bgname = 'pk_yellow_list_lite_png'
         if (this.type === UserPositionType.RIGHT) {
-            bgname = 'pk_user_bg_right_png';
-            color = 0x1670c1;
+            bgname = 'pk_green_list_lite_png'
         }
-        this.color = color;
+
         let bg = Util.createBitmapByName(bgname)
-        let width = 105;
-        let height = 133;
-        this.height = height;
-        this.width = width;
-        bg.width = width;
-        bg.height = height;
+        this.width = bg.width
+        this.height = bg.height
+        this.addChild(bg)
 
-        this.addChild(bg);
-
-        let border: egret.Bitmap = Util.createBitmapByName('icon_border_png');
-        border.width = 85;
-        border.height = 85;
-        border.x = 10;
-        border.y = 10;
-        this.addChild(border);
-
-
-        let icon: egret.Bitmap = Util.createBitmapByName('icon_2_jpg');
-        icon.width = 75;
-        icon.height = 75;
-        icon.x = border.x + 5
-        icon.y = border.y + 5
-        this.addChild(icon);
-        if (this.userinfo && this.userinfo.avatar){
-            // Util.setUserImg(this.userinfo.avatar, icon);
+        // 头像
+        if (this.userinfo && this.userinfo.avatar) {
+            let avatar = Util.setUserImg(this.userinfo.avatar, 112)
+            avatar.x = this.type == UserPositionType.LEFT ? 54 : 3
+            avatar.y = 3
+            this.addChild(avatar)
         }
 
-        let shape = new egret.Shape();
-        this.addChild(shape);
-        let graphics = shape.graphics;
-        graphics.beginFill(0xff0000);
-        graphics.moveTo(icon.x, icon.y + 5);/// 设定显示区域
-        graphics.lineTo(icon.x, icon.y + icon.height);/// 设定显示区域
-        graphics.lineTo(icon.x + icon.width, icon.y + icon.height);/// 设定显示区域
-        graphics.lineTo(icon.x + icon.width, icon.y);/// 设定显示区域
-        graphics.lineTo(icon.x + 5, icon.y);/// 设定显示区域
-        graphics.lineTo(icon.x, icon.y + 5);/// 设定显示区域
-        graphics.endFill();
-        icon.mask = shape;
-
-        //人名
-        let name = new egret.TextField();
-
-        name.width = 105;
-        name.wordWrap = false;
-        name.multiline = false;
-        name.textAlign = egret.HorizontalAlign.CENTER;
-        name.y = icon.y + 80;
-        name.size = 22;
-        if (this.userinfo && this.userinfo.nickName) name.text = this.userinfo.nickName;
-        this.addChild(name);
-
+        // 人名
+        if (this.userinfo && this.userinfo.nickName) {
+            let name = new egret.TextField()
+            name.text = this.userinfo.nickName
+            name.x = this.type == UserPositionType.LEFT ? 0 : 110
+            name.width = 60
+            name.height = bg.height - 20
+            name.wordWrap = false
+            name.multiline = false
+            name.textAlign = this.type == UserPositionType.LEFT ? 'right' : 'left'
+            name.verticalAlign = 'bottom'
+            name.size = 18
+            this.addChild(name)
+        }
     }
-
-
-
-
-
 }

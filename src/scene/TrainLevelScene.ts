@@ -1,5 +1,6 @@
 class TrainLevelScene extends Scene {
     private bandge
+    private flag1: boolean = true
     constructor(bandge) {
         super()
         this.bandge = bandge
@@ -48,6 +49,8 @@ class TrainLevelScene extends Scene {
 
             level.touchEnabled = true
             level.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+                if (!this.flag1) return
+                this.flag1 = false
                 //请求数据
                 Util.playMusic('model_select_mp3')
                 if (currentLevel >= data.key) {
@@ -63,11 +66,14 @@ class TrainLevelScene extends Scene {
                             let alert = new AlertPanel("提示:题库未设置", 150)
                             this.addChild(alert)
                         }
+                        setTimeout(() => {
+                            this.flag1 = true
+                        }, 500)
                     })
-                }
-                else {
+                } else {
                     let alert = new AlertPanel("提示:请先通关前面的关卡后再来哦", 150)
                     this.addChild(alert)
+                    this.flag1 = true
                 }
             }, this)
 

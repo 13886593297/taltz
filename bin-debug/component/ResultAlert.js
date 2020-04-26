@@ -11,73 +11,36 @@ r.prototype = e.prototype, t.prototype = new r();
 var ResultAlert = (function (_super) {
     __extends(ResultAlert, _super);
     /**
-     * @param type UserPositionType左右
      * @param corret 是否错误
-     * @param order 次序
      * @param score 分数
      */
-    function ResultAlert(type, corret, order, score) {
+    function ResultAlert(corret, score) {
         var _this = _super.call(this) || this;
-        _this.type = type;
-        _this.error = corret;
-        _this.order = order;
+        _this.corret = corret;
         _this.score = score;
         _this.init();
         return _this;
     }
     ResultAlert.prototype.init = function () {
-        this.width = 240;
-        this.height = 120;
-        var bgName = 'left_bg_png';
-        var flagName = 'green_flag_png';
-        var xs = [10, 80, 145];
-        var flagIdx = 0;
-        var scoreIdx = 2;
-        if (this.type == UserPositionType.RIGHT) {
-            bgName = 'right_bg_png';
-            flagName = 'blue_flag_png';
-            flagIdx = 2;
-            scoreIdx = 0;
-        }
-        var bg = Util.createBitmapByName(bgName);
-        bg.width = this.width;
-        bg.height = this.height;
-        bg.alpha = 0.5;
-        this.addChild(bg);
-        //标记 对错 分数
-        var flag = Util.createBitmapByName(flagName);
-        flag.x = xs[flagIdx];
-        flag.y = 25;
-        this.addChild(flag);
-        var order = new egret.TextField();
-        order.text = this.order;
-        order.size = 24;
-        order.height = 54;
-        order.verticalAlign = egret.VerticalAlign.MIDDLE;
-        order.textAlign = egret.HorizontalAlign.CENTER;
-        order.width = 70;
-        order.x = flag.x;
-        order.y = flag.y;
-        this.addChild(order);
-        // correct
-        var errorName = 'answer_error_png';
-        if (this.error)
-            errorName = 'answer_ok_png';
-        var error = Util.createBitmapByName(errorName);
-        error.x = xs[1];
-        error.y = 35;
-        this.addChild(error);
-        var score = new egret.TextField();
-        score.text = this.score;
-        score.size = 35;
-        score.height = this.height;
-        score.verticalAlign = egret.VerticalAlign.MIDDLE;
-        // score.textAlign = egret.HorizontalAlign.CENTER;
-        score.width = 70;
-        score.x = xs[scoreIdx];
-        if (scoreIdx == 0)
-            score.x = xs[scoreIdx] + 20;
-        this.addChild(score);
+        // 边框背景
+        var border = new egret.Shape;
+        border.graphics.lineStyle(3, Config.COLOR_MAINCOLOR);
+        border.graphics.beginFill(this.corret ? 0xb5d100 : 0xffffff, 1);
+        border.graphics.drawCircle(23, 23, 23);
+        border.graphics.endFill();
+        this.addChild(border);
+        this.width = border.width;
+        this.height = border.height;
+        // 内容
+        var text = new egret.TextField;
+        text.text = this.corret ? "\u6B63\u786E\n+" + this.score : "\u9519\u8BEF\n-" + this.score;
+        text.textColor = this.corret ? 0xffffff : 0x7fc871;
+        text.width = border.width - 6;
+        text.height = border.height;
+        text.textAlign = 'center';
+        text.verticalAlign = 'middle';
+        text.size = 16;
+        this.addChild(text);
     };
     return ResultAlert;
 }(eui.Group));
@@ -115,35 +78,3 @@ var NoScoreAlert = (function (_super) {
     return NoScoreAlert;
 }(eui.Group));
 __reflect(NoScoreAlert.prototype, "NoScoreAlert");
-var MvpAlert = (function (_super) {
-    __extends(MvpAlert, _super);
-    function MvpAlert(type) {
-        if (type === void 0) { type = TeamType.GREEN; }
-        var _this = _super.call(this) || this;
-        _this.type = type;
-        _this.init();
-        return _this;
-    }
-    MvpAlert.prototype.init = function () {
-        this.width = 120;
-        this.height = 125;
-        var bgName = 'green_mvp_bg_png';
-        var left = 0;
-        if (this.type == TeamType.BLUE) {
-            bgName = 'blue_mvp_bg_png';
-            left = 13;
-        }
-        var bg = Util.createBitmapByName(bgName);
-        bg.width = this.width;
-        bg.height = this.height;
-        this.addChild(bg);
-        var mvp = Util.createBitmapByName('result_mvp_png');
-        mvp.x = left;
-        mvp.y = 10;
-        mvp.width = 98;
-        mvp.height = 98;
-        this.addChild(mvp);
-    };
-    return MvpAlert;
-}(eui.Group));
-__reflect(MvpAlert.prototype, "MvpAlert");

@@ -5,7 +5,7 @@
 class ViewManager {
     private static instance: ViewManager;
 
-    private views: Array<Scene> = [];
+    public views: Array<Scene> = [];
 
     public shareView;
 
@@ -76,7 +76,7 @@ class ViewManager {
      */
     public jumpHome() {
         let oldScene = this.getCurrentScene();
-        oldScene.parent.removeChild(oldScene);
+        oldScene && oldScene.parent && oldScene.parent.removeChild(oldScene);
         let home = this.views[0];
         if (home.name == 'home') {
             home.updateScene();
@@ -107,7 +107,7 @@ class ViewManager {
             // tw.to({ "alpha": 0 }, 100);
             tw.call(() => {
                 //加载完动画remove
-                oldScene.parent.removeChild(oldScene);
+                oldScene && oldScene.parent && oldScene.parent.removeChild(oldScene);
                 //添加场景
                 this.stage.addChild(newScene);
                 newScene.updateScene();
@@ -135,7 +135,7 @@ class ViewManager {
         }
         let length = this.views.length;
         let oldScene = this.views[length - 1];
-        oldScene.parent.removeChild(oldScene);
+        oldScene && oldScene.parent && oldScene.parent.removeChild(oldScene);
         if (index > -1) { //找到界面
             let newScene = this.views[index];
             let tw = egret.Tween.get(newScene);

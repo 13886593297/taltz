@@ -21,7 +21,8 @@ var Config = (function () {
     Config.COLOR_ORANGE = 0xF46C22;
     Config.COLOR_YELLOW = 0xABBF11;
     Config.COLOR_BLUE = 0x1570C7;
-    Config.DEBUG = false;
+    Config.COLOR_MAINCOLOR = 0x36af38;
+    Config.DEBUG = true;
     return Config;
 }());
 __reflect(Config.prototype, "Config");
