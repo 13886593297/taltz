@@ -496,12 +496,6 @@ class TeamMatchScene extends Scene {
                 this.addChild(pkVs)
             }
         }
-        // test begin
-        // setTimeout(() => {
-        //     let teamMatch = new TeamKnowBattleScene()
-        //     ViewManager.getInstance().changeScene(teamMatch)
-        // }, 2000)
-        // test end
     }
 }
 

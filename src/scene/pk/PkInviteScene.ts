@@ -187,12 +187,6 @@ class PkInviteScene extends Scene {
             countDown.text = '' + seconds
         }, this)
 
-        // test begin
-        // timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, () => {
-        //     let scene = new BattleScene()
-        //     ViewManager.getInstance().changeScene(scene)
-        // }, this)
-        // test end
         timer.start()
     }
 
@@ -249,15 +243,6 @@ class PkInviteScene extends Scene {
 
         let info = new LineInfo('你的对手还在苦苦思索中\n请稍候...')
         this.addChild(info)
-
-        // test begin
-        // let timer = new egret.Timer(3000, 1)
-        // timer.addEventListener(egret.TimerEvent.TIMER, () => {
-        //     let pk = new PkResultScene(1)
-        //     ViewManager.getInstance().changeScene(pk)
-        // }, this)
-        // timer.start()
-        // test end
     }
 
     public onBack() {

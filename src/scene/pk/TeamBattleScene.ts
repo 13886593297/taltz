@@ -277,29 +277,6 @@ class TeamBattleScene extends Scene {
      */
     public initTopic() {
         let pkData = DataManager.getInstance().getTeamPkData()
-
-        // test begin
-        // pkData = {
-        //     pkCode: "6d8bcc2061b311eaaab4c72eb1651d0c",
-        //     pkType: 3,
-        //     questions: [
-        //         { id: 2915 },
-        //         { id: 2773 },
-        //         { id: 2774 },
-        //         { id: 2775 },
-        //         { id: 2776 },
-        //         { id: 2777 },
-        //         { id: 2778 },
-        //         { id: 2779 },
-        //         { id: 2782 },
-        //         { id: 2783 }
-        //     ],
-        //     status: 1,
-        //     type: 3
-        // }
-        // test end
-
-      //  console.log(pkData, 'pkData')
         if (!pkData) {
             console.error('没有团队pk数据')
             return
@@ -387,35 +364,8 @@ class TeamBattleScene extends Scene {
     }
 
     private submitResult(result, selectOption) {
-        // test begin
-        // let resultMatch = new TeamResultScene()
-        // ViewManager.getInstance().changeScene(resultMatch)
-        // return
-        // test end
-
-
         let roomData = DataManager.getInstance().getRoomData()
         let pkData = DataManager.getInstance().getTeamPkData()
-        // test begin
-        // pkData = {
-        //     pkCode: "6d8bcc2061b311eaaab4c72eb1651d0c",
-        //     pkType: 3,
-        //     questions: [
-        //         { id: 2790 },
-        //         { id: 2773 },
-        //         { id: 2774 },
-        //         { id: 2775 },
-        //         { id: 2776 },
-        //         { id: 2777 },
-        //         { id: 2778 },
-        //         { id: 2779 },
-        //         { id: 2782 },
-        //         { id: 2783 }
-        //     ],
-        //     status: 1,
-        //     type: 3
-        // }
-        // test end
         let trainid = pkData.questions[this.index]['id']
         let subject: Subject = Util.getTrain(trainid)
         if (!subject) return
@@ -522,38 +472,6 @@ class TeamKnowBattleScene extends Scene {
         let roomData = DataManager.getInstance().getRoomData()
         this.roomData = roomData
         let pkData = roomData.pkData
-
-        // test begin
-        // pkData = {
-        //     pkCode: "6d8bcc2061b311eaaab4c72eb1651d0c",
-        //     pkType: 3,
-        //     users: {
-        //         '1': {
-        //             nickName: "周武", 
-        //             avatar: "http://127.0.0.1:8360/uploads/avatar/13886593297_avatar.jpg"
-        //         },
-        //         '2': {
-        //             nickName: "周武", 
-        //             avatar: "http://127.0.0.1:8360/uploads/avatar/13886593297_avatar.jpg"
-        //         }
-        //     },
-        //     questions: [
-        //         { id: 2915 },
-        //         { id: 2773 },
-        //         { id: 2774 },
-        //         { id: 2775 },
-        //         { id: 2776 },
-        //         { id: 2777 },
-        //         { id: 2778 },
-        //         { id: 2779 },
-        //         { id: 2782 },
-        //         { id: 2783 }
-        //     ],
-        //     status: 1,
-        //     type: 3
-        // }
-        // test end
-
         this.pkData = pkData
 
         let users = pkData.users
@@ -742,15 +660,6 @@ class TeamKnowBattleScene extends Scene {
      *  2.超时提交答案
      */
     public submitResult(result, reply) {
-        // test begin
-        // let resultMatch = new TeamKnowResultScene()
-        // ViewManager.getInstance().changeScene(resultMatch)
-        // let scene = new TeamKnowPkResultScene()
-        // ViewManager.getInstance().changeScene(scene)
-        // return
-        // test end
-
-
         this.canSubmit = false
         let qattrId = this.topic.getQAttrId()
         let current = new Date().getTime()
@@ -779,12 +688,6 @@ class TeamKnowBattleScene extends Scene {
         }
 
         this.submitButton.visible = false
-        //如果有下一題，直接进入下一题
-        // test begin
-        // if (this.index < this.pkData.questions.length - 1) {
-        //     setTimeout(() => { this.next() }, 1000)
-        // }
-        // test end
     }
 
     //进入下一题

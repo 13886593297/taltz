@@ -5,20 +5,6 @@ class PkResultScene extends Scene {
     constructor(result, back = PkResultBackModel.BACK) {
         super()
         this.result = result
-        // test begin
-        // this.result = {
-        //     receiver: {
-        //         pkResult: { scoretips: "超过8次,无积分", userAddScore: 0, userAnswerUseTimeTotal: 60 },
-        //         pkUser: { userId: "3", avatar: "http://thirdwx.qlogo.cn/mmopen/vi_32/cKqXyr3j6icxgs4TSy6cpMMkbsWXSdAfXqFkLysDgacAbrzulVqj6eulmZGRianMKqIlL8hWGAAToc8PkcTOGtgA/132", nickName: "希博士" }
-        //     },
-        //     sender: {
-        //         pkResult: { scoretips: "", userAddScore: 10, userAnswerUseTimeTotal: "18" },
-        //         pkUser: { userId: "ohggBuO6DyT39nB116p35TxAp-YQ", avatar: "http://thirdwx.qlogo.cn/mmopen/vi_32/cKqXyr3j6icxgs4TSy6cpMMkbsWXSdAfXqFkLysDgacAbrzulVqj6eulmZGRianMKqIlL8hWGAAToc8PkcTOGtgA/132", nickName: "黄欢" }
-        //     },
-        //     tipsMsg: '本局无效，友谊的小船荡呀荡，but你们都却没有答题',
-        //     status: 1
-        // }
-        // test end
         this.back = back
     }
 

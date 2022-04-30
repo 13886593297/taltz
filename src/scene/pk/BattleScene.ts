@@ -33,29 +33,6 @@ class BattleScene extends Scene {
         this.addChild(leftUser)
 
         let pkData = DataManager.getInstance().getPkData()
-
-        // test begin
-        // pkData = {
-        //     pkCode: "6d8bcc2061b311eaaab4c72eb1651d0c",
-        //     pkType: 3,
-        //     pkUser: { userId: "3", teamId: 1002, nickName: "希博士", avatar: "http://thirdwx.qlogo.cn/mmopen/vi_32/cKqXyr3j6icxg…AbrzulVqj6eulmZGRianMKqIlL8hWGAAToc8PkcTOGtgA/132", robot: 1 },
-        //     questions: [
-        //         { id: 2858 },
-        //         { id: 2805 },
-        //         { id: 2793 },
-        //         { id: 2822 },
-        //         { id: 2803 },
-        //         { id: 2906 },
-        //         { id: 2774 },
-        //         { id: 2821 },
-        //         { id: 2901 },
-        //         { id: 2777 }
-        //     ],
-        //     status: 1,
-        //     type: 3
-        // }
-        // test end
-
         this.pkData = pkData
 
         let rightUser = new PkUser(pkData.pkUser, 'right')
@@ -216,12 +193,6 @@ class BattleScene extends Scene {
                 this.next()
                 this.selfProgress.setRate(this.index + 1)
             }, 500)
-        } else {
-            // test begin
-            // 跳转等待页面
-            // let pk = new PkInviteScene(InviteStatus.PK_END_WAIT)
-            // ViewManager.getInstance().changeScene(pk)
-            // test end
         }
     }
 
@@ -245,12 +216,6 @@ class BattleScene extends Scene {
         //如果有下一題，直接进入下一题
         if (this.index < this.pkData.questions.length - 1) {
             this.next()
-        } else {
-            // test begin
-            // 跳转等待页面
-            // let pk = new PkInviteScene(InviteStatus.PK_END_WAIT)
-            // ViewManager.getInstance().changeScene(pk)
-            // test end
         }
     }
 

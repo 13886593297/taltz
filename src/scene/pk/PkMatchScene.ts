@@ -25,9 +25,6 @@ class PkMatchScene extends Scene {
         infoGroup.addChild(person_info_bg)
 
         let timerNumber = 30
-        // test begin
-        // timerNumber = 5
-        // test end
         let time = new egret.TextField()
         time.text = `00:${timerNumber}`
         time.textColor = Config.COLOR_MAINCOLOR
@@ -39,10 +36,6 @@ class PkMatchScene extends Scene {
         timer.addEventListener(egret.TimerEvent.TIMER, () => {
             if (timerNumber <= 0) {
                 SocketX.getInstance().sendMsg(NetEvent.PK_MATCH, { robot: true })
-                // test begin
-                // let scene = new PkInviteScene(InviteStatus.MATCHEND);
-                // ViewManager.getInstance().changeScene(scene);
-                // test end
                 timer.stop()
             } else {
                 timerNumber--

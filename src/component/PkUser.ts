@@ -114,10 +114,6 @@ class TeamUser extends eui.Group {
     constructor(userinfo, type = UserPositionType.LEFT) {
         super()
         this.userinfo = userinfo || {}
-        // test begin
-        // this.userinfo.nickName = '周武Zhou Wu'
-        // this.userinfo.avatar = 'http://127.0.0.1:8360/uploads/avatar/13886593297_avatar.jpg'
-        // test end
         this.type = type
         this.init()
     }
@@ -267,10 +263,6 @@ class LiteTeamUser extends eui.Group {
     constructor(userinfo, type = UserPositionType.LEFT) {
         super()
         this.userinfo = userinfo || {}
-        // test begin
-        // this.userinfo.nickName = '周武'
-        // this.userinfo.avatar = 'http://127.0.0.1:8360/uploads/avatar/13886593297_avatar.jpg'
-        // test end
         this.type = type
         this.init()
     }

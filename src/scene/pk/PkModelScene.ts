@@ -78,13 +78,6 @@ class PkModelScene extends Scene {
                             this.removeChild(tips)
                             SocketX.getInstance().sendMsg(NetEvent.PK_INVITE, { pkCode: code })
                         })
-                        // test begin
-                        // let code = Util.randomString(32)
-                        // console.log('pkcode:'+code)
-                        // SocketX.getInstance().sendMsg(NetEvent.PK_INVITE,{pkCode:code})
-                        // let inviteScene = new PkInviteScene(InviteStatus.INVITING)
-                        // ViewManager.getInstance().changeScene(inviteScene)
-                        // test end
                         break
                 }
 

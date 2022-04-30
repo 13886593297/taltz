@@ -205,9 +205,6 @@ class UserInfo extends eui.Group {
         let textGroup = new eui.Group()
         this.group.addChild(textGroup)
 
-        // test begin
-        // this.userinfo.teamAchiRate = 10
-        // test.end
         // 标题
         let titleArr
         // 数值
