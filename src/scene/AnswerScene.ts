@@ -27,6 +27,7 @@ class AnswerScene extends Scene {
     private scroller
 
     private start
+    private persent
 
     constructor(answers, type = 1, levelData = null) {
         super()
@@ -47,8 +48,19 @@ class AnswerScene extends Scene {
             this.addChild(title)
         }
 
-        //进度条
         if (this.type == 1 || this.type == 9) {
+            // Q1
+            let number = new egret.TextField()
+            number.text = "Q" + this.curIdx
+            number.textColor = 0x35af38
+            number.x = 85
+            number.y = 177
+            this.numberText = number
+            this.addChild(number)
+        }
+
+        //进度条
+        if (this.type == 1) {
             // 进度条
             let pBar = new eui.ProgressBar()
             pBar.maximum = this.answers.questions.length < 10 ? this.answers.questions.length : 10//设置进度条的最大值
@@ -60,15 +72,15 @@ class AnswerScene extends Scene {
             pBar.y = 170
             pBar.value = this.curIdx//设置进度条的初始值
             this._progress = pBar
-
-            // Q1
-            let number = new egret.TextField()
-            number.text = "Q" + this.curIdx
-            number.textColor = 0x35af38
-            number.x = 85
-            number.y = 177
-            this.numberText = number
-            this.addChild(number)
+            
+        } else if (this.type == 9) {
+            let persent = new egret.TextField
+            persent.text = this.curIdx + '/' + this.answers.questions.length
+            persent.textColor = 0x35af38
+            persent.x = this.stage.stageWidth - persent.width - 85
+            persent.y = 177
+            this.persent = persent
+            this.addChild(persent)
         }
 
         let trainid = this.answers.questions[this.curIdx - 1].qid
@@ -151,6 +163,7 @@ class AnswerScene extends Scene {
 
             favorButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
                 //请求收藏id 
+                if (!this.answers.questions[this.curIdx - 1]) return
                 let qid = this.answers.questions[this.curIdx - 1].qid
                 Http.getInstance().post(Url.HTTP_FAVOR_SUBJECT, { qid: qid, type: 2 }, (json) => {
                     this.answers.questions.splice(this.curIdx - 1, 1)
@@ -177,6 +190,7 @@ class AnswerScene extends Scene {
                 })
             }, this)
         }
+        let flag = true
 
         let subButton = new XButton('提交', ButtonType.YELLOW)
         this.commitButton = subButton
@@ -208,8 +222,7 @@ class AnswerScene extends Scene {
             } else {
                 if (this.isNext) { //下一题
                     this.next()
-                }
-                else { //提交
+                } else { //提交
                     let selectOption = this.topic.getSelect()
                     if (!selectOption) {
                         //TODO 
@@ -220,6 +233,9 @@ class AnswerScene extends Scene {
                         this.addChild(alert)
                         return
                     }
+
+                    if (!flag) return
+                    flag = false
 
                     let qid = this.answers.questions[this.curIdx - 1].qid
                     let result = this.topic.getSelectResult()
@@ -254,6 +270,7 @@ class AnswerScene extends Scene {
                         }
                         subButton.labelDisplay.text = buttonText
                         this.isNext = true
+                        flag = true
                     })
                 }
             }
@@ -328,6 +345,9 @@ class AnswerScene extends Scene {
         this.curIdx = this.curIdx + 1
         if (this.type == 1 || this.type == 9) {
             this.numberText.text = `Q${this.curIdx}`
+        }
+        if (this.type == 9) {
+            this.persent.text = this.curIdx + '/' + this.answers.questions.length
         }
         if (this._progress) this._progress.value = this.curIdx
 

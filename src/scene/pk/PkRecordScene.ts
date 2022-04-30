@@ -40,7 +40,7 @@ class PkRecordScene extends Scene {
         this.addChild(backButtonText)
 
         SocketX.getInstance().addEventListener(NetEvent.PK_RECORDS, (data) => {
-            console.log(data.data)
+          //  console.log(data.data)
             ViewManager.getInstance().hideLoading()
             if (data.data.length == 0 && this.page == 1) {
                 let tip = new LineInfo('暂无挑战数据')
@@ -155,6 +155,10 @@ class RecordItem extends eui.Group {
         this.addChild(line)
 
         this.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            // test begin
+            // let resultScene = new PkResultScene('', PkResultBackModel.BACK)
+            // ViewManager.getInstance().changeScene(resultScene)
+            // test end
             SocketX.getInstance().addEventListener(NetEvent.PK_INFO, (data) => {
                 let result = data.data
                 if (result.tipsCode == InviteStatus.WATTING) {
@@ -164,6 +168,7 @@ class RecordItem extends eui.Group {
                     // result.sendUserId = this.data.sendUserId
                     // result.accepUserId = this.data.accepUserId
                     result = DataManager.getInstance().convertPkResult(result)
+                  //  console.log(result)
                     let resultScene = new PkResultScene(result, PkResultBackModel.BACK)
                     ViewManager.getInstance().changeScene(resultScene)
                 }

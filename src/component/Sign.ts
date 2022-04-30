@@ -44,11 +44,7 @@ class Sign extends egret.DisplayObjectContainer {
         group.scaleY = 0
         this.addChild(group)
         this._myGroup = group
-        egret.Tween.get(group).to(
-            { scaleX: 1, scaleY: 1 },
-            300,
-            egret.Ease.backInOut
-        )
+        egret.Tween.get(group).to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.backInOut)
 
         // 签到背景
         var signBg = Util.createBitmapByName('green_small_bg_png')
@@ -59,24 +55,15 @@ class Sign extends egret.DisplayObjectContainer {
 
         // 关闭按钮
         let closeButton = Util.createBitmapByName('close_white_png')
-        group.addChild(closeButton)
         closeButton.x = 580
         closeButton.y = 180
         closeButton.touchEnabled = true
-        closeButton.addEventListener(
-            egret.TouchEvent.TOUCH_TAP,
-            () => {
-                Util.playMusic('model_select_mp3')
-                eui.UIEvent.dispatchUIEvent(
-                    this,
-                    eui.UIEvent.CLOSING,
-                    true,
-                    true
-                )
-                this.parent.removeChild(this)
-            },
-            this
-        )
+        closeButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            Util.playMusic('model_select_mp3')
+            eui.UIEvent.dispatchUIEvent(this, eui.UIEvent.CLOSING, true, true)
+            this.parent.removeChild(this)
+        }, this)
+        group.addChild(closeButton)
 
         this.createCalendar()
     }

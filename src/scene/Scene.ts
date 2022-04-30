@@ -7,6 +7,7 @@ class Scene extends eui.UILayer {
     public isBackHome = false
     public backPage: any = false
     private flag = true
+    public removeEvent
 
     public constructor() {
         super()
@@ -36,12 +37,14 @@ class Scene extends eui.UILayer {
             this.flag = false
             hideIFrame()
             if (this.isBackHome) {
-                ViewManager.getInstance().jumpHome()
+                let scene = new IndexScene()
+                ViewManager.getInstance().changeScene(scene)
             } else if (this.backPage) {
                 ViewManager.getInstance().backByName(this.backPage)
             } else {
                 this.onBack()
             }
+            this.removeEvent && SocketX.getInstance().removeEventListener(this.removeEvent)
             setTimeout(() => {
                 this.flag = true
             }, 300)

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="DailyTasks4Skin" width="676" height="975" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16dc38fdc52" ></w:Config>
+	<e:Image source="dailyTasks_dialog_bg_png" horizontalCenter="0" verticalCenter="0"/>
+	<e:Image id="pic" source="dailyTasks_dialog_1_png" horizontalCenter="12" verticalCenter="-46.5"/>
+	<e:Image id="btnClose" source="close_white_png" x="530" y="110"/>
+    <e:Label anchorOffsetX="0" width="400" anchorOffsetY="0" height="68" textAlign="center" verticalAlign="middle" text="今 日 随 堂 考！" textColor="0xffffff" size="46" verticalCenter="-340" horizontalCenter="-50"/>
+    <e:Label anchorOffsetX="0" width="543" anchorOffsetY="0" height="68" textAlign="center" verticalAlign="middle" text="请回答产品领域相关知识" textColor="0xffffff" size="34" verticalCenter="220" horizontalCenter="1.5"/>
+	<e:Label id="title" text="{t}" anchorOffsetX="0" width="543" anchorOffsetY="0" height="68" textColor="0xFFFFFF" textAlign="center" verticalAlign="middle" size="26" verticalCenter="260" horizontalCenter="1.5"/>
+    <e:Label id="clickArea" text="" x="50" y="200" anchorOffsetX="0" width="580" anchorOffsetY="0" height="700"/>
+</e:Skin>

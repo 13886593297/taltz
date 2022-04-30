@@ -4,21 +4,11 @@ class SocketX {
     private socket
     private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIwLCJpYXQiOjE1NDgzMDU4NjEsImV4cCI6MTU0ODM5MjI2MX0.yYz1cwYudv5yMo_r90n6gYRW-wv5PJvFxrrHGYnZ2KE'
 
-    // private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOnsidXNlcklkIjoib2hnZ0J1TzZEeVQzOW5CMTE2cDM1VHhBcC1ZUSIsImF2YXRhciI6Imh0dHA6Ly90aGlyZHd4LnFsb2dvLmNuL21tb3Blbi92aV8zMi9jS3FYeXIzajZpY3hnczRUU3k2Y3BNTWtic1dYU2RBZlhxRmtMeXNEZ2FjQWJyenVsVnFqNmV1bG1aR1JpYW5NS3FJbEw4aFdHQUFUb2M4UGtjVE9HdGdBLzEzMiIsInNleCI6MiwibHYiOjEsInNjb3JlIjowLCJ0ZWFtSWQiOjAsInNpZ25Ub3RhbCI6MCwicGtUZWFtVG90YWwiOjAsInBrVGVhbURheSI6MH0sImlhdCI6MTU3NDkyNDI3MiwiZXhwIjoxNTc1MDEwNjcyfQ.zxIM-BjWTCzkwLEcpUlgBxg5L2dgIy_kz-fJ4-pmTQw'
-
     private isconnect = false
     private lastMatch = 0
 
 
-    private constructor() {
-        // let socket = io(Config.HOST + ':' + Config.PORT)
-        // this.socket = socket
-        // this.addEventListener(NetEvent.ON_CONNENT,this.onConnect,this)
-        // this.addEventListener('name', (data) => {
-        //     console.log('name event lister', data)
-        // })
-
-    }
+    private constructor() {}
 
     public callbacks = {}
 
@@ -26,7 +16,7 @@ class SocketX {
         if (this.socket && this.socket.connect) {
             // console.log(this.socket.connect)
             this.socket.close()
-            //清空值钱的监听事件
+            //清空之前的监听事件
             this.callbacks = []
             this.isconnect = false
             this.socket = null
@@ -58,7 +48,7 @@ class SocketX {
         })
         //授权完成才会关闭
         // socket.on(NetEvent.PK_OAUTH, (data) => {
-        //     console.log(NetEvent.PK_OAUTH, '授权用户确定')
+        //  console.log(NetEvent.PK_OAUTH, '授权用户确定')
         //     ViewManager.getInstance().hideLoading()
         // })
         this.addEventListener(NetEvent.PK_OAUTH,(data)=>{
@@ -114,7 +104,7 @@ class SocketX {
     public pkEnd(data) {
         let pkData = DataManager.getInstance().getPkData()
         if (!pkData.pkCode) {
-            console.log("已清除不需要跳转结果页面")
+          //  console.log("已清除不需要跳转结果页面")
             return
         }
         if (data.data.tipsCode > 0) {
@@ -139,7 +129,7 @@ class SocketX {
 
     //匹配成功！
     private onMatch(data) {
-        console.log('onMatch', data)
+      //  console.log('onMatch', data)
         let cur = +new Date()
         if (cur - this.lastMatch > 2000) {
             DataManager.getInstance().setPk(data.data)
@@ -159,13 +149,6 @@ class SocketX {
 
 
     public addEventListener(event: string, fn: Function, thisObject: any = null, multFlag = null) {
-        // if (thisObject == null) {
-        //     this.socket.on(event, fn)
-        //     // this.socket.addEventListener(event, fn)
-        // } else {
-        //     this.socket.on(event, fn.bind(thisObject))
-        //     // this.socket.addEventListener(event, fn.bind(thisObject))
-        // }
         let isregister = false
         let key = event
         if (multFlag) key = multFlag + '_' + event
@@ -174,7 +157,7 @@ class SocketX {
             isregister = true
         }
         this.callbacks[event] = (data) => {
-            console.log(event, data)
+          //  console.log(event, data)
             if (data && data.code > 0) {
                 // let alert = new AlertPanel(data.msg)
                 // ViewManager.getInstance().getCurrentScene().addChildAt(alert,200)
@@ -198,7 +181,7 @@ class SocketX {
 
 
     public sendMsg(key: string, msg: any) {
-        console.log('sendMsg', { key, msg })
+      //  console.log('sendMsg', { key, msg })
         this.socket.emit(key, msg)
     }
 

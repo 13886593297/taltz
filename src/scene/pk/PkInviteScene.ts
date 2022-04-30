@@ -68,6 +68,7 @@ class PkInviteScene extends Scene {
                 this.close_btn = 'close_png'
                 this.backPage = 'pkmodel'
                 this.avatarGroup.y = 120
+                this.removeEvent = NetEvent.PK_END
                 break
             case InviteStatus.PK_NO_ANSWER:
                 this.pkNoAnswer()

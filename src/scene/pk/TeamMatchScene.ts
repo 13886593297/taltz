@@ -265,7 +265,7 @@ class TeamMatchScene extends Scene {
 
         //倒计时 
         SocketX.getInstance().addEventListener(NetEvent.TEAM_COUNT_DOWN_BROADCAST, (data) => {
-            console.log('倒计时-------->', data)
+          //  console.log('倒计时-------->', data)
             if (data.data.type == 1) {
                 this.showTimer(data.data.timeout)
             } else {
@@ -442,8 +442,8 @@ class TeamMatchScene extends Scene {
             }
 
             teamUser.addUserEventListener(() => {
-                console.log('点击用户', user)
-                console.log('this.isShowLoading', this.isShowLoading)
+              //  console.log('点击用户', user)
+              //  console.log('this.isShowLoading', this.isShowLoading)
                 if (this.isShowLoading) return
                 if (roomData.joinType == JoinType.OBSEVER) return
                 let self = DataManager.getInstance().getRoomSelfData()
@@ -454,7 +454,7 @@ class TeamMatchScene extends Scene {
 
                 switch (positionUser.status) {
                     case ReadyType.UNJOIN:
-                        console.log('处理未加入事件')
+                      //  console.log('处理未加入事件')
                         Util.playMusic('model_select_mp3')
                         SocketX.getInstance().sendMsg(NetEvent.TEAM_CHANGE_POSITION, {
                             tableNo: roomData.tableNo,
@@ -463,7 +463,7 @@ class TeamMatchScene extends Scene {
                         })
                         break
                     case ReadyType.UNREADY:
-                        console.log('处理未准备 交换')
+                      //  console.log('处理未准备 交换')
                         Util.playMusic('model_select_mp3')
                         this.showLoading()
                         SocketX.getInstance().sendMsg(NetEvent.TEAM_CHANGE_POSITION, {

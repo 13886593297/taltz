@@ -52,7 +52,7 @@ class Main extends eui.UILayer {
 
 
         this.runGame().catch(e => {
-            console.log(e);
+          //  console.log(e);
         })
     }
 

@@ -227,7 +227,7 @@ class PkRoomScene extends Scene {
                 this.roomView.addChild(roomItem)
                 roomItem.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
                     //根据item 状态进行判断
-                    console.log(item)
+                  //  console.log(item)
                     // let teamMatch = new TeamMatchScene()
                     // //  let teamMatch = new TeamBattleScene()
                     // ViewManager.getInstance().changeScene(teamMatch)

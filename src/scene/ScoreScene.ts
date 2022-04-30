@@ -43,7 +43,9 @@ class ScoreScene extends Scene {
     private registerShare(shareGroup) {
         let user = DataManager.getInstance().getUser()
         let trainResult = user.trainResult
-        let rateValue = Math.round(trainResult.trainCorrectCount * 100 / trainResult.trainTotalCount)
-        Util.registerShare(shareGroup, ShareType.TRAIN_RESULT, user.nickName, rateValue + '%')
+        if (user && trainResult) {
+            let rateValue = Math.round(trainResult.trainCorrectCount * 100 / trainResult.trainTotalCount)
+            Util.registerShare(shareGroup, ShareType.TRAIN_RESULT, user.nickName, rateValue + '%')
+        }
     }
 }

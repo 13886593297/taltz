@@ -1,12 +1,4 @@
 class EquipmentScene extends Scene {
-    configs = [
-        { icon: '', bg: '', name: '搜索结果', type: 0 },
-        { icon: '', bg: 'equip_bg_1_png', name: '最新内容', type: 15 },
-        { icon: '', bg: 'equip_bg_2_png', name: '疾病档案', type: 16 },
-        { icon: '', bg: 'equip_bg_3_png', name: '产品资料', type: 17 },
-        { icon: '', bg: 'equip_bg_4_png', name: '竞品分析', type: 18 },
-    ]
-
     constructor() {
         super()
         Util.setTitle('装备库')
@@ -23,7 +15,7 @@ class EquipmentScene extends Scene {
         this.addChild(title)
 
         let y = 325
-        for (let config of this.configs) {
+        for (let config of EquipmentConfigs) {
             if (config.type == 0) {
                 continue
             }

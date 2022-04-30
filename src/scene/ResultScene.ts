@@ -109,6 +109,7 @@ class ResultScene extends Scene {
         if (this.type == 9 && ratevalue == 100) {
             //签到
             Http.getInstance().post(Url.HTTP_SIGN, {}, (data) => { })
+            DataManager.getInstance().hasShowSignIn = true
         }
 
         // 继续训练
@@ -121,14 +122,29 @@ class ResultScene extends Scene {
             restartButton.touchEnabled = true
             restartButton.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
                 if (this.type == 9) {
-                    let i = Util.getDailyTaskID()
-                    Http.getInstance().post(Url.HTTP_DAILYTASKS_START, { questionAttrIds: EquipmentConfigs[i].qaids }, (data) => {
-                        let answer = new Answers()
-                        answer.lifecycleId = data.data.lifecycleId
-                        answer.questions = data.data.questions.slice(0, 5)
-                        let scene = new AnswerScene(answer, this.type)
-                        ViewManager.getInstance().changeScene(scene)
-                    })
+                    let week = DataManager.getInstance().getTime()
+                    let i
+                    if (week == 2) {
+                        i = Util.getDailyTaskID()
+                        Http.getInstance().post(Url.HTTP_DAILYTASKS_START, { questionAttrIds: EquipmentConfigs[i].qaids }, (data) => {
+                            let answer = new Answers()
+                            answer.lifecycleId = data.data.lifecycleId
+                            answer.questions = data.data.questions.slice(0, 5)
+                            let scene = new AnswerScene(answer, this.type)
+                            ViewManager.getInstance().changeScene(scene)
+                        })
+                    } else {
+                        Http.getInstance().post(Url.HTTP_DAILYTASKS_CONTENT, {}, (json) => {
+                            i = json.data[0].typeid
+                            Http.getInstance().post(Url.HTTP_DAILYTASKS_START, { questionAttrIds: EquipmentConfigs[i].qaids }, (data) => {
+                                let answer = new Answers()
+                                answer.lifecycleId = data.data.lifecycleId
+                                answer.questions = data.data.questions
+                                let scene = new AnswerScene(answer, this.type)
+                                ViewManager.getInstance().changeScene(scene)
+                            })
+                        })
+                    }
                 } else {
                     let bandge = DataManager.getInstance().getCurrentBandge()
                     let scene = new TrainLevelScene(bandge)

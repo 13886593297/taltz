@@ -18,6 +18,7 @@ class DataManager extends egret.EventDispatcher {
 
     public hasShowRanker = false;
     public hasShowSignIn = false;
+    public time
 
     /**
      * 房间列表信息
@@ -53,6 +54,15 @@ class DataManager extends egret.EventDispatcher {
 
     public getUser() {
         return this.user;
+    }
+
+    // 设置日期
+    public setTime(time) {
+        this.time = time
+    }
+
+    public getTime() {
+        return this.time
     }
 
     /**
@@ -120,7 +130,7 @@ class DataManager extends egret.EventDispatcher {
         result['sender'] = data[this.user.userId];
         if (pkUser) result['receiver'] = data[pkUser.userId];
         else result['receiver'] = null
-        console.log('setPkResult', result);
+        // console.log('setPkResult', result);
         this.pkData.result = result;
         //更新用户数据
         Http.getInstance().post(Url.HTTP_USER_BASE_INFO, "", (info) => {
@@ -354,7 +364,7 @@ class DataManager extends egret.EventDispatcher {
                 roomUsers[position] = format;
             }
         }
-        console.log('users', roomUsers);
+      //  console.log('users', roomUsers);
         this.roomData.users = roomUsers;
 
         
@@ -428,7 +438,7 @@ class DataManager extends egret.EventDispatcher {
         // let user = userData.joinUser;
         let format = {}
         let position = user.index;
-        console.log('user', user)
+      //  console.log('user', user)
         format['position'] = position;
         if (user.userInfo) {
             format['userInfo'] = user['userInfo'];
@@ -440,7 +450,7 @@ class DataManager extends egret.EventDispatcher {
             format['status'] = ReadyType.UNJOIN;
         }
         if (this.roomData && this.roomData.users) this.roomData.users[position] = format;
-        console.log('updateTeamUser', format)
+      //  console.log('updateTeamUser', format)
     }
 
     /**
@@ -449,12 +459,12 @@ class DataManager extends egret.EventDispatcher {
     public updateUserLeave(user) {
         let format = {}
         let position = user.index;
-        console.log('user', user)
+      //  console.log('user', user)
         format['position'] = position;
         format['userInfo'] = null;
         format['status'] = ReadyType.UNJOIN;
         if (this.roomData && this.roomData.users) this.roomData.users[position] = format;
-        console.log('updateTeamUser', format)
+      //  console.log('updateTeamUser', format)
     }
 
 
@@ -531,7 +541,7 @@ class DataManager extends egret.EventDispatcher {
         }
         this.roomData.pkData = pkData;
 
-        console.log('updateTeamPkData', this.roomData.pkData)
+      //  console.log('updateTeamPkData', this.roomData.pkData)
         // = {
         //         pkCode: 1233333,
         //         pkType: 2,

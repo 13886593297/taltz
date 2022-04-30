@@ -133,7 +133,7 @@ class RankScene extends Scene {
         if (this.currentIdx == 1 && this.personPage > 0) {
             this.getRank(Url.HTTP_PERSON_RANK_LIST, this.personPage, this.size)
                 .then(data => {
-                    console.log(data)
+                  //  console.log(data)
                     this.personRank.concat(data.list)
                     this.personPage = data.page
                     this.addItem(data.list, 1, this.scrollView.viewport.contentHeight)

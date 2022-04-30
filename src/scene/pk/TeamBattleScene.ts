@@ -299,7 +299,7 @@ class TeamBattleScene extends Scene {
         // }
         // test end
 
-        console.log(pkData, 'pkData')
+      //  console.log(pkData, 'pkData')
         if (!pkData) {
             console.error('没有团队pk数据')
             return
@@ -310,7 +310,7 @@ class TeamBattleScene extends Scene {
 
         let subject: Subject = Util.getTrain(trainid)
         if (!subject) return
-        console.log('subject-' + trainid, subject)
+      //  console.log('subject-' + trainid, subject)
 
         let group = new eui.Group()
         group.width = width

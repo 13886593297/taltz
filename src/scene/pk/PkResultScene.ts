@@ -24,9 +24,6 @@ class PkResultScene extends Scene {
 
     public init() {
         super.setBackground()
-        if (ViewManager.getInstance().views.length < 5) {
-            this.isBackHome = true
-        }
 
         let shareGroup = new eui.Group()
         this.addChild(shareGroup)
@@ -34,6 +31,7 @@ class PkResultScene extends Scene {
         shareGroup.width = this.stage.stageWidth
 
         let pkResult = this.result
+        console.log('pkResult', pkResult)
 
         // 玩家自己
         let self = pkResult.sender
@@ -130,7 +128,7 @@ class PkResultScene extends Scene {
         }, this)
         this.addChild(shareButton)
 
-        Util.registerShare(this.shareGroup, ShareType.PK_BATTLE, self.pkUser.nickName, opponent.pkUser.nickName)
+        Util.registerShare(this.shareGroup, ShareType.PK_BATTLE, self.pkUser.nickName, opponent ? opponent.pkUser.nickName : '')
     }
 
     private scoreItem(name, score, scoretips) {

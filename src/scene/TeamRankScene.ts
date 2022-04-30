@@ -59,7 +59,7 @@ class TeamRankScene extends Scene {
     }
 
     private addItem(data, y = 60) {
-        console.log(data)
+      //  console.log(data)
         for (let rank of data) {
             let rankItem = this.rankItemTemplate(rank, y)
             y += 200
@@ -139,7 +139,7 @@ class TeamRankScene extends Scene {
     private loadMoreData() {
         if (this.personPage > 0) {
             Http.getInstance().post(Url.HTTP_TEAM_PERSON_RANK_LIST, { tid: this.teamid, page: this.personPage, size: this.size }, (json) => {
-                console.log(json)
+              //  console.log(json)
                 if (json.data.length == this.size) {
                     this.personPage += 1
                 } else {

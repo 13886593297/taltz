@@ -21,9 +21,6 @@ class ErrorScene extends Scene {
     }
 
     public init() {
-        if (this.type == 9) {
-            this.close_btn = false
-        }
         super.setBackground()
         let title: egret.Bitmap = Util.createBitmapByName('title_error_png')
         title.y = 20
@@ -93,14 +90,29 @@ class ErrorScene extends Scene {
         train.touchEnabled = true
         train.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             if (this.type == 9) {
-                let i = Util.getDailyTaskID()
-                Http.getInstance().post(Url.HTTP_DAILYTASKS_START, { questionAttrIds: EquipmentConfigs[i].qaids }, (data) => {
-                    let answer = new Answers()
-                    answer.lifecycleId = data.data.lifecycleId
-                    answer.questions = data.data.questions.slice(0, 5)
-                    let scene = new AnswerScene(answer, this.type)
-                    ViewManager.getInstance().changeScene(scene)
-                })
+                let week = DataManager.getInstance().getTime()
+                let i
+                if (week == 2) {
+                    i = Util.getDailyTaskID()
+                    Http.getInstance().post(Url.HTTP_DAILYTASKS_START, { questionAttrIds: EquipmentConfigs[i].qaids }, (data) => {
+                        let answer = new Answers()
+                        answer.lifecycleId = data.data.lifecycleId
+                        answer.questions = data.data.questions.slice(0, 5)
+                        let scene = new AnswerScene(answer, this.type)
+                        ViewManager.getInstance().changeScene(scene)
+                    })
+                } else {
+                    Http.getInstance().post(Url.HTTP_DAILYTASKS_CONTENT, {}, (json) => {
+                        i = json.data[0].typeid
+                        Http.getInstance().post(Url.HTTP_DAILYTASKS_START, { questionAttrIds: EquipmentConfigs[i].qaids }, (data) => {
+                            let answer = new Answers()
+                            answer.lifecycleId = data.data.lifecycleId
+                            answer.questions = data.data.questions
+                            let scene = new AnswerScene(answer, this.type)
+                            ViewManager.getInstance().changeScene(scene)
+                        })
+                    })
+                }
             } else {
                 ViewManager.getInstance().back(4)
             }

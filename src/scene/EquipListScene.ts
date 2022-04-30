@@ -18,7 +18,7 @@ class EquipList extends Scene {
 
     public init() {
         super.setBackground()
-        let bd: egret.Bitmap = Util.createBitmapByName('equip_bg_' + this.config.type + '_01_png')
+        let bd: egret.Bitmap = Util.createBitmapByName('equip_bg_' + this.config.id + '_01_png')
         bd.y = 20
         this.addChild(bd)
         this.changeTypeList(this.config)
@@ -27,13 +27,20 @@ class EquipList extends Scene {
     private changeTypeList(config) {
         Http.getInstance().post(Url.HTTP_EQUIP_LIST, { catid: config.type }, data => {
             Http.getInstance().post(Url.HTTP_GAME_INIT, "", (json) => {
-                let curDate = new Date();
-                let week = curDate.getDay();
-                // week = 6
-                if (json.data.isNeedSign && (week == 1 || week == 3)) {
-                    let i = Util.getDailyTaskID();
-                    if (i == config.id) {
-                        Http.getInstance().post(Url.HTTP_SIGN, {}, (data) => { });
+                let week = DataManager.getInstance().getTime()
+                if (json.data.isNeedSign) {
+                    if (week == 1) {
+                        let i = Util.getDailyTaskID();
+                        if (i == config.id) {
+                            Http.getInstance().post(Url.HTTP_SIGN, {}, (data) => { });
+                        }
+                    } else if (week == 3) {
+                        Http.getInstance().post(Url.HTTP_DAILYTASKS_CONTENT, {}, (data) => {
+                            let i = data.data[0].typeid
+                            if (i == config.id) {
+                                Http.getInstance().post(Url.HTTP_SIGN, {}, (data) => { });
+                            }
+                        })
                     }
                 }
             });

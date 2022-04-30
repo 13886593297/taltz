@@ -1,554 +1,674 @@
-﻿{
-    "host1": "https://gamiwechat-taltz.lillyadmin.cn",
-    "host": "http://127.0.0.1:8360",
-    "rule": [
-        [
-            {
-                "text": "人机对战 \n",
-                "style": {
-                    "size": 35
-                }
-            }
-        ]
-    ],
-    "share": {
-        "1": {
-            "title": "净阶战队题海点兵,该你上场了!",
-            "desc": "答题王者，快来挑战积分排位赛！ "
-        },
-        "2": {
-            "title": "净阶王者试炼之路已开启，请听题！",
-            "desc": "太强了！{0}已晋级为{1},不服来战！"
-        },
-        "3": {
-            "title": "净阶王者题海点将，{0}喊你应战啦！",
-            "desc": "闯关我能赢！{0}已开启晋级之路，快来挑战！"
-        },
-        "4": {
-            "title": "净阶王者题海点将，{0}喊你应战啦！",
-            "desc": "王者争霸！{0}VS{1}巅峰对决，战况已揭晓！"
-        },
-        "5": {
-            "title": "净阶王者题海点将，喊你应战啦！",
-            "desc": "到底是谁Get了知识点？黄队 VS 绿队比分揭晓！"
-        },
-        "6": {
-            "title": "净阶王者题海点将，喊你应战啦！",
-            "desc": "王者争霸！黄队 VS 绿队巅峰对决，战况已揭晓！"
-        },
-        "10": {
-            "title": "对手已抵达净阶王者战场，等你来战！",
-            "desc": "{0}邀你挑战答题，是青铜还是王者？来一局！"
-        }
-    },
-    "bandge": [
-        {
-            "name": "净",
-            "id": 401,
-            "start": 1,
-            "levels": [
-                {
-                    "name": "见习王者",
-                    "flag": "LV.1",
-                    "key": 1,
-                    "levelid": 405
-                },
-                {
-                    "name": "初登新净",
-                    "flag": "LV.2",
-                    "key": 2,
-                    "levelid": 406
-                },
-                {
-                    "name": "登堂入室",
-                    "flag": "LV.3",
-                    "key": 3,
-                    "levelid": 407
-                },
-                {
-                    "name": "了然於胸",
-                    "flag": "LV.4",
-                    "key": 4,
-                    "levelid": 408
-                },
-                {
-                    "name": "豁然贯通",
-                    "flag": "LV.5",
-                    "key": 5,
-                    "levelid": 409
-                },
-                {
-                    "name": "渐入佳净",
-                    "flag": "LV.6",
-                    "key": 6,
-                    "levelid": 410
-                },
-                {
-                    "name": "驾轻就熟",
-                    "flag": "LV.7",
-                    "key": 7,
-                    "levelid": 411
-                },
-                {
-                    "name": "略有小成",
-                    "flag": "LV.8",
-                    "key": 8,
-                    "levelid": 412
-                },
-                {
-                    "name": "出类拔萃",
-                    "flag": "LV.9",
-                    "key": 9,
-                    "levelid": 413
-                },
-                {
-                    "name": "心领神会",
-                    "flag": "LV.10",
-                    "key": 10,
-                    "levelid": 414
-                },
-                {
-                    "name": "净在掌握",
-                    "flag": "LV.11",
-                    "key": 11,
-                    "levelid": 415
-                },
-                {
-                    "name": "挥洒自如",
-                    "flag": "LV.12",
-                    "key": 12,
-                    "levelid": 416
-                },
-                {
-                    "name": "游刃有余",
-                    "flag": "LV.13",
-                    "key": 13,
-                    "levelid": 417
-                },
-                {
-                    "name": "举世无双",
-                    "flag": "LV.14",
-                    "key": 14,
-                    "levelid": 418
-                },
-                {
-                    "name": "已臻化净",
-                    "flag": "LV.15",
-                    "key": 15,
-                    "levelid": 419
-                },
-                {
-                    "name": "技冠群雄",
-                    "flag": "LV.16",
-                    "key": 16,
-                    "levelid": 420
-                },
-                {
-                    "name": "融会贯通",
-                    "flag": "LV.17",
-                    "key": 17,
-                    "levelid": 421
-                },
-                {
-                    "name": "炉火纯青",
-                    "flag": "LV.18",
-                    "key": 18,
-                    "levelid": 422
-                },
-                {
-                    "name": "出神入化",
-                    "flag": "LV.19",
-                    "key": 19,
-                    "levelid": 423
-                },
-                {
-                    "name": "净界王者",
-                    "flag": "LV.20",
-                    "key": 20,
-                    "levelid": 424
-                }
-            ]
-        },
-        {
-            "name": "阶",
-            "id": 402,
-            "start": 21,
-            "levels": [
-                {
-                    "name": "见习王者",
-                    "flag": "LV.1",
-                    "key": 21,
-                    "levelid": 425
-                },
-                {
-                    "name": "初登新净",
-                    "flag": "LV.2",
-                    "key": 22,
-                    "levelid": 426
-                },
-                {
-                    "name": "登堂入室",
-                    "flag": "LV.3",
-                    "key": 23,
-                    "levelid": 427
-                },
-                {
-                    "name": "了然於胸",
-                    "flag": "LV.4",
-                    "key": 24,
-                    "levelid": 428
-                },
-                {
-                    "name": "豁然贯通",
-                    "flag": "LV.5",
-                    "key": 25,
-                    "levelid": 429
-                },
-                {
-                    "name": "渐入佳净",
-                    "flag": "LV.6",
-                    "key": 26,
-                    "levelid": 430
-                },
-                {
-                    "name": "驾轻就熟",
-                    "flag": "LV.7",
-                    "key": 27,
-                    "levelid": 431
-                },
-                {
-                    "name": "略有小成",
-                    "flag": "LV.8",
-                    "key": 28,
-                    "levelid": 432
-                },
-                {
-                    "name": "出类拔萃",
-                    "flag": "LV.9",
-                    "key": 29,
-                    "levelid": 433
-                },
-                {
-                    "name": "心领神会",
-                    "flag": "LV.10",
-                    "key": 30,
-                    "levelid": 434
-                },
-                {
-                    "name": "净在掌握",
-                    "flag": "LV.11",
-                    "key": 31,
-                    "levelid": 435
-                },
-                {
-                    "name": "挥洒自如",
-                    "flag": "LV.12",
-                    "key": 32,
-                    "levelid": 436
-                },
-                {
-                    "name": "游刃有余",
-                    "flag": "LV.13",
-                    "key": 33,
-                    "levelid": 437
-                },
-                {
-                    "name": "举世无双",
-                    "flag": "LV.14",
-                    "key": 34,
-                    "levelid": 438
-                },
-                {
-                    "name": "已臻化净",
-                    "flag": "LV.15",
-                    "key": 35,
-                    "levelid": 439
-                },
-                {
-                    "name": "技冠群雄",
-                    "flag": "LV.16",
-                    "key": 36,
-                    "levelid": 440
-                },
-                {
-                    "name": "融会贯通",
-                    "flag": "LV.17",
-                    "key": 37,
-                    "levelid": 441
-                },
-                {
-                    "name": "炉火纯青",
-                    "flag": "LV.18",
-                    "key": 38,
-                    "levelid": 442
-                },
-                {
-                    "name": "出神入化",
-                    "flag": "LV.19",
-                    "key": 39,
-                    "levelid": 443
-                },
-                {
-                    "name": "净界王者",
-                    "flag": "LV.20",
-                    "key": 40,
-                    "levelid": 444
-                }
-            ]
-        },
-        {
-            "name": "王",
-            "id": 403,
-            "start": 41,
-            "levels": [
-                {
-                    "name": "见习王者",
-                    "flag": "LV.1",
-                    "key": 41,
-                    "levelid": 445
-                },
-                {
-                    "name": "初登新净",
-                    "flag": "LV.2",
-                    "key": 42,
-                    "levelid": 446
-                },
-                {
-                    "name": "登堂入室",
-                    "flag": "LV.3",
-                    "key": 43,
-                    "levelid": 447
-                },
-                {
-                    "name": "了然於胸",
-                    "flag": "LV.4",
-                    "key": 44,
-                    "levelid": 448
-                },
-                {
-                    "name": "豁然贯通",
-                    "flag": "LV.5",
-                    "key": 45,
-                    "levelid": 449
-                },
-                {
-                    "name": "渐入佳净",
-                    "flag": "LV.6",
-                    "key": 46,
-                    "levelid": 450
-                },
-                {
-                    "name": "驾轻就熟",
-                    "flag": "LV.7",
-                    "key": 47,
-                    "levelid": 451
-                },
-                {
-                    "name": "略有小成",
-                    "flag": "LV.8",
-                    "key": 48,
-                    "levelid": 452
-                },
-                {
-                    "name": "出类拔萃",
-                    "flag": "LV.9",
-                    "key": 49,
-                    "levelid": 453
-                },
-                {
-                    "name": "心领神会",
-                    "flag": "LV.10",
-                    "key": 50,
-                    "levelid": 454
-                },
-                {
-                    "name": "净在掌握",
-                    "flag": "LV.11",
-                    "key": 51,
-                    "levelid": 455
-                },
-                {
-                    "name": "挥洒自如",
-                    "flag": "LV.12",
-                    "key": 52,
-                    "levelid": 456
-                },
-                {
-                    "name": "游刃有余",
-                    "flag": "LV.13",
-                    "key": 53,
-                    "levelid": 457
-                },
-                {
-                    "name": "举世无双",
-                    "flag": "LV.14",
-                    "key": 54,
-                    "levelid": 458
-                },
-                {
-                    "name": "已臻化净",
-                    "flag": "LV.15",
-                    "key": 55,
-                    "levelid": 459
-                },
-                {
-                    "name": "技冠群雄",
-                    "flag": "LV.16",
-                    "key": 56,
-                    "levelid": 460
-                },
-                {
-                    "name": "融会贯通",
-                    "flag": "LV.17",
-                    "key": 57,
-                    "levelid": 461
-                },
-                {
-                    "name": "炉火纯青",
-                    "flag": "LV.18",
-                    "key": 58,
-                    "levelid": 462
-                },
-                {
-                    "name": "出神入化",
-                    "flag": "LV.19",
-                    "key": 59,
-                    "levelid": 463
-                },
-                {
-                    "name": "净界王者",
-                    "flag": "LV.20",
-                    "key": 60,
-                    "levelid": 464
-                }
-            ]
-        },
-        {
-            "name": "者",
-            "id": 404,
-            "start": 61,
-            "levels": [
-                {
-                    "name": "见习王者",
-                    "flag": "LV.1",
-                    "key": 61,
-                    "levelid": 465
-                },
-                {
-                    "name": "初登新净",
-                    "flag": "LV.2",
-                    "key": 62,
-                    "levelid": 466
-                },
-                {
-                    "name": "登堂入室",
-                    "flag": "LV.3",
-                    "key": 63,
-                    "levelid": 467
-                },
-                {
-                    "name": "了然於胸",
-                    "flag": "LV.4",
-                    "key": 64,
-                    "levelid": 468
-                },
-                {
-                    "name": "豁然贯通",
-                    "flag": "LV.5",
-                    "key": 65,
-                    "levelid": 469
-                },
-                {
-                    "name": "渐入佳净",
-                    "flag": "LV.6",
-                    "key": 66,
-                    "levelid": 470
-                },
-                {
-                    "name": "驾轻就熟",
-                    "flag": "LV.7",
-                    "key": 67,
-                    "levelid": 471
-                },
-                {
-                    "name": "略有小成",
-                    "flag": "LV.8",
-                    "key": 68,
-                    "levelid": 472
-                },
-                {
-                    "name": "出类拔萃",
-                    "flag": "LV.9",
-                    "key": 69,
-                    "levelid": 473
-                },
-                {
-                    "name": "心领神会",
-                    "flag": "LV.10",
-                    "key": 70,
-                    "levelid": 474
-                },
-                {
-                    "name": "净在掌握",
-                    "flag": "LV.11",
-                    "key": 71,
-                    "levelid": 475
-                },
-                {
-                    "name": "挥洒自如",
-                    "flag": "LV.12",
-                    "key": 72,
-                    "levelid": 476
-                },
-                {
-                    "name": "游刃有余",
-                    "flag": "LV.13",
-                    "key": 73,
-                    "levelid": 477
-                },
-                {
-                    "name": "举世无双",
-                    "flag": "LV.14",
-                    "key": 74,
-                    "levelid": 478
-                },
-                {
-                    "name": "已臻化净",
-                    "flag": "LV.15",
-                    "key": 75,
-                    "levelid": 479
-                },
-                {
-                    "name": "技冠群雄",
-                    "flag": "LV.16",
-                    "key": 76,
-                    "levelid": 480
-                },
-                {
-                    "name": "融会贯通",
-                    "flag": "LV.17",
-                    "key": 77,
-                    "levelid": 481
-                },
-                {
-                    "name": "炉火纯青",
-                    "flag": "LV.18",
-                    "key": 78,
-                    "levelid": 482
-                },
-                {
-                    "name": "出神入化",
-                    "flag": "LV.19",
-                    "key": 79,
-                    "levelid": 483
-                },
-                {
-                    "name": "净界王者",
-                    "flag": "LV.20",
-                    "key": 80,
-                    "levelid": 484
-                }
-            ]
-        }
-    ]
+{
+	"host": "https://gamiwechat-taltz-q.lillyadmin.cn",
+	"host1": "http://127.0.0.1:8360",
+	"rule": [
+		[
+			{
+				"text": "人机对战 \n",
+				"style": {
+					"size": 35
+				}
+			}
+		]
+	],
+	"share": {
+		"1": {
+			"title": "净阶战队题海点兵,该你上场了!",
+			"desc": "答题王者，快来挑战积分排位赛！ "
+		},
+		"2": {
+			"title": "净阶王者试炼之路已开启，请听题！",
+			"desc": "太强了！{0}已晋级为{1},不服来战！"
+		},
+		"3": {
+			"title": "净阶王者题海点将，{0}喊你应战啦！",
+			"desc": "闯关我能赢！{0}已开启晋级之路，快来挑战！"
+		},
+		"4": {
+			"title": "净阶王者题海点将，{0}喊你应战啦！",
+			"desc": "王者争霸！{0}VS{1}巅峰对决，战况已揭晓！"
+		},
+		"5": {
+			"title": "净阶王者题海点将，喊你应战啦！",
+			"desc": "到底是谁Get了知识点？黄队 VS 绿队比分揭晓！"
+		},
+		"6": {
+			"title": "净阶王者题海点将，喊你应战啦！",
+			"desc": "王者争霸！黄队 VS 绿队巅峰对决，战况已揭晓！"
+		},
+		"10": {
+			"title": "对手已抵达净阶王者战场，等你来战！",
+			"desc": "{0}邀你挑战答题，是青铜还是王者？来一局！"
+		}
+	},
+	"bandge": [
+		{
+			"name": "净",
+			"id": 486,
+			"start": 1,
+			"levels": [
+				{
+					"name": "见习新人",
+					"flag": "LV.1",
+					"key": 1,
+					"levelid": 490
+				},
+				{
+					"name": "初登新净",
+					"flag": "LV.2",
+					"key": 2,
+					"levelid": 491
+				},
+				{
+					"name": "初学乍练",
+					"flag": "LV.3",
+					"key": 3,
+					"levelid": 492
+				},
+				{
+					"name": "跃跃欲试",
+					"flag": "LV.4",
+					"key": 4,
+					"levelid": 493
+				},
+				{
+					"name": "登堂入室",
+					"flag": "LV.5",
+					"key": 5,
+					"levelid": 494
+				},
+				{
+					"name": "步步为营",
+					"flag": "LV.6",
+					"key": 6,
+					"levelid": 495
+				},
+				{
+					"name": "渐入佳净",
+					"flag": "LV.7",
+					"key": 7,
+					"levelid": 496
+				},
+				{
+					"name": "驾轻就熟",
+					"flag": "LV.8",
+					"key": 8,
+					"levelid": 497
+				},
+				{
+					"name": "略有小成",
+					"flag": "LV.9",
+					"key": 9,
+					"levelid": 498
+				},
+				{
+					"name": "了然於胸",
+					"flag": "LV.10",
+					"key": 10,
+					"levelid": 499
+				},
+				{
+					"name": "出类拔萃",
+					"flag": "LV.11",
+					"key": 11,
+					"levelid": 500
+				},
+				{
+					"name": "心领神会",
+					"flag": "LV.12",
+					"key": 12,
+					"levelid": 501
+				},
+				{
+					"name": "熟能生巧",
+					"flag": "LV.13",
+					"key": 13,
+					"levelid": 502
+				},
+				{
+					"name": "净在掌握",
+					"flag": "LV.14",
+					"key": 14,
+					"levelid": 503
+				},
+				{
+					"name": "挥洒自如",
+					"flag": "LV.15",
+					"key": 15,
+					"levelid": 504
+				},
+				{
+					"name": "游刃有余",
+					"flag": "LV.16",
+					"key": 16,
+					"levelid": 505
+				},
+				{
+					"name": "胸有成竹",
+					"flag": "LV.17",
+					"key": 17,
+					"levelid": 506
+				},
+				{
+					"name": "踌躇满志",
+					"flag": "LV.18",
+					"key": 18,
+					"levelid": 507
+				},
+				{
+					"name": "举世无双",
+					"flag": "LV.19",
+					"key": 19,
+					"levelid": 508
+				},
+				{
+					"name": "已臻化净",
+					"flag": "LV.20",
+					"key": 20,
+					"levelid": 509
+				},
+				{
+					"name": "技冠群雄",
+					"flag": "LV.21",
+					"key": 21,
+					"levelid": 510
+				},
+				{
+					"name": "融会贯通",
+					"flag": "LV.22",
+					"key": 22,
+					"levelid": 511
+				},
+				{
+					"name": "炉火纯青",
+					"flag": "LV.23",
+					"key": 23,
+					"levelid": 512
+				},
+				{
+					"name": "出神入化",
+					"flag": "LV.24",
+					"key": 24,
+					"levelid": 513
+				},
+				{
+					"name": "净界王者",
+					"flag": "LV.25",
+					"key": 25,
+					"levelid": 514
+				}
+			]
+		},
+		{
+			"name": "阶",
+			"id": 487,
+			"start": 26,
+			"levels": [
+				{
+					"name": "见习新人",
+					"flag": "LV.1",
+					"key": 26,
+					"levelid": 515
+				},
+				{
+					"name": "初登新净",
+					"flag": "LV.2",
+					"key": 27,
+					"levelid": 516
+				},
+				{
+					"name": "初学乍练",
+					"flag": "LV.3",
+					"key": 28,
+					"levelid": 517
+				},
+				{
+					"name": "跃跃欲试",
+					"flag": "LV.4",
+					"key": 29,
+					"levelid": 518
+				},
+				{
+					"name": "登堂入室",
+					"flag": "LV.5",
+					"key": 30,
+					"levelid": 519
+				},
+				{
+					"name": "步步为营",
+					"flag": "LV.6",
+					"key": 31,
+					"levelid": 520
+				},
+				{
+					"name": "渐入佳净",
+					"flag": "LV.7",
+					"key": 32,
+					"levelid": 521
+				},
+				{
+					"name": "驾轻就熟",
+					"flag": "LV.8",
+					"key": 33,
+					"levelid": 522
+				},
+				{
+					"name": "",
+					"flag": "LV.9",
+					"key": 34,
+					"levelid": 523
+				},
+				{
+					"name": "了然於胸",
+					"flag": "LV.10",
+					"key": 35,
+					"levelid": 524
+				},
+				{
+					"name": "出类拔萃",
+					"flag": "LV.11",
+					"key": 36,
+					"levelid": 525
+				},
+				{
+					"name": "心领神会",
+					"flag": "LV.12",
+					"key": 37,
+					"levelid": 526
+				},
+				{
+					"name": "熟能生巧",
+					"flag": "LV.13",
+					"key": 38,
+					"levelid": 527
+				},
+				{
+					"name": "净在掌握",
+					"flag": "LV.14",
+					"key": 39,
+					"levelid": 528
+				},
+				{
+					"name": "挥洒自如",
+					"flag": "LV.15",
+					"key": 40,
+					"levelid": 529
+				},
+				{
+					"name": "游刃有余",
+					"flag": "LV.16",
+					"key": 41,
+					"levelid": 530
+				},
+				{
+					"name": "胸有成竹",
+					"flag": "LV.17",
+					"key": 42,
+					"levelid": 531
+				},
+				{
+					"name": "踌躇满志",
+					"flag": "LV.18",
+					"key": 43,
+					"levelid": 532
+				},
+				{
+					"name": "举世无双",
+					"flag": "LV.19",
+					"key": 44,
+					"levelid": 533
+				},
+				{
+					"name": "已臻化净",
+					"flag": "LV.20",
+					"key": 45,
+					"levelid": 534
+				},
+				{
+					"name": "技冠群雄",
+					"flag": "LV.21",
+					"key": 46,
+					"levelid": 535
+				},
+				{
+					"name": "融会贯通",
+					"flag": "LV.22",
+					"key": 47,
+					"levelid": 536
+				},
+				{
+					"name": "炉火纯青",
+					"flag": "LV.23",
+					"key": 48,
+					"levelid": 537
+				},
+				{
+					"name": "出神入化",
+					"flag": "LV.24",
+					"key": 49,
+					"levelid": 538
+				},
+				{
+					"name": "净界王者",
+					"flag": "LV.25",
+					"key": 50,
+					"levelid": 539
+				}
+			]
+		},
+		{
+			"name": "王",
+			"id": 488,
+			"start": 51,
+			"levels": [
+				{
+					"name": "见习新人",
+					"flag": "LV.1",
+					"key": 51,
+					"levelid": 540
+				},
+				{
+					"name": "初登新净",
+					"flag": "LV.2",
+					"key": 52,
+					"levelid": 541
+				},
+				{
+					"name": "初学乍练",
+					"flag": "LV.3",
+					"key": 53,
+					"levelid": 542
+				},
+				{
+					"name": "跃跃欲试",
+					"flag": "LV.4",
+					"key": 54,
+					"levelid": 543
+				},
+				{
+					"name": "登堂入室",
+					"flag": "LV.5",
+					"key": 55,
+					"levelid": 544
+				},
+				{
+					"name": "步步为营",
+					"flag": "LV.6",
+					"key": 56,
+					"levelid": 545
+				},
+				{
+					"name": "渐入佳净",
+					"flag": "LV.7",
+					"key": 57,
+					"levelid": 546
+				},
+				{
+					"name": "驾轻就熟",
+					"flag": "LV.8",
+					"key": 58,
+					"levelid": 547
+				},
+				{
+					"name": "",
+					"flag": "LV.9",
+					"key": 59,
+					"levelid": 548
+				},
+				{
+					"name": "了然於胸",
+					"flag": "LV.10",
+					"key": 60,
+					"levelid": 549
+				},
+				{
+					"name": "出类拔萃",
+					"flag": "LV.11",
+					"key": 61,
+					"levelid": 550
+				},
+				{
+					"name": "心领神会",
+					"flag": "LV.12",
+					"key": 62,
+					"levelid": 551
+				},
+				{
+					"name": "熟能生巧",
+					"flag": "LV.13",
+					"key": 63,
+					"levelid": 552
+				},
+				{
+					"name": "净在掌握",
+					"flag": "LV.14",
+					"key": 64,
+					"levelid": 553
+				},
+				{
+					"name": "挥洒自如",
+					"flag": "LV.15",
+					"key": 65,
+					"levelid": 554
+				},
+				{
+					"name": "游刃有余",
+					"flag": "LV.16",
+					"key": 66,
+					"levelid": 555
+				},
+				{
+					"name": "胸有成竹",
+					"flag": "LV.17",
+					"key": 67,
+					"levelid": 556
+				},
+				{
+					"name": "踌躇满志",
+					"flag": "LV.18",
+					"key": 68,
+					"levelid": 557
+				},
+				{
+					"name": "举世无双",
+					"flag": "LV.19",
+					"key": 69,
+					"levelid": 558
+				},
+				{
+					"name": "已臻化净",
+					"flag": "LV.20",
+					"key": 70,
+					"levelid": 559
+				},
+				{
+					"name": "技冠群雄",
+					"flag": "LV.21",
+					"key": 71,
+					"levelid": 560
+				},
+				{
+					"name": "融会贯通",
+					"flag": "LV.22",
+					"key": 72,
+					"levelid": 561
+				},
+				{
+					"name": "炉火纯青",
+					"flag": "LV.23",
+					"key": 73,
+					"levelid": 562
+				},
+				{
+					"name": "出神入化",
+					"flag": "LV.24",
+					"key": 74,
+					"levelid": 563
+				},
+				{
+					"name": "净界王者",
+					"flag": "LV.25",
+					"key": 75,
+					"levelid": 564
+				}
+			]
+		},
+		{
+			"name": "者",
+			"id": 489,
+			"start": 76,
+			"levels": [
+				{
+					"name": "见习新人",
+					"flag": "LV.1",
+					"key": 76,
+					"levelid": 565
+				},
+				{
+					"name": "初登新净",
+					"flag": "LV.2",
+					"key": 77,
+					"levelid": 566
+				},
+				{
+					"name": "初学乍练",
+					"flag": "LV.3",
+					"key": 78,
+					"levelid": 567
+				},
+				{
+					"name": "跃跃欲试",
+					"flag": "LV.4",
+					"key": 79,
+					"levelid": 568
+				},
+				{
+					"name": "登堂入室",
+					"flag": "LV.5",
+					"key": 80,
+					"levelid": 569
+				},
+				{
+					"name": "步步为营",
+					"flag": "LV.6",
+					"key": 81,
+					"levelid": 570
+				},
+				{
+					"name": "渐入佳净",
+					"flag": "LV.7",
+					"key": 82,
+					"levelid": 571
+				},
+				{
+					"name": "驾轻就熟",
+					"flag": "LV.8",
+					"key": 83,
+					"levelid": 572
+				},
+				{
+					"name": "",
+					"flag": "LV.9",
+					"key": 84,
+					"levelid": 573
+				},
+				{
+					"name": "了然於胸",
+					"flag": "LV.10",
+					"key": 85,
+					"levelid": 574
+				},
+				{
+					"name": "出类拔萃",
+					"flag": "LV.11",
+					"key": 86,
+					"levelid": 575
+				},
+				{
+					"name": "心领神会",
+					"flag": "LV.12",
+					"key": 87,
+					"levelid": 576
+				},
+				{
+					"name": "熟能生巧",
+					"flag": "LV.13",
+					"key": 88,
+					"levelid": 577
+				},
+				{
+					"name": "净在掌握",
+					"flag": "LV.14",
+					"key": 89,
+					"levelid": 578
+				},
+				{
+					"name": "挥洒自如",
+					"flag": "LV.15",
+					"key": 90,
+					"levelid": 579
+				},
+				{
+					"name": "游刃有余",
+					"flag": "LV.16",
+					"key": 91,
+					"levelid": 580
+				},
+				{
+					"name": "胸有成竹",
+					"flag": "LV.17",
+					"key": 92,
+					"levelid": 581
+				},
+				{
+					"name": "踌躇满志",
+					"flag": "LV.18",
+					"key": 93,
+					"levelid": 582
+				},
+				{
+					"name": "举世无双",
+					"flag": "LV.19",
+					"key": 94,
+					"levelid": 583
+				},
+				{
+					"name": "已臻化净",
+					"flag": "LV.20",
+					"key": 95,
+					"levelid": 584
+				},
+				{
+					"name": "技冠群雄",
+					"flag": "LV.21",
+					"key": 96,
+					"levelid": 585
+				},
+				{
+					"name": "融会贯通",
+					"flag": "LV.22",
+					"key": 97,
+					"levelid": 586
+				},
+				{
+					"name": "炉火纯青",
+					"flag": "LV.23",
+					"key": 98,
+					"levelid": 587
+				},
+				{
+					"name": "出神入化",
+					"flag": "LV.24",
+					"key": 99,
+					"levelid": 588
+				},
+				{
+					"name": "净界王者",
+					"flag": "LV.25",
+					"key": 100,
+					"levelid": 589
+				}
+			]
+		}
+	]
 }

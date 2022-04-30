@@ -136,6 +136,8 @@ class Url {
 
     //每日任务
     public static readonly HTTP_DAILYTASKS_START = "/game/api/dailytasks/start";
+    public static readonly HTTP_DAILYTASKS_CONTENT = "/game/api/dailytasks/content";
+    public static readonly HTTP_DAILYTASKS_CURDAY = "/game/api/dailytasks/curday";
 
     //提交答案
     public static readonly HTTP_TRAIN_SUBMIT = "/game/api/train/submitquestion";
@@ -155,4 +157,6 @@ class Url {
     public static readonly HTTP_WATERING_INFO = '/game/api/watering/info';
     public static readonly HTTP_WATERING_DO = '/game/api/watering/do';
     public static readonly HTTP_WATERING_PICK = '/game/api/watering/pick';
+
+    
 }

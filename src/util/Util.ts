@@ -6,15 +6,18 @@ class Util {
         let weekNumber = this.getWeekNumber(curDate.getFullYear(), curDate.getMonth(), curDate.getDate());
 
         if (weekNumber % 3 == 0) {
-            return week == 1 ? 2 : 3;
+            // return week == 1 ? 2 : 3;
+            return 2
         }
 
         if (weekNumber % 3 == 1) {
-            return week == 1 ? 4 : 2;
+            // return week == 1 ? 4 : 2;
+            return 3
         }
 
         if (weekNumber % 3 == 2) {
-            return week == 1 ? 3 : 4;
+            // return week == 1 ? 3 : 4;
+            return 4
         }
     }
 
@@ -65,7 +68,7 @@ class Util {
      * 日志处理
      */
     public static log(...agurements) {
-        console.log(agurements);
+      //  console.log(agurements);
     }
 
     /**
@@ -571,7 +574,7 @@ class Util {
                 Http.getInstance().post(Url.HTTP_SHARE_UPLOAD, { code: code, type: type, imgdata: imgData }, () => {
                 })
             } catch (error) {
-                console.log('错误提示', error)
+              //  console.log('错误提示', error)
             }
 
         }

@@ -90,7 +90,6 @@ class ViewManager {
             this.stage.addChild(home);
             this.views.push(home);
         }
-
     }
 
 

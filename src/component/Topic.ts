@@ -136,7 +136,7 @@ class Topic extends eui.Group {
         /*** 本示例关键代码段开始 ***/
         input.type = egret.TextFieldType.INPUT
         input.addEventListener(egret.FocusEvent.FOCUS_IN, function (e: egret.FocusEvent) {
-            console.log('input set FOCUS')
+          //  console.log('input set FOCUS')
         }, this)
         input.addEventListener(egret.FocusEvent.FOCUS_OUT, function (e: egret.FocusEvent) {
         }, this)
@@ -148,7 +148,7 @@ class Topic extends eui.Group {
 
         qtitle.touchEnabled = true
         qtitle.addEventListener(egret.TouchEvent.TOUCH_BEGIN, () => {
-            console.log('input set FOCUS_OUT')
+          //  console.log('input set FOCUS_OUT')
             input.setFocus()
         }, this)
 

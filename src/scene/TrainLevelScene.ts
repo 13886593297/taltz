@@ -19,11 +19,8 @@ class TrainLevelScene extends Scene {
         group.width = 570
         this.addChild(group)
 
-        let lineGroup = new eui.Group()
-        lineGroup.height = 4100
-        group.addChild(lineGroup)
         let y = 70
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < this.bandge.levels.length; i++) {
             // 每关的信息
             let data = this.bandge.levels[i]
             // 判断是否通关
@@ -79,7 +76,7 @@ class TrainLevelScene extends Scene {
 
             // 关卡之间的连接线条
             let linePic: egret.Bitmap
-            if (i < 19) {
+            if (i < this.bandge.levels.length - 1) {
                 if (i % 2 == 1) {
                     linePic = Util.createBitmapByName("train_line_left_png")
                     linePic.y = y + 90

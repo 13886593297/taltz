@@ -83,6 +83,7 @@ class UserInfo extends eui.Group {
 
         if (this.type == 'score') {
             let trainResult = this.userinfo.trainResult
+            if (!trainResult) return
             let rateValue = Math.round(trainResult.trainCorrectCount * 100 / trainResult.trainTotalCount)
             let trainGroup = new eui.Group()
             trainGroup.x = 230
@@ -204,6 +205,9 @@ class UserInfo extends eui.Group {
         let textGroup = new eui.Group()
         this.group.addChild(textGroup)
 
+        // test begin
+        // this.userinfo.teamAchiRate = 10
+        // test.end
         // 标题
         let titleArr
         // 数值
