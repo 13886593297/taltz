@@ -214,7 +214,7 @@ class RankScene extends Scene {
             achiRate.size = 20
             achiRate.lineSpacing = 15
         } else {
-            achiRate.text = '团队达标率'
+            achiRate.text = '团队平均积分'
             achiRate.x = 460
             achiRate.y = 120
             achiRate.size = 22
@@ -231,7 +231,7 @@ class RankScene extends Scene {
             achiRateNum.size = 36
             achiRateNum.y = 65
         } else {
-            achiRateNum.text = rank.achiRate ? rank.achiRate.toFixed(2) + '%' : '0%'
+            achiRateNum.text = rank.score ? rank.score.toFixed(2) : '0'
             achiRateNum.x = 450
             achiRateNum.width = 150
             achiRateNum.textAlign = egret.HorizontalAlign.CENTER
