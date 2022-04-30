@@ -180,7 +180,7 @@ class UserInfo extends eui.Group {
             level.y = 210
         } else {
             level.x = 220
-            level.y = 100
+            level.y = 110
         }
         this.group.addChild(level)
 
@@ -194,8 +194,8 @@ class UserInfo extends eui.Group {
             levelName.x = 430
             levelName.y = 210
         } else {
-            levelName.x = 220
-            levelName.y = 160
+            levelName.x = 340
+            levelName.y = 110
         }
         this.group.addChild(levelName)
     }
@@ -210,18 +210,18 @@ class UserInfo extends eui.Group {
         // 数值
         let numArr
         if (this.type == 'score') {
-            titleArr = ['个人累计积分', '累积签到', '个人达标率', '团队达标率']
+            titleArr = ['个人累计积分', '累积签到', '个人达标率', '团队平均积分']
             textGroup.x = 230
             textGroup.y = 350
             this.info(titleArr, textGroup, 28, 365, 50)
-            numArr = [this.userinfo.score + '分', this.userinfo.signTotal + '天', this.userinfo.personAchiRate + '%', this.userinfo.teamAchiRate.toFixed(2) + '%']
+            numArr = [this.userinfo.score + '分', this.userinfo.signTotal + '天', this.userinfo.personAchiRate + '%', this.userinfo.score.toFixed(2)]
             this.info(numArr, textGroup, 30, 365, 50, egret.HorizontalAlign.RIGHT)
         } else {
-            titleArr = ['个人累计积分', '个人达标率', '团队达标率', '连续达标天数']
+            titleArr = ['个人当月积分','个人累计积分', '个人达标率', '团队平均积分', '连续达标天数']
             textGroup.x = 300
-            textGroup.y = 230
+            textGroup.y = 180
             this.info(titleArr, textGroup, 24)
-            numArr = [this.userinfo.score + '分', this.userinfo.personAchiRate + '%', this.userinfo.teamAchiRate.toFixed(2) + '%', this.userinfo.contSignTotal + '天']
+            numArr = [this.userinfo.monthlyScore+'分',this.userinfo.score + '分', this.userinfo.personAchiRate + '%', this.userinfo.teamAchiRate ? this.userinfo.teamAchiRate.toFixed(2) + '分' : "0", this.userinfo.contSignTotal + '天']
             this.info(numArr, textGroup, 28, 300, 45, egret.HorizontalAlign.RIGHT)
         }
     }
