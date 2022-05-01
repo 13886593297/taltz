@@ -119,7 +119,10 @@
     <script src="./libs/socket/socket.io.js"></script>
     <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
     <script>
-        new VConsole();
+        const origin = location.origin
+        if (origin.indexOf('-q') != -1) {
+            new VConsole();
+        }
 
         function GetRequest() {
             var url = location.search; //获取url中"?"符后的字串
@@ -285,8 +288,8 @@
             wx.onMenuShareAppMessage({
                 title: title || '净阶战队',
                 desc: desc || '净阶战队-默认测试战队',
-                link: link || 'https://gamiwechat-taltz-q.lillyadmin.cn',
-                imgUrl: 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
+                link: link || origin,
+                imgUrl: origin + '/games/resource/assets/share.jpg',
                 trigger: function (res) {
 
                 },
@@ -302,8 +305,8 @@
         function onMenuShareTimeline(title, link, imgUrl, callback) {
             wx.onMenuShareTimeline({
                 title: title || '净阶战队邀请您！',
-                link: link || 'https://gamiwechat-taltz-q.lillyadmin.cn',
-                imgUrl: imgUrl || 'https://gamiwechat-taltz-q.lillyadmin.cn/games/resource/assets/share.jpg',
+                link: link || origin,
+                imgUrl: imgUrl || origin + '/games/resource/assets/share.jpg',
                 trigger: function (res) {
                     // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                 },
