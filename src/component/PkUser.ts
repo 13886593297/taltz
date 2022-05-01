@@ -28,7 +28,7 @@ class PkUser extends eui.Group {
         this.addChild(bg)
 
         // 头像
-        let avatar = Util.setUserImg(this.userinfo ? this.userinfo.avatar : 'pk_default_avatar_png', 112)
+        let avatar = Util.setUserImg(this.userinfo ? this.userinfo.avatar : Util.getHost() + '/games/resource/assets/Pk/pk_default_avatar.png', 112)
         avatar.x = 170
         avatar.y = 3
         if (this.type == 'right') {
