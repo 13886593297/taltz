@@ -67,57 +67,34 @@ class IndexScene extends Scene {
 
         // 初始化游戏数据
         Http.getInstance().post(Url.HTTP_GAME_INIT, "", json => {
-            Http.getInstance().post(Url.HTTP_DAILYTASKS_CURDAY, {}, time => {
-                let week
-                if (!time.data) {
-                    let date = new Date()
-                    week = date.getDay()
-                } else {
-                    week = time.data
-                }
-                DataManager.getInstance().setTime(week)
-
-                if (json.data.isNeedSign) {
-                    if (week == 6 || week == 0) {
-                        Http.getInstance().post(Url.HTTP_SIGN, {}, (data) => { });
-                    } else {
-                        this.showSignInIcon()
-                    }
-                }
-                if (!DataManager.getInstance().hasShowSignIn) {
-                    Http.getInstance().post(Url.HTTP_SIGNINFO, {}, data => {
-                        DataManager.getInstance().setSign(data.data)
-                        //需要签到
-                        //更新用户数据
-                        Http.getInstance().post(Url.HTTP_USER_BASE_INFO, "", (info) => {
-                            DataManager.getInstance().updateUserInfo(info.data)
-                            this.userView.refresh()
-                        })
-                        let sign = new Sign()
-                        this.addChildAt(sign, 100)
-                        this.sign = sign
-                        sign.addEventListener(eui.UIEvent.CLOSING, () => {
-                            this.sign = null
-                            if (json.data.isNeedSign) {
-                                this.showDailyTasks()
-                            }
-                        }, this)
-                        var timer: egret.Timer = new egret.Timer(5000, 1)
-                        //注册事件侦听器
-                        timer.addEventListener(egret.TimerEvent.TIMER, () => {
-                            if (this.sign) {
-                                this.removeChild(this.sign)
-                                if (json.data.isNeedSign) {
-                                    this.showDailyTasks()
-                                }
-                            }
-                        }, this)
-                        // 开始计时
-                        timer.start()
+            Http.getInstance().post(Url.HTTP_SIGN)
+            if (!DataManager.getInstance().hasShowSignIn) {
+                Http.getInstance().post(Url.HTTP_SIGNINFO, {}, data => {
+                    DataManager.getInstance().setSign(data.data)
+                    //需要签到
+                    //更新用户数据
+                    Http.getInstance().post(Url.HTTP_USER_BASE_INFO, "", (info) => {
+                        DataManager.getInstance().updateUserInfo(info.data)
+                        this.userView.refresh()
                     })
-                    DataManager.getInstance().hasShowSignIn = true
-                }
-            })
+                    let sign = new Sign()
+                    this.addChildAt(sign, 100)
+                    this.sign = sign
+                    sign.addEventListener(eui.UIEvent.CLOSING, () => {
+                        this.sign = null
+                    }, this)
+                    var timer: egret.Timer = new egret.Timer(5000, 1)
+                    //注册事件侦听器
+                    timer.addEventListener(egret.TimerEvent.TIMER, () => {
+                        if (this.sign) {
+                            this.removeChild(this.sign)
+                        }
+                    }, this)
+                    // 开始计时
+                    timer.start()
+                })
+                DataManager.getInstance().hasShowSignIn = true
+            }
         })
 
         let url = window.location.href.split('#')[0]
@@ -128,46 +105,6 @@ class IndexScene extends Scene {
             }, 1000)
         })
 
-    }
-
-    private showSignInIcon() {
-        let icon = new SignInIcon()
-        icon.x = -260
-        icon.y = 530
-        this.addChild(icon)
-    }
-
-    private showDailyTasks() {
-        let week = DataManager.getInstance().getTime()
-        let dialogContainer
-        let ctr
-        switch (week) {
-            case 1:
-                ctr = new DailyTasks1()
-                dialogContainer = new DialogContainer(ctr)
-                this.addChildAt(dialogContainer, 99)
-                break
-            case 2:
-                ctr = new DailyTasks2()
-                dialogContainer = new DialogContainer(ctr)
-                this.addChildAt(dialogContainer, 99)
-                break
-            case 3:
-                ctr = new DailyTasks3()
-                dialogContainer = new DialogContainer(ctr)
-                this.addChildAt(dialogContainer, 99)
-                break
-            case 4:
-                ctr = new DailyTasks4()
-                dialogContainer = new DialogContainer(ctr)
-                this.addChildAt(dialogContainer, 99)
-                break
-            case 5:
-                ctr = new DailyTasks5()
-                dialogContainer = new DialogContainer(ctr)
-                this.addChildAt(dialogContainer, 99)
-                break
-        }
     }
 
     // 页面跳转

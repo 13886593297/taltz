@@ -57,7 +57,7 @@ class FavorScene extends Scene {
                     let levelData = item
                     levelData.name = item.attrVal
                     levelData.flag = ""
-                    let scene = new AnswerScene(answer, 2, levelData)
+                    let scene = new AnswerScene(answer, TrainType.FAVOR, levelData)
                     ViewManager.getInstance().changeScene(scene)
                 } else {
                     let alert = new AlertPanel("提示:暂无收藏！", 1200)

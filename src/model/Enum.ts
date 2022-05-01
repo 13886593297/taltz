@@ -120,3 +120,10 @@ enum WinnerStatus {
     PKING = 5 //进行中
 }
 
+/**
+ * 关卡类型
+ */
+ enum TrainType {
+    TRAIN = 1,
+    FAVOR = 2,
+}

@@ -56,7 +56,7 @@ class TrainLevelScene extends Scene {
                             let answer = new Answers()
                             answer.lifecycleId = data.data.lifecycleId
                             answer.questions = data.data.questions
-                            let scene = new AnswerScene(answer, 1, level.levelData)
+                            let scene = new AnswerScene(answer, TrainType.TRAIN, level.levelData)
                             ViewManager.getInstance().changeScene(scene)
                         }
                         else {

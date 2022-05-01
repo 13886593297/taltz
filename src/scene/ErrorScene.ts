@@ -9,15 +9,12 @@ class ErrorScene extends Scene {
 
     private title
     private content
-    private result
     private nextButton
     private trainButton
-    private type
 
-    constructor(errors, type?) {
+    constructor(errors) {
         super()
         this.errors = errors
-        this.type = type
     }
 
     public init() {
@@ -83,39 +80,13 @@ class ErrorScene extends Scene {
         }, this)
         this.nextButton = next
 
-        let train = Util.createBitmapByName(this.type == 9 ? 'dailyTasks_tryAgain1_png' : 'continueTrain_png')
+        let train = Util.createBitmapByName('continueTrain_png')
         train.x = this.stage.stageWidth / 2 + 10
         train.y = 1000
         this.addChild(train)
         train.touchEnabled = true
         train.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            if (this.type == 9) {
-                let week = DataManager.getInstance().getTime()
-                let i
-                if (week == 2) {
-                    i = Util.getDailyTaskID()
-                    Http.getInstance().post(Url.HTTP_DAILYTASKS_START, { questionAttrIds: EquipmentConfigs[i].qaids }, (data) => {
-                        let answer = new Answers()
-                        answer.lifecycleId = data.data.lifecycleId
-                        answer.questions = data.data.questions.slice(0, 5)
-                        let scene = new AnswerScene(answer, this.type)
-                        ViewManager.getInstance().changeScene(scene)
-                    })
-                } else {
-                    Http.getInstance().post(Url.HTTP_DAILYTASKS_CONTENT, {}, (json) => {
-                        i = json.data[0].typeid
-                        Http.getInstance().post(Url.HTTP_DAILYTASKS_START, { questionAttrIds: EquipmentConfigs[i].qaids }, (data) => {
-                            let answer = new Answers()
-                            answer.lifecycleId = data.data.lifecycleId
-                            answer.questions = data.data.questions
-                            let scene = new AnswerScene(answer, this.type)
-                            ViewManager.getInstance().changeScene(scene)
-                        })
-                    })
-                }
-            } else {
-                ViewManager.getInstance().back(4)
-            }
+            ViewManager.getInstance().back(4)
         }, this)
         this.trainButton = train
 

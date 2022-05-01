@@ -29,7 +29,7 @@ class AnswerScene extends Scene {
     private start
     private persent
 
-    constructor(answers, type = 1, levelData = null) {
+    constructor(answers, type = TrainType.TRAIN, levelData = null) {
         super()
         this.answers = answers
         this.type = type
@@ -41,14 +41,12 @@ class AnswerScene extends Scene {
         super.setBackground()
         this.start = +new Date()
 
-        if (this.type != 9) {
-            let title = this.trainTitle(this.levelData.flag, this.levelData.name)
-            title.x = 180
-            title.y = 25
-            this.addChild(title)
-        }
+        let title = this.trainTitle(this.levelData.flag, this.levelData.name)
+        title.x = 180
+        title.y = 25
+        this.addChild(title)
 
-        if (this.type == 1 || this.type == 9) {
+        if (this.type == TrainType.TRAIN) {
             // Q1
             let number = new egret.TextField()
             number.text = "Q" + this.curIdx
@@ -57,10 +55,7 @@ class AnswerScene extends Scene {
             number.y = 177
             this.numberText = number
             this.addChild(number)
-        }
 
-        //进度条
-        if (this.type == 1) {
             // 进度条
             let pBar = new eui.ProgressBar()
             pBar.maximum = this.answers.questions.length < 10 ? this.answers.questions.length : 10//设置进度条的最大值
@@ -72,15 +67,6 @@ class AnswerScene extends Scene {
             pBar.y = 170
             pBar.value = this.curIdx//设置进度条的初始值
             this._progress = pBar
-            
-        } else if (this.type == 9) {
-            let persent = new egret.TextField
-            persent.text = this.curIdx + '/' + this.answers.questions.length
-            persent.textColor = 0x35af38
-            persent.x = this.stage.stageWidth - persent.width - 85
-            persent.y = 177
-            this.persent = persent
-            this.addChild(persent)
         }
 
         let trainid = this.answers.questions[this.curIdx - 1].qid
@@ -111,7 +97,7 @@ class AnswerScene extends Scene {
         this.addChild(myScroller)
         this.scroller = myScroller
 
-        if (this.type == 1 || this.type == 9) {
+        if (this.type == TrainType.TRAIN) {
             let favorButton = new XButton('加入收藏')
             favorButton.x = this.stage.stageWidth / 2 - favorButton.width - 10
             favorButton.y = 1040
@@ -203,7 +189,7 @@ class AnswerScene extends Scene {
                 isEnd = true
             }
             if (isEnd && this.isNext) {
-                if (this.type == 1 || this.type == 9) {
+                if (this.type == TrainType.TRAIN) {
                     Http.getInstance().post(Url.HTTP_TRAIN_END, { lifecycleid: this.answers.lifecycleId }, (json) => {
                         DataManager.getInstance().updateUserInfo(json.data.userBase)
                         let params = {
@@ -243,14 +229,14 @@ class AnswerScene extends Scene {
                     let curerntTime = + new Date()
                     let useTime = (curerntTime - this.start) / 1000
                     let params = {
-                        "levelid": this.type == 9 ? -1 : this.levelData.levelid,
-                        "lifecycleid": this.answers.lifecycleId,
-                        "qid": qid,
-                        "serialno": this.curIdx,
-                        "qattrid": this.curSubject.qattrid,
-                        "reply": selectOption,
-                        "iscorrect": result ? 1 : 0,
-                        "useTime": useTime
+                        levelid: this.levelData.levelid,
+                        lifecycleid: this.answers.lifecycleId,
+                        qid: qid,
+                        serialno: this.curIdx,
+                        qattrid: this.curSubject.qattrid,
+                        reply: selectOption,
+                        iscorrect: result ? 1 : 0,
+                        useTime: useTime,
                     }
                     Http.getInstance().post(Url.HTTP_TRAIN_SUBMIT, params, (json) => {
                         this.topic.setDisableSeleced()
@@ -290,7 +276,7 @@ class AnswerScene extends Scene {
             let scene = new AnalysisScene(this.curSubject, '题目分析')
             ViewManager.getInstance().changeScene(scene)
         }, this)
-        if (this.type == 1 || this.type == 9) {
+        if (this.type == TrainType.TRAIN) {
             analysisButton.visible = false
         }
     }
@@ -304,7 +290,7 @@ class AnswerScene extends Scene {
         flagName.verticalAlign = egret.VerticalAlign.MIDDLE
         flagName.textAlign = egret.HorizontalAlign.CENTER
 
-        if (this.type == 1) {
+        if (this.type == TrainType.TRAIN) {
             let flagBg = Util.createBitmapByName('flagBg_png')
             group.addChild(flagBg)
 
@@ -343,11 +329,8 @@ class AnswerScene extends Scene {
         this.commitButton.labelDisplay.text = '提交'
         this.isNext = false
         this.curIdx = this.curIdx + 1
-        if (this.type == 1 || this.type == 9) {
+        if (this.type == TrainType.TRAIN) {
             this.numberText.text = `Q${this.curIdx}`
-        }
-        if (this.type == 9) {
-            this.persent.text = this.curIdx + '/' + this.answers.questions.length
         }
         if (this._progress) this._progress.value = this.curIdx
 
@@ -368,7 +351,7 @@ class AnswerScene extends Scene {
         topic.x = (this.stage.stageWidth - topic.width) / 2
         this.topic = topic
         this.topicGroup.addChild(topic)
-        if (this.type == 1 || this.type == 9) {
+        if (this.type == TrainType.TRAIN) {
             this.analysisButton.visible = false
         }
         this.scroller.viewport.scrollV = 0

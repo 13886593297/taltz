@@ -26,25 +26,6 @@ class EquipList extends Scene {
 
     private changeTypeList(config) {
         Http.getInstance().post(Url.HTTP_EQUIP_LIST, { catid: config.type }, data => {
-            Http.getInstance().post(Url.HTTP_GAME_INIT, "", (json) => {
-                let week = DataManager.getInstance().getTime()
-                if (json.data.isNeedSign) {
-                    if (week == 1) {
-                        let i = Util.getDailyTaskID();
-                        if (i == config.id) {
-                            Http.getInstance().post(Url.HTTP_SIGN, {}, (data) => { });
-                        }
-                    } else if (week == 3) {
-                        Http.getInstance().post(Url.HTTP_DAILYTASKS_CONTENT, {}, (data) => {
-                            let i = data.data[0].typeid
-                            if (i == config.id) {
-                                Http.getInstance().post(Url.HTTP_SIGN, {}, (data) => { });
-                            }
-                        })
-                    }
-                }
-            });
-
             var group = new eui.Group()
             group.width = this.stage.stageWidth
             this.addChild(group)

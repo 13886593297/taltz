@@ -58,7 +58,7 @@ class Http {
     /**
      * 请求POST数据
      */
-    public post(url: string, msg: any, callback: Function) {
+    public post(url: string, msg?: any, callback?: Function) {
         let host = Util.getHost()
         url = host + url;
         //数据缓存问题
@@ -134,11 +134,6 @@ class Url {
 
     //训练场
     public static readonly HTTP_TRAIN_START = "/game/api/train/start";
-
-    //每日任务
-    public static readonly HTTP_DAILYTASKS_START = "/game/api/dailytasks/start";
-    public static readonly HTTP_DAILYTASKS_CONTENT = "/game/api/dailytasks/content";
-    public static readonly HTTP_DAILYTASKS_CURDAY = "/game/api/dailytasks/curday";
 
     //提交答案
     public static readonly HTTP_TRAIN_SUBMIT = "/game/api/train/submitquestion";
