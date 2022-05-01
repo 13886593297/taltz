@@ -20,6 +20,7 @@ class Http {
      */
     public get(url: string, msg: any) {
         let host = Util.getHost();
+        url = host + url;
         var request = new egret.HttpRequest();
         request.responseType = egret.HttpResponseType.TEXT;
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -58,7 +59,7 @@ class Http {
      * 请求POST数据
      */
     public post(url: string, msg: any, callback: Function) {
-        let host = Config.DEBUG ? Util.getConfig('host') : Util.getHost(); //Util.getConfig('host');//
+        let host = Util.getHost()
         url = host + url;
         //数据缓存问题
         var request = new egret.HttpRequest();

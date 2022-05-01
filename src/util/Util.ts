@@ -480,14 +480,10 @@ class Util {
      * 获取页面 host地址
      */
     public static getHost() {
-        var ishttps = 'https:' == document.location.protocol ? true : false;
-        var url = window.location.host;
-        if (ishttps) {
-            url = 'https://' + url;
-        } else {
-            url = 'http://' + url;
+        if (Config.DEBUG) {
+            return Util.getConfig('host')
         }
-        return url
+        return location.origin
     }
 
     /**

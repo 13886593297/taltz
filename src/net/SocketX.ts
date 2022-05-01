@@ -29,7 +29,7 @@ class SocketX {
         if (this.socket && this.socket.connect) return
         ViewManager.getInstance().showLoading('数据加载中...')
         
-        let host = Config.DEBUG ? 'http://127.0.0.1:8360' : Util.getHost()
+        let host = Util.getHost()
 
         let url = host + '/proom'
         if (type == PKTYPE.TEAM) url = host + '/troom'
