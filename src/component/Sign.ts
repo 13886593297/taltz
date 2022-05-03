@@ -133,28 +133,30 @@ class Sign extends egret.DisplayObjectContainer {
         }
 
         let height = 72 // 每个数字的高度
-        let curDate = new Date()
-        // 当前日期
-        let currentDay = curDate.getDate()
-        // 获取这个月有多少天，将月份下移到下一个月份，同时将日期设置为0；由于Date里的日期是1~31，所以Date对象自动跳转到上一个月的最后一天；getDate（）获取天数即可。
-        curDate.setMonth(curDate.getMonth() + 1)
-        curDate.setDate(0)
-        let days = curDate.getDate()
-        // 获取第一天星期几
-        curDate.setDate(1)
-        // 返回的是0-6，设置0为7
-        let week1 = curDate.getDay() == 0 ? 7 : curDate.getDay()
-        let max = week1 + days
+        let date = new Date() // 当前日期
+        let currentDay = date.getDate()
+        // 获取这个月有多少天：
+        // 将月份下移到下一个月份，同时将日期设置为0，
+        // 由于Date里的日期是1~31，所以Date对象自动跳转到上一个月的最后一天，getDate获取天数即可。
+        date.setMonth(date.getMonth() + 1)
+        date.setDate(0)
+        let currentMonthMaxDays = date.getDate()
+        // 设置回第一天，获取第一天星期几
+        date.setDate(1)
+        let firstDayWeek = date.getDay() == 0 ? 7 : date.getDay()
+        let max = firstDayWeek + currentMonthMaxDays
         for (let i = 0; i < max; i++) {
-            if (i >= week1) {
-                let day = i - week1 + 1
-                let sign = 0
+            if (i >= firstDayWeek) {
+                let day = i - firstDayWeek + 1
+                let sign = 0 // 未签到
                 if (this.signed.indexOf(day) > -1) {
-                    sign = 1
+                    sign = 1 // 已签到
+                } else {
+                    if (currentDay == day) {
+                        sign = 2 // 正在签到
+                    }
                 }
-                // if (currentDay == day) {
-                //     sign = 2
-                // }
+                
                 let singItem = new SignItem(day, sign)
                 singItem.x = left + ((i - 1) % 7) * width
                 singItem.y = Math.ceil(i / 7) * height + 100
@@ -186,15 +188,15 @@ class SignItem extends egret.DisplayObjectContainer {
             icon.y = (this.H - icon.height) / 2
             this.addChild(icon)
 
-            // //当前签到中
-            // if (this.sign == 2) {
-            //     icon.alpha = 0
-            //     egret.Tween.get(icon).to(
-            //         { alpha: 1 },
-            //         3000,
-            //         egret.Ease.backInOut
-            //     )
-            // }
+            //当前签到中
+            if (this.sign == 2) {
+                icon.alpha = 0
+                egret.Tween.get(icon).to(
+                    { alpha: 1 },
+                    3000,
+                    egret.Ease.backInOut
+                )
+            }
         }
 
         let label = new egret.TextField()
