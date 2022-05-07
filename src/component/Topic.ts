@@ -264,7 +264,7 @@ class TopicItem extends egret.DisplayObjectContainer {
     private text: egret.TextField
 
     private option
-    private readonly BG_RES = ['option_normal_png', 'option_select_png', 'option_error_png', 'option_ok_png', 'option_ok_png']
+    private readonly BG_RES = ['option_normal_png', 'option_select_png', 'option_error_png', 'option_select_png', 'option_select_png']
 
     private readonly ICON_RES = { 2: "icon_err_png", 3: "icon_ok_png" }
 
@@ -276,7 +276,6 @@ class TopicItem extends egret.DisplayObjectContainer {
 
     private status
     private optionNum
-    private prefix
     private isTeamAnswer
 
     public constructor(optionNum, option, width = 633, isTeamAnswer?) {
@@ -323,14 +322,13 @@ class TopicItem extends egret.DisplayObjectContainer {
         text.size = size
         text.textAlign = egret.HorizontalAlign.CENTER
         text.verticalAlign = egret.VerticalAlign.MIDDLE
-        text.textColor = 0x79cd72
+        text.textColor = 0xfd8a22
         this.text = text
         this.addChild(text)
         
         // 答案前缀
         let prefix = new egret.TextField()
         prefix.text = this.optionNum
-        this.prefix = prefix
         prefix.width = 100
         prefix.height = this.height
         prefix.size = 40
@@ -380,11 +378,8 @@ class TopicItem extends egret.DisplayObjectContainer {
         if (this.status == status) return
         this.status = status
         this.bg.texture = RES.getRes(this.BG_RES[status])
-        if (status == 0) {
-            this.text.textColor = 0x79cd72
-        } else if (status == 2) {
-            this.text.textColor = 0x4d7d44
-            this.prefix.textColor = 0x99a496
+        if (status == TopicItem.STATUS_NORMAL || status == TopicItem.STATUS_ERROR) {
+            this.text.textColor = 0xfd8a22
         } else {
             this.text.textColor = 0xffffff
         }
@@ -400,12 +395,4 @@ class TopicItem extends egret.DisplayObjectContainer {
     public release() {
         this.removeChildren()
     }
-}
-
-
-/**
- * 填空题
- */
-class Blanks extends eui.Group {
-
 }

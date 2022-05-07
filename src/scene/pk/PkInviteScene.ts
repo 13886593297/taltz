@@ -126,7 +126,7 @@ class PkInviteScene extends Scene {
         waitPic.y = 500
         this.addChild(waitPic)
 
-        let tip = new LineInfo(`等待好友进入挑战`)
+        let tip = new LineInfo(`等待好友进入挑战...`)
         this.addChild(tip)
     }
 
@@ -263,7 +263,7 @@ class PkInviteScene extends Scene {
         waitPic.y = 500
         this.addChild(waitPic)
 
-        let info = new LineInfo('等待对手24小时进入挑战')
+        let info = new LineInfo('等待对手24小时进入挑战...')
         this.addChild(info)
 
         let backButton = Util.createBitmapByName('pk_back_png')

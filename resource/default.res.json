@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "thumb_pb_png,description_json,option_normal_png,option_select_png,mask_png,mask_transparent_png,info_bg_png,info_bg1_png,info_top01_png,info_top02_png,info_top03_png,peachWord_png,notice_png,bg_level_pass_png,bg_level_cur_png,favor_fill_png,favor_png,cup1_png,cup2_png,cup3_png,model_bg_1_png,rank_item_bg_png,share_arrow_png,share_tips_jpg,model_bg_2_png,model_bg_3_png,model_bg_4_png,sign_mask_png,option_error_png,option_ok_png,icon_ok_png,icon_err_png,bg_level_nopass_png,progress_bg_png,button_bg_png,button_submit_bg_png,dialog_close_x_png,share_tips_android_jpg,rank_title_self_png,rank_title_team_png,equip_bg_1_png,equip_bg_2_png,equip_bg_3_png,equip_bg_4_png,equip_title_png,equip_bg_1_01_png,equip_bg_2_01_png,equip_bg_3_01_png,equip_bg_4_01_png,equip_bg_mp4_png,equip_bg_pdf_png,myfavor_png,alter_bg_png,train_line_left_png,train_line_right_png,favor_title_png,favor_title_cpxx_png,favor_title_jbxx_png,favor_title_jpfx_png,favor_title_lcyj_png,favor_title_sccl_png,favor_title_zyjz_png,icon_tmfx_png,title_tmfx_png,button_small_1_png,button_small_2_png,bg_png,train_fail_png,train_success_png,share_jpg,search_border_png,search_png,search_result_bg_png,title_error_png,green_small_bg_png,peachTree3_png,peach3_png,peachTree2_png,peach2_png,peach1_png,peachTree1_png,close_png,close_white_png,taltz_bg_png,avatar_bg_png,kettle_empty_png,shadow_png,tip_bg_png,title_png,title_rank_png,title_signRecord_png,rule_png,train_title_png,train_grade1_png,train_grade2_png,train_grade3_png,train_grade4_png,flagBg_png,flagBg_blank_png,tmfx01_png,tmfx02_png,tmfx03_png,continueTrain_png,next_png,flaunt_png,errorParse_png,water_success_png,teamRank_png,roundthumb_png,person_pk_png,team_pk_png,pk_list_text_bg_png,pk_list_title_png,pk_auto_png,pk_friend_png,pk_modal_title_person_png,pk_record_png,person_info_bg_png,pk_cancel_png,pk_user_bg_left_png,pk_user_bg_right_png,pk_vs_png,match_title_01_png,match_title_02_png,pk_begin_png,pk_submit_png,pk_progress_bg_png,pk_thumb_pb_png,pk_end_wait_png,pk_draw_png,pk_fail_png,pk_success_png,pk_back_png,pk_accept_png,pk_refuse_png,pk_default_avatar_png,pk_record_title_png,pk_modal_title_team_png,pk_answer_png,pk_knowledge_png,room_six_png,room_six_gray_png,room_ten_png,room_ten_gray_png,pk_team_list_bg_png,pk_icon_fighting_png,pk_icon_wait_png,pk_green_group_png,pk_yellow_group_png,pk_green_list_png,pk_yellow_list_png,pk_observe_modal_png,pk_time_bg_png,pk_ready_png,pk_seat_tip_png,pk_leave_png,pk_icon_ready_png,loading_png,pk_alert_refuse_png,pk_answer_title_png,pk_time_down_png,pk_green_group_little_png,pk_yellow_group_little_png,pk_right_score_png,pk_result_score_left_png,pk_result_score_right_png,pk_winner_cup_png,pk_winner_draw_png,pk_winner_left_png,pk_winner_right_png,pk_result_btn_png,pk_tip_waiting_png,pk_tip_draw_png,pk_result_left_bg_png,pk_result_right_bg_png,pk_winner_draw2_png,pk_winner_left2_png,pk_winner_right2_png,pk_know_result_left_png,pk_yellow_list_lite_png,pk_green_list_lite_png",
+			"keys": "thumb_pb_png,description_json,option_normal_png,option_select_png,mask_png,mask_transparent_png,info_bg_png,info_bg1_png,info_top01_png,info_top02_png,info_top03_png,peachWord_png,notice_png,bg_level_pass_png,bg_level_cur_png,favor_fill_png,favor_png,cup1_png,cup2_png,cup3_png,model_bg_1_png,rank_item_bg_png,share_arrow_png,share_tips_jpg,model_bg_2_png,model_bg_3_png,model_bg_4_png,sign_mask_png,option_error_png,icon_ok_png,icon_err_png,bg_level_nopass_png,progress_bg_png,button_bg_png,button_submit_bg_png,dialog_close_x_png,share_tips_android_jpg,rank_title_self_png,rank_title_team_png,equip_bg_1_png,equip_bg_2_png,equip_bg_3_png,equip_bg_4_png,equip_title_png,equip_bg_1_01_png,equip_bg_2_01_png,equip_bg_3_01_png,equip_bg_4_01_png,equip_bg_mp4_png,equip_bg_pdf_png,myfavor_png,alter_bg_png,train_line_left_png,train_line_right_png,favor_title_png,favor_title_cpxx_png,favor_title_jbxx_png,favor_title_jpfx_png,favor_title_lcyj_png,favor_title_sccl_png,favor_title_zyjz_png,icon_tmfx_png,title_tmfx_png,button_small_1_png,button_small_2_png,bg_png,train_fail_png,train_success_png,share_jpg,search_border_png,search_png,search_result_bg_png,title_error_png,green_small_bg_png,peachTree3_png,peach3_png,peachTree2_png,peach2_png,peach1_png,peachTree1_png,close_png,close_white_png,taltz_bg_png,avatar_bg_png,kettle_empty_png,shadow_png,tip_bg_png,title_png,title_rank_png,title_signRecord_png,rule_png,train_title_png,train_grade1_png,train_grade2_png,train_grade3_png,train_grade4_png,flagBg_png,flagBg_blank_png,tmfx01_png,tmfx02_png,tmfx03_png,continueTrain_png,next_png,flaunt_png,errorParse_png,water_success_png,teamRank_png,roundthumb_png,person_pk_png,team_pk_png,pk_list_text_bg_png,pk_list_title_png,pk_title_bg_png,pk_auto_png,pk_friend_png,pk_modal_title_person_png,pk_record_png,person_info_bg_png,pk_cancel_png,pk_user_bg_left_png,pk_user_bg_right_png,pk_vs_png,match_title_01_png,match_title_02_png,pk_begin_png,pk_submit_png,pk_progress_bg_png,pk_thumb_pb_png,pk_end_wait_png,pk_draw_png,pk_fail_png,pk_success_png,pk_back_png,pk_accept_png,pk_refuse_png,pk_default_avatar_png,pk_record_title_png,pk_modal_title_team_png,pk_answer_png,pk_knowledge_png,room_six_png,room_six_gray_png,room_ten_png,room_ten_gray_png,pk_team_list_bg_png,pk_icon_fighting_png,pk_icon_wait_png,pk_green_group_png,pk_yellow_group_png,pk_green_list_png,pk_yellow_list_png,pk_observe_modal_png,pk_time_bg_png,pk_ready_png,pk_seat_tip_png,pk_leave_png,pk_icon_ready_png,loading_png,pk_alert_refuse_png,pk_answer_title_png,pk_time_down_png,pk_green_group_little_png,pk_yellow_group_little_png,pk_right_score_png,pk_result_score_left_png,pk_result_score_right_png,pk_winner_cup_png,pk_winner_draw_png,pk_winner_left_png,pk_winner_right_png,pk_result_btn_png,pk_tip_waiting_png,pk_tip_draw_png,pk_result_left_bg_png,pk_result_right_bg_png,pk_winner_draw2_png,pk_winner_left2_png,pk_winner_right2_png,pk_know_result_left_png,pk_yellow_list_lite_png,pk_green_list_lite_png",
 			"name": "preload"
 		},
 		{
@@ -37,25 +37,19 @@
 			"url": "assets/Topic/option_normal.png",
 			"type": "image",
 			"name": "option_normal_png",
-			"scale9grid": "141,24,357,43"
+			"scale9grid": "141,24,264,43"
 		},
 		{
 			"url": "assets/Topic/option_select.png",
 			"type": "image",
 			"name": "option_select_png",
-			"scale9grid": "141,24,357,43"
+			"scale9grid": "141,24,264,43"
 		},
 		{
 			"url": "assets/Topic/option_error.png",
 			"type": "image",
 			"name": "option_error_png",
-			"scale9grid": "141,24,357,43"
-		},
-		{
-			"url": "assets/Topic/option_ok.png",
-			"type": "image",
-			"name": "option_ok_png",
-			"scale9grid": "141,24,357,43"
+			"scale9grid": "141,24,264,43"
 		},
 		{
 			"url": "assets/mask.png",
@@ -342,7 +336,7 @@
 		{
 			"url": "assets/Equip/equip_bg_pdf.png",
 			"type": "image",
-            "name": "equip_bg_pdf_png"
+			"name": "equip_bg_pdf_png"
 		},
 		{
 			"url": "assets/Train/myfavor.png",
@@ -648,6 +642,11 @@
 			"url": "assets/Pk/pk_list_title.png",
 			"type": "image",
 			"name": "pk_list_title_png"
+		},
+		{
+			"url": "assets/Pk/pk_title_bg.png",
+			"type": "image",
+			"name": "pk_title_bg_png"
 		},
 		{
 			"url": "assets/Pk/pk_auto.png",

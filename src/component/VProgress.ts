@@ -10,8 +10,8 @@ class VProgress extends eui.Group {
     }
 
     public init() {
-        this.width = 40
-        this.height = 430
+        this.width = 27
+        this.height = 315
 
         let bg = Util.createBitmapByName('pk_progress_bg_png')
         bg.width = this.width
@@ -20,7 +20,7 @@ class VProgress extends eui.Group {
 
         let thumb = Util.createBitmapByName('pk_thumb_pb_png')
         thumb.fillMode = egret.BitmapFillMode.REPEAT
-        thumb.height = 43
+        thumb.height = 31
         thumb.y = bg.height - thumb.height
         this.addChild(thumb)
 

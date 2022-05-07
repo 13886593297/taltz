@@ -3,14 +3,15 @@ class PkModelScene extends Scene {
         "1": {
             title: 'pk_modal_title_person_png',
             items: [
-                { icon: 'pk_auto_png', type: PkModel.AUTO },
-                { icon: 'pk_friend_png', type: PkModel.FRIEND }]
+                { icon: 'pk_auto_png', type: PkModel.AUTO, title: '自动匹配' },
+                { icon: 'pk_friend_png', type: PkModel.FRIEND, title: '邀请好友' }
+            ]
         },
         "2": {
             title: 'pk_modal_title_team_png',
             items: [
-                { icon: 'pk_answer_png', type: PkModel.ANSWER },
-                { icon: 'pk_knowledge_png', type: PkModel.KNOW }
+                { icon: 'pk_answer_png', type: PkModel.ANSWER, title: '抢答赛' },
+                { icon: 'pk_knowledge_png', type: PkModel.KNOW, title: '知识赛' }
             ]
         }
     }
@@ -41,7 +42,7 @@ class PkModelScene extends Scene {
 
         let itemY = 400
         for (let data of this.data.items) {
-            let item = new PkItem(data)
+            let item = new PkItem2(data)
             this.addChild(item)
             item.y = itemY
             itemY += 200

@@ -52,7 +52,7 @@ class PkRecordScene extends Scene {
 
         SocketX.getInstance().sendMsg(NetEvent.PK_RECORDS, { page: this.page, pageSize: this.pageSize })
 
-        let border = Util.drawRoundRect(2, 0x4fb483, 0xFFFFFF, 650, this.stage.stageHeight - 300 + backButtonBg.height / 2, 80, 0)
+        let border = Util.drawRoundRect(2, Config.COLOR_MAINCOLOR, 0xFFFFFF, 650, this.stage.stageHeight - 300 + backButtonBg.height / 2, 80, 0)
         border.x = (this.stage.stageWidth - border.width) / 2
         border.y = 100
         this.addChildAt(border, 1)
@@ -118,7 +118,7 @@ class RecordItem extends eui.Group {
         fightPerson.x = 40
         fightPerson.verticalAlign = 'middle'
         fightPerson.size = size
-        fightPerson.textColor = 0x009649
+        fightPerson.textColor = Config.COLOR_MAINCOLOR
         this.addChild(fightPerson)
 
         let result = new egret.TextField()
@@ -128,11 +128,14 @@ class RecordItem extends eui.Group {
         result.size = size
         result.x = 360
         result.verticalAlign = 'middle'
-        result.textColor = 0x009649
-        if (this.data.pkResult.text == '失败') {
-            result.textColor = 0x747a7c
+        if (this.data.pkResult.text == '胜利') {
+            result.textColor = Config.COLOR_MAINCOLOR
+        } else if (this.data.pkResult.text == '失败') {
+            result.textColor = 0xe71f19
+        } else if (this.data.pkResult.text == '进行中') {
+            result.textColor = 0x52b584
         } else {
-            result.textColor = 0x006a3a
+            result.textColor = 0x666666
         }
         this.addChild(result)
 
@@ -143,7 +146,7 @@ class RecordItem extends eui.Group {
         date.size = size
         date.x = 450
         date.verticalAlign = 'middle'
-        date.textColor = 0x009649
+        date.textColor = Config.COLOR_MAINCOLOR
         date.textAlign = egret.HorizontalAlign.RIGHT
         this.addChild(date)
 
