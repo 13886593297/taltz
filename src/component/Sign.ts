@@ -25,7 +25,7 @@ class Sign extends egret.DisplayObjectContainer {
     public init() {
         let stage = ViewManager.getInstance().stage
 
-        let mask: egret.Bitmap = Util.createBitmapByName('bg_png')
+        let mask: egret.Bitmap = Util.createBitmapByName('sign_bg_png')
         mask.x = 0
         mask.y = 0
         mask.width = stage.stageWidth
@@ -47,7 +47,7 @@ class Sign extends egret.DisplayObjectContainer {
         egret.Tween.get(group).to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.backInOut)
 
         // 签到背景
-        var signBg = Util.createBitmapByName('green_small_bg_png')
+        var signBg = Util.createBitmapByName('sign_date_bg_png')
         signBg.x = stage.stageWidth / 2
         signBg.anchorOffsetX = signBg.width / 2
         signBg.y = 150
@@ -84,6 +84,7 @@ class Sign extends egret.DisplayObjectContainer {
         ]
         text1.x = 150
         text1.y = 20
+        text1.textColor = 0x333333
         group.addChild(text1)
 
         let text2 = new egret.TextField()
@@ -97,17 +98,28 @@ class Sign extends egret.DisplayObjectContainer {
         ]
         text2.x = 420
         text2.y = 20
+        text2.textColor = 0x333333
         group.addChild(text2)
 
         let userinfo = DataManager.getInstance().getUser()
 
         let notes = new egret.TextField()
-        notes.text = '你已持续达标' + userinfo.contSignTotal + '天'
-        notes.bold = true
+        notes.textFlow = [
+            {
+                text: '你已持续达标',
+            },
+            {
+                text: userinfo.contSignTotal + '',
+                style: { textColor: Config.COLOR_MAINCOLOR, bold: true }
+            },
+            {
+                text: '天',
+            },
+        ]
         notes.x = 230
         notes.y = 250
         notes.size = 40
-        notes.textColor = 0x3a9e53
+        notes.textColor = 0xffffff
         group.addChild(notes)
     }
 
@@ -129,6 +141,7 @@ class Sign extends egret.DisplayObjectContainer {
             label.width = width
             label.textAlign = egret.HorizontalAlign.CENTER
             label.size = 26
+            label.textColor = 0x333333
             group.addChild(label)
         }
 
@@ -159,7 +172,7 @@ class Sign extends egret.DisplayObjectContainer {
                 
                 let singItem = new SignItem(day, sign)
                 singItem.x = left + ((i - 1) % 7) * width
-                singItem.y = Math.ceil(i / 7) * height + 100
+                singItem.y = Math.ceil(i / 7) * height + 110
                 group.addChild(singItem)
             }
         }
@@ -185,7 +198,7 @@ class SignItem extends egret.DisplayObjectContainer {
         if (this.sign > 0) {
             let icon = Util.createBitmapByName('sign_mask_png')
             icon.x = (this.W - icon.width) / 2
-            icon.y = (this.H - icon.height) / 2
+            icon.y = (this.H - icon.height) / 2 - 2
             this.addChild(icon)
 
             //当前签到中
@@ -206,6 +219,7 @@ class SignItem extends egret.DisplayObjectContainer {
         label.size = 28
         label.textAlign = egret.HorizontalAlign.CENTER
         label.verticalAlign = egret.VerticalAlign.MIDDLE
+        label.textColor = 0x333333
         this.addChild(label)
     }
 }
