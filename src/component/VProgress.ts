@@ -11,7 +11,7 @@ class VProgress extends eui.Group {
 
     public init() {
         this.width = 27
-        this.height = 315
+        this.height = 310
 
         let bg = Util.createBitmapByName('pk_progress_bg_png')
         bg.width = this.width

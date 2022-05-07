@@ -2,7 +2,6 @@
  * 首页界面
  */
 class IndexScene extends Scene {
-    private sign
     private userView
     public constructor() {
         super()
@@ -52,19 +51,6 @@ class IndexScene extends Scene {
             bg.touchEnabled = true
         }
 
-        // 底部通知消息
-        Http.getInstance().post(Url.HTTP_NOTICE, {}, (data) => {
-            let notice = new Notice(data.data)
-            notice.y = 1120
-            this.addChild(notice)
-            notice.touchEnabled = true
-            notice.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-                //跳转规则界面
-                let scene = new RuleScene()
-                ViewManager.getInstance().changeScene(scene)
-            }, this)
-        })
-
         // 初始化游戏数据
         Http.getInstance().post(Url.HTTP_GAME_INIT, "", json => {
             Http.getInstance().post(Url.HTTP_SIGN)
@@ -78,16 +64,17 @@ class IndexScene extends Scene {
                         this.userView.refresh()
                     })
                     let sign = new Sign()
-                    this.addChildAt(sign, 100)
-                    this.sign = sign
+                    this.addChild(sign)
                     sign.addEventListener(eui.UIEvent.CLOSING, () => {
-                        this.sign = null
+                        this.removeChild(sign)
+                        this.showNotice()
                     }, this)
                     var timer: egret.Timer = new egret.Timer(5000, 1)
                     //注册事件侦听器
                     timer.addEventListener(egret.TimerEvent.TIMER, () => {
-                        if (this.sign) {
-                            this.removeChild(this.sign)
+                        if (sign) {
+                            this.removeChild(sign)
+                            this.showNotice()
                         }
                     }, this)
                     // 开始计时
@@ -105,6 +92,21 @@ class IndexScene extends Scene {
             }, 1000)
         })
 
+    }
+
+    private showNotice() {
+        // 底部通知消息
+        Http.getInstance().post(Url.HTTP_NOTICE, {}, (data) => {
+            let notice = new Notice(data.data)
+            notice.y = 1120
+            this.addChild(notice)
+            notice.touchEnabled = true
+            notice.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+                //跳转规则界面
+                let scene = new RuleScene()
+                ViewManager.getInstance().changeScene(scene)
+            }, this)
+        })
     }
 
     // 页面跳转
