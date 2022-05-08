@@ -10,7 +10,6 @@ class DataManager extends egret.EventDispatcher {
     private user;
     private bandge;
     private sign;
-    private equipment = null;
     public channel;
 
     private pkData;
@@ -23,7 +22,6 @@ class DataManager extends egret.EventDispatcher {
     /**
      * 房间列表信息
      */
-    private roomList;
     private pkUsers; //团战用户列表
     private roomData: Room; //房间数据
 
@@ -244,85 +242,6 @@ class DataManager extends egret.EventDispatcher {
 
     public getPkModel() {
         return this.pkModel;
-    }
-
-
-    public test() {
-
-
-        this.roomList = {
-            6: [
-                {
-                    room: 12341,
-                    roomId: '11212',
-                    status: 1,
-                    roomNumber: 6,
-                    in: 5,
-                    see: 2,
-                }, {
-                    room: 12342,
-                    roomId: '11212',
-                    status: 2,
-                    roomNumber: 6,
-                    in: 5,
-                    see: 2,
-                }, {
-                    room: 12343,
-                    roomId: '11212',
-                    status: 1,
-                    roomNumber: 6,
-                    in: 5,
-                    see: 2,
-                }, {
-                    room: 12344,
-                    status: 2,
-                    roomId: '11212',
-                    roomNumber: 6,
-                    in: 5,
-                    see: 2,
-                },
-            ],
-            10: [
-                {
-                    room: 12345,
-                    roomId: '11212',
-                    status: 1,
-                    roomNumber: 10,
-                    in: 5,
-                    see: 2,
-                },
-                {
-                    room: 12346,
-                    roomId: '11212',
-                    status: 2,
-                    roomNumber: 10,
-                    in: 5,
-                    see: 2,
-                },
-                {
-                    room: 12347,
-                    roomId: '11212',
-                    status: 1,
-                    roomNumber: 10,
-                    in: 5,
-                    see: 2,
-                },
-                {
-                    room: 12348,
-                    roomId: '11212',
-                    status: 2,
-                    roomNumber: 10,
-                    in: 5,
-                    see: 2,
-                },
-            ]
-        }
-
-        // this.pkUsers = {
-        //     green: [{ nickName: '张三', avatar: null }, null, { nickName: '李四' }, { nickName: '顽固' }, { nickName: '第多少' }],
-        //     blue: [{ nickName: '刚发的' }, { nickName: '订单' }, null, { nickName: '的味道' }, { nickName: '大萨达' }]
-        // }
-
     }
 
     public clearRoomData() {

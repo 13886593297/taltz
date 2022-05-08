@@ -60,13 +60,13 @@ class TeamResultScene extends Scene {
         rightScore.verticalAlign = 'middle'
         this.shareGroup.addChild(rightScore)
 
-        let leftFlag = Util.createBitmapByName('pk_yellow_group_little_png')
-        leftFlag.x = 50
+        let leftFlag = Util.createBitmapByName('pk_yellow_group_png')
+        leftFlag.x = 65
         leftFlag.y = 270
         this.shareGroup.addChild(leftFlag)
 
-        let rightFlag = Util.createBitmapByName('pk_green_group_little_png')
-        rightFlag.x = this.stage.stageWidth - rightFlag.width - 50
+        let rightFlag = Util.createBitmapByName('pk_green_group_png')
+        rightFlag.x = this.stage.stageWidth - rightFlag.width - leftFlag.x
         rightFlag.y = 270
         this.shareGroup.addChild(rightFlag)
     }
@@ -125,7 +125,7 @@ class TeamResultScene extends Scene {
         this.shareGroup.addChild(resultTitle)
 
         // 奖杯
-        let resultBg = Util.createBitmapByName(result.winner == 0 ? 'pk_winner_draw_png' : 'pk_winner_cup_png')
+        let resultBg = Util.createBitmapByName(result.winner == 0 ? 'pk_winner_draw_png' : result.winner == 1 ? 'pk_winner_cup_left_png' : 'pk_winner_cup_png')
         resultBg.x = (this.stage.stageWidth - resultBg.width) / 2
         resultBg.y = result.winner == 0 ? 450 : 520
         this.shareGroup.addChild(resultBg)

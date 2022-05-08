@@ -32,23 +32,29 @@ class TeamMatchScene extends Scene {
 
         let stageW = this.stage.stageWidth
         let roomData = DataManager.getInstance().getRoomData()
-        if (roomData.joinType === JoinType.OBSEVER) {
-            let observerTitle = Util.createBitmapByName('pk_observe_modal_png')
-            observerTitle.x = (stageW - observerTitle.width) / 2
-            observerTitle.y = 45
-            this.addChild(observerTitle)
+        let titleName = 'pk_answer_title_png'
+        if (roomData.roomType === PkModel.KNOW) {
+            titleName = 'pk_know_title_png'
         }
+        if (roomData.joinType === JoinType.OBSEVER) {
+            titleName = 'pk_observe_modal_png'
+            
+        }
+        let title = Util.createBitmapByName(titleName)
+        title.x = (stageW - title.width) / 2
+        title.y = 45
+        this.addChild(title)
 
         let init_y = 200
         // 黄队
         let yellowGroup = Util.createBitmapByName('pk_yellow_group_png')
-        yellowGroup.x = 50
+        yellowGroup.x = 65
         yellowGroup.y = init_y
         this.addChild(yellowGroup)
 
         // 绿队
         let greenGroup = Util.createBitmapByName('pk_green_group_png')
-        greenGroup.x = stageW / 2 + 150
+        greenGroup.x = stageW - greenGroup.width - yellowGroup.x
         greenGroup.y = init_y
         this.addChild(greenGroup)
 
@@ -102,7 +108,7 @@ class TeamMatchScene extends Scene {
     
                 let centerText = new egret.TextField()
                 centerText.text = '点击头像\n交换位置'
-                centerText.textColor = 0x7bbf71
+                centerText.textColor = Config.COLOR_MAINCOLOR
                 centerText.x = centerTextBg.x
                 centerText.y = centerTextBg.y
                 centerText.size = 18
@@ -114,14 +120,9 @@ class TeamMatchScene extends Scene {
             } else {
                 let tip = Util.createBitmapByName('pk_seat_tip_png')
                 tip.x = (stageW - tip.width) / 2
-                tip.y = number * 160 + 300
+                tip.y = number * 160 + 270
                 this.addChild(tip)
             }
-        } else {//观察者 不可以加入战队
-            // setTimeout(() => {
-            //     let scene = new TeamKnowResultScene()
-            //     ViewManager.getInstance().changeScene(scene)
-            // }, 5000)
         }
 
         let leaveButton = Util.createBitmapByName('pk_leave_png')

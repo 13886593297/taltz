@@ -247,18 +247,18 @@ class TeamKnowPkResultScene extends Scene {
         let music = "pass_mp3"
         Util.playMusic(music)
 
-        let selfScoreDescription = this.scoreItem(this.pkData.users[1].nickName, pkResult.score[1])
+        let selfScoreDescription = this.scoreItem(this.pkData.users[1].nickName, pkResult.score[1], pkResult.winner)
         selfScoreDescription.y = 830
         this.addChild(selfScoreDescription)
 
-        let opponentScoreDescription = this.scoreItem(this.pkData.users[2].nickName, pkResult.score[2])
+        let opponentScoreDescription = this.scoreItem(this.pkData.users[2].nickName, pkResult.score[2], pkResult.winner)
         opponentScoreDescription.y = 910
         this.addChild(opponentScoreDescription)
     }
 
-    private scoreItem(name, score) {
+    private scoreItem(name, score, winner: 0 | 1 | 2) {
         let group = new eui.Group
-        let bg = Util.drawRoundRect(3, Config.COLOR_MAINCOLOR, 0xffffff, 274, 60, 30)
+        let bg = Util.drawRoundRect(3, winner == 2 ? 0x36AF38 : Config.COLOR_MAINCOLOR, 0xffffff, 274, 60, 30)
         group.width = bg.width
         group.x = (this.stage.stageWidth - group.width) / 2
         group.addChild(bg)
@@ -269,7 +269,7 @@ class TeamKnowPkResultScene extends Scene {
         nickName.x = 20
         nickName.y = 20
         nickName.size = 24
-        nickName.textColor = Config.COLOR_MAINCOLOR
+        nickName.textColor = winner == 2 ? 0x36AF38 : Config.COLOR_MAINCOLOR
         group.addChild(nickName)
 
         let addScore = new egret.TextField
@@ -280,7 +280,7 @@ class TeamKnowPkResultScene extends Scene {
         addScore.y = nickName.y
         addScore.size = nickName.size
         addScore.textAlign = 'right'
-        addScore.textColor = Config.COLOR_MAINCOLOR
+        addScore.textColor = winner == 2 ? 0x36AF38 : Config.COLOR_MAINCOLOR
         group.addChild(addScore)
         return group
     }

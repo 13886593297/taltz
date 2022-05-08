@@ -217,7 +217,7 @@ class PkRoomScene extends Scene {
             this.scrollView.viewport.scrollV = 0
             this.roomView.removeChildren()
             this.roomListViews = {}
-            let y = 0
+            let y = 20
             for (let item of roomList) {
                 item.model = this.model
                 item.roomNumber = this.roomNumber
@@ -227,10 +227,6 @@ class PkRoomScene extends Scene {
                 this.roomView.addChild(roomItem)
                 roomItem.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
                     //根据item 状态进行判断
-                  //  console.log(item)
-                    // let teamMatch = new TeamMatchScene()
-                    // //  let teamMatch = new TeamBattleScene()
-                    // ViewManager.getInstance().changeScene(teamMatch)
                     this.tableNo = item.tableNo
                     if (item.status == RoomStatus.PK) {
                         let confirm = new Confirm(`房间${item.tableNo}比赛进行中\n是否进入观战模式？`)

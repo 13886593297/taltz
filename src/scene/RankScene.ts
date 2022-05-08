@@ -164,7 +164,7 @@ class RankScene extends Scene {
         if (rank.serialNo < 4) {
             let crown = Util.createBitmapByName('cup' + rank.serialNo + '_png')
             crown.x = 515
-            crown.y = -20
+            crown.y = -30
             rankGroup.addChild(crown)
         }
 
@@ -174,8 +174,8 @@ class RankScene extends Scene {
         num.textColor = rank.serialNo == 1 ? 0xd7a83f : rank.serialNo == 2 ? 0xbebebe : rank.serialNo == 3 ? 0xb77e43 : 0x077424
         num.bold = true
         num.size = rank.serialNo < 100 ? 50 : 38
-        num.x = 65
-        num.y = 20
+        num.x = 55
+        num.y = 5
         num.width = 66
         num.height = 66
         num.textAlign = egret.HorizontalAlign.CENTER
@@ -189,16 +189,15 @@ class RankScene extends Scene {
                 { text: rank.teamName + '\n', style: { size: 28 } },
                 { text: Util.getStrByWith(rank.userName, 160, 40), style: { size: 40 } }
             ]
-            userInfo.y = 60
             userInfo.lineSpacing = 10
         } else {
             userInfo.text = rank.teamName
             userInfo.size = 44
-            userInfo.y = 50
             userInfo.width = 300
             userInfo.height = 90
             userInfo.verticalAlign = 'middle'
         }
+        userInfo.y = 45
         userInfo.x = 145
         rankGroup.addChild(userInfo)
 
@@ -210,13 +209,13 @@ class RankScene extends Scene {
                 { text: '个人当月积分：' }
             ]
             achiRate.x = 340
-            achiRate.y = 75
+            achiRate.y = 60
             achiRate.size = 20
             achiRate.lineSpacing = 15
         } else {
             achiRate.text = '团队平均积分'
             achiRate.x = 460
-            achiRate.y = 120
+            achiRate.y = 100
             achiRate.size = 22
         }
         rankGroup.addChild(achiRate)
@@ -229,14 +228,14 @@ class RankScene extends Scene {
             ]
             achiRateNum.x = 470
             achiRateNum.size = 36
-            achiRateNum.y = 65
+            achiRateNum.y = 50
         } else {
             achiRateNum.text = rank.score ? rank.score.toFixed(2) : '0'
             achiRateNum.x = 450
             achiRateNum.width = 150
             achiRateNum.textAlign = egret.HorizontalAlign.CENTER
             achiRateNum.size = 42
-            achiRateNum.y = 70
+            achiRateNum.y = 50
         }
         rankGroup.addChild(achiRateNum)
 

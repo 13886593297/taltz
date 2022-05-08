@@ -82,7 +82,7 @@ class TeamRankScene extends Scene {
         if (item.serialNo < 4) {
             let crown = Util.createBitmapByName('cup' + item.serialNo + '_png')
             crown.x = 515
-            crown.y = -20
+            crown.y = -30
             rankGroup.addChild(crown)
         }
 
@@ -92,8 +92,8 @@ class TeamRankScene extends Scene {
         num.textColor = item.serialNo == 1 ? 0xd7a83f : item.serialNo == 2 ? 0xbebebe : item.serialNo == 3 ? 0xb77e43 : 0x077424
         num.bold = true
         num.size = item.serialNo < 100 ? 50 : 38
-        num.x = 65
-        num.y = 20
+        num.x = 55
+        num.y = 5
         num.width = 66
         num.height = 66
         num.textAlign = egret.HorizontalAlign.CENTER
@@ -106,9 +106,9 @@ class TeamRankScene extends Scene {
             { text: item.teamName + '\n', style: { size: 28 } },
             { text: Util.getStrByWith(item.userName, 160, 40), style: { size: 40 } }
         ]
-        userInfo.y = 60
-        userInfo.lineSpacing = 10
+        userInfo.y = 45
         userInfo.x = 145
+        userInfo.lineSpacing = 10
         rankGroup.addChild(userInfo)
 
         // 达标率
@@ -118,7 +118,7 @@ class TeamRankScene extends Scene {
             { text: '个人当月积分：' }
         ]
         achiRate.x = 340
-        achiRate.y = 75
+        achiRate.y = 60
         achiRate.size = 20
         achiRate.lineSpacing = 15
         rankGroup.addChild(achiRate)
@@ -130,7 +130,7 @@ class TeamRankScene extends Scene {
         ]
         achiRateNum.x = 470
         achiRateNum.size = 36
-        achiRateNum.y = 65
+        achiRateNum.y = 50
         rankGroup.addChild(achiRateNum)
 
         return rankGroup

@@ -230,13 +230,13 @@ class TeamBattleScene extends Scene {
         this.addChild(rightScore)
         this.team[UserPositionType.RIGHT] = rightScore
 
-        let leftFlag = Util.createBitmapByName('pk_yellow_group_little_png')
-        leftFlag.x = 50
+        let leftFlag = Util.createBitmapByName('pk_yellow_group_png')
+        leftFlag.x = 65
         leftFlag.y = y
         this.addChild(leftFlag)
 
-        let rightFlag = Util.createBitmapByName('pk_green_group_little_png')
-        rightFlag.x = this.stage.stageWidth - rightFlag.width - 50
+        let rightFlag = Util.createBitmapByName('pk_green_group_png')
+        rightFlag.x = this.stage.stageWidth - rightFlag.width - leftFlag.x
         rightFlag.y = y
         this.addChild(rightFlag)
     }
