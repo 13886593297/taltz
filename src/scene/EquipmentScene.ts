@@ -14,7 +14,7 @@ class EquipmentScene extends Scene {
         title.y = 20
         this.addChild(title)
 
-        let y = 325
+        let y = 370
         for (let config of EquipmentConfigs) {
             if (config.type == 0) {
                 continue
@@ -22,9 +22,9 @@ class EquipmentScene extends Scene {
             let bg: egret.Bitmap = Util.createBitmapByName(config.bg)
             this.addChild(bg)
             if (config.type % 2 != 0) {
-                bg.x = this.stage.stageWidth / 2 - bg.width
+                bg.x = this.stage.stageWidth / 2 - bg.width - 30
             } else {
-                bg.x = this.stage.stageWidth / 2
+                bg.x = this.stage.stageWidth / 2 + 30
             }
             if (config.type < 17) {
                 bg.y = y

@@ -22,37 +22,13 @@ class ResultScene extends Scene {
 
     public init() {
         super.setBackground()
+        this.close_btn = 'close_yellow_png'
         this.isBackHome = true
 
-        let group = new eui.Group()
-        group.x = 170
-        group.y = 25
-        this.addChild(group)
-
-        let flagBg = Util.createBitmapByName('flagBg_png')
-        group.addChild(flagBg)
-
-        // 等级
-        let flagText = new egret.TextField()
-        flagText.text = this.levelData.flag
-        flagText.width = flagBg.width
-        flagText.height = flagBg.height + 10
-        flagText.textAlign = egret.HorizontalAlign.CENTER
-        flagText.verticalAlign = egret.VerticalAlign.MIDDLE
-        flagText.size = 28
-        group.addChild(flagText)
-
-        // 名称
-        let flagName = new egret.TextField()
-        flagName.text = this.levelData.name
-        flagName.verticalAlign = egret.VerticalAlign.MIDDLE
-        flagName.textAlign = egret.HorizontalAlign.CENTER
-        flagName.stroke = 6
-        flagName.strokeColor = 0x0d793b
-        flagName.size = 80
-        flagName.x = flagBg.width - 20
-        flagName.height = flagBg.height + 10
-        group.addChild(flagName)
+        let title = new TrainTitleClass(this.levelData.flag, this.levelData.name, this.type)
+        title.x = 180
+        title.y = 25
+        this.addChild(title)
 
         let bg
         let music
@@ -63,8 +39,8 @@ class ResultScene extends Scene {
             bg = Util.createBitmapByName('train_success_png')
             music = "pass_mp3"
         }
-
-        bg.y = 200
+        bg.x = (this.stage.stageWidth - bg.width) / 2
+        bg.y = 210
         this.addChild(bg)
         Util.playMusic(music)
 
@@ -81,13 +57,13 @@ class ResultScene extends Scene {
                 { text: ratevalue + '%' }
             ])
             rate.x = 160
-            rate.y = 640
+            rate.y = 650
             let score = this.createScoreView([
                 { text: '积分\n', style: { size: 20 } },
                 { text: '+' + this.result.addScore }
             ])
             score.x = 508
-            score.y = 288
+            score.y = 295
             this.addChild(score)
         } else {
             rate = this.createScoreView([

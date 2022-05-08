@@ -86,8 +86,8 @@ class UserInfo extends eui.Group {
             if (!trainResult) return
             let rateValue = Math.round(trainResult.trainCorrectCount * 100 / trainResult.trainTotalCount)
             let trainGroup = new eui.Group()
-            trainGroup.x = 230
-            trainGroup.y = 630
+            trainGroup.x = 190
+            trainGroup.y = 620
             group.addChild(trainGroup)
             let textArr = ['累积训练', '正确率']
             this.info(textArr, trainGroup, 42, 365, 60)
@@ -98,26 +98,24 @@ class UserInfo extends eui.Group {
 
     // 头像 个人排名
     private initLeft() {
-        let x = 30
-
         let iconGroup = new eui.Group()
         iconGroup.width = 260
         iconGroup.height = 260
-        iconGroup.x = x
+        iconGroup.x = 10
         iconGroup.y = 10
         this.group.addChild(iconGroup)
 
         // 头像
         let avatar = Util.setUserImg(this.userinfo.avatar, 157)
-        avatar.x = this.type == 'score' ? 109 : 30
-        avatar.y = this.type == 'score' ? 114 : 30
+        avatar.x = this.type == 'score' ? 62 : 10
+        avatar.y = this.type == 'score' ? 82 : 5
         this.group.addChild(avatar)
 
         // 桃子森林
         var peachWord: egret.Bitmap = Util.createBitmapByName('peachWord_png')
         peachWord.width = 240
         peachWord.x = -10
-        peachWord.y = 300
+        peachWord.y = 280
         if (this.type != 'score') {
             iconGroup.addChild(peachWord)
         }
@@ -132,13 +130,13 @@ class UserInfo extends eui.Group {
         let name = new egret.TextField()
         name.textColor = 0xffffff
         if (this.type == 'score') {
-            name.x = 410
-            name.y = 130
+            name.x = 383
+            name.y = 100
             name.width = 160
             name.height = 40
         } else {
             name.x = 0
-            name.y = 215
+            name.y = 190
             name.size = 44
             name.width = 220
             name.height = 60
@@ -153,7 +151,7 @@ class UserInfo extends eui.Group {
         let vicon = Math.ceil(this.userinfo.lv / 20) - 1
         var flilter = Util.grayFliter()
         let iconx = 420
-        let icony = 40
+        let icony = 20
         let key = 1
         for (let icon of iconnames) {
             let levelIcon = Util.createBitmapByName(icon)
@@ -176,11 +174,11 @@ class UserInfo extends eui.Group {
         level.size = 44
 
         if (this.type == 'score') {
-            level.x = 300
-            level.y = 210
+            level.x = 250
+            level.y = 180
         } else {
             level.x = 220
-            level.y = 110
+            level.y = 80
         }
         this.group.addChild(level)
 
@@ -191,12 +189,11 @@ class UserInfo extends eui.Group {
         levelName.size = 44
 
         if (this.type == 'score') {
-            levelName.x = 430
-            levelName.y = 210
+            levelName.x = 380
         } else {
             levelName.x = 340
-            levelName.y = 110
         }
+        levelName.y = level.y
         this.group.addChild(levelName)
     }
 
@@ -211,15 +208,15 @@ class UserInfo extends eui.Group {
         let numArr
         if (this.type == 'score') {
             titleArr = ['个人累计积分', '累积签到', '个人达标率', '团队平均积分']
-            textGroup.x = 230
-            textGroup.y = 350
+            textGroup.x = 190
+            textGroup.y = 300
             this.info(titleArr, textGroup, 28, 365, 50)
             numArr = [this.userinfo.score + '分', this.userinfo.signTotal + '天', this.userinfo.personAchiRate + '%', this.userinfo.score.toFixed(2)]
             this.info(numArr, textGroup, 30, 365, 50, egret.HorizontalAlign.RIGHT)
         } else {
             titleArr = ['个人当月积分','个人累计积分', '个人达标率', '团队平均积分', '连续达标天数']
             textGroup.x = 300
-            textGroup.y = 180
+            textGroup.y = 150
             this.info(titleArr, textGroup, 24)
             numArr = [this.userinfo.monthlyScore+'分',this.userinfo.score + '分', this.userinfo.personAchiRate + '%', this.userinfo.teamAchiRate ? this.userinfo.teamAchiRate.toFixed(2) + '分' : "0", this.userinfo.contSignTotal + '天']
             this.info(numArr, textGroup, 28, 300, 45, egret.HorizontalAlign.RIGHT)

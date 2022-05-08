@@ -66,7 +66,7 @@ class IndexScene extends Scene {
                     let sign = new Sign()
                     this.addChild(sign)
                     sign.addEventListener(eui.UIEvent.CLOSING, () => {
-                        this.removeChild(sign)
+                        sign = null
                         this.showNotice()
                     }, this)
                     var timer: egret.Timer = new egret.Timer(5000, 1)

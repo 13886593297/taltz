@@ -5,6 +5,7 @@ class ScoreScene extends Scene {
 
     public init() {
         super.setBackground()
+        this.close_btn = 'close_yellow_png'
         this.isBackHome = true
 
         let shareGroup = new eui.Group()
@@ -12,7 +13,6 @@ class ScoreScene extends Scene {
 
         // 玩家信息
         let user = new UserInfo('score')
-        user.y = 20
         shareGroup.addChild(user)
 
         // 保存图片和分享

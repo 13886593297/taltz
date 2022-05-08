@@ -15,6 +15,7 @@ class AnalysisScene extends Scene {
 
     public init() {
         super.setBackground()
+        this.close_btn = false
         let y = 20
         let title: egret.Bitmap = Util.createBitmapByName('title_tmfx_png')
         title.y = y

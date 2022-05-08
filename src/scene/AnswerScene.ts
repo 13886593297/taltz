@@ -37,11 +37,13 @@ class AnswerScene extends Scene {
     }
 
     public init() {
-        this.close_btn = false
+        if (this.type == TrainType.TRAIN) {
+            this.close_btn = false
+        }
         super.setBackground()
         this.start = +new Date()
 
-        let title = this.trainTitle(this.levelData.flag, this.levelData.name)
+        let title = new TrainTitleClass(this.levelData.flag, this.levelData.name, this.type)
         title.x = 180
         title.y = 25
         this.addChild(title)
@@ -50,9 +52,9 @@ class AnswerScene extends Scene {
             // Q1
             let number = new egret.TextField()
             number.text = "Q" + this.curIdx
-            number.textColor = 0x35af38
-            number.x = 85
-            number.y = 177
+            number.textColor = Config.COLOR_MAINCOLOR
+            number.x = 150
+            number.y = 172
             this.numberText = number
             this.addChild(number)
 
@@ -60,10 +62,10 @@ class AnswerScene extends Scene {
             let pBar = new eui.ProgressBar()
             pBar.maximum = this.answers.questions.length < 10 ? this.answers.questions.length : 10//设置进度条的最大值
             pBar.minimum = 1//设置进度条的最小值
-            pBar.width = 430
-            pBar.height = 40
+            pBar.width = 310
+            pBar.height = 27
             this.addChild(pBar)
-            pBar.x = 150
+            pBar.x = 220
             pBar.y = 170
             pBar.value = this.curIdx//设置进度条的初始值
             this._progress = pBar
@@ -281,46 +283,6 @@ class AnswerScene extends Scene {
         }
     }
 
-    private trainTitle(flag: string, name: string): any {
-        let group = new eui.Group()
-
-        // 名称
-        let flagName = new egret.TextField()
-        flagName.text = name
-        flagName.verticalAlign = egret.VerticalAlign.MIDDLE
-        flagName.textAlign = egret.HorizontalAlign.CENTER
-
-        if (this.type == TrainType.TRAIN) {
-            let flagBg = Util.createBitmapByName('flagBg_png')
-            group.addChild(flagBg)
-
-            // 等级
-            let flagText = new egret.TextField()
-            flagText.text = flag
-            flagText.width = flagBg.width
-            flagText.height = flagBg.height + 10
-            flagText.textAlign = egret.HorizontalAlign.CENTER
-            flagText.verticalAlign = egret.VerticalAlign.MIDDLE
-            flagText.size = 28
-            group.addChild(flagText)
-
-            flagName.stroke = 6
-            flagName.strokeColor = 0x0d793b
-            flagName.size = 80
-            flagName.x = flagBg.width - 20
-            flagName.height = flagBg.height + 10
-        } else {
-            let flagBg = Util.createBitmapByName('flagBg_blank_png')
-            group.addChild(flagBg)
-
-            flagName.size = 60
-            flagName.width = flagBg.width
-            flagName.height = flagBg.height
-        }
-        group.addChild(flagName)
-        return group
-    }
-
     /**
      * 下一题
      */
@@ -355,5 +317,52 @@ class AnswerScene extends Scene {
             this.analysisButton.visible = false
         }
         this.scroller.viewport.scrollV = 0
+    }
+}
+
+class TrainTitleClass extends eui.Group {
+    constructor(private flag: string, private levelName: string, private type: TrainType) {
+        super()
+        this.flag = flag
+        this.levelName = levelName
+        this.type = type
+        this.init()
+    }
+    private init() {
+        console.warn('this.levelName', this.levelName)
+        // 名称
+        let levelName = new egret.TextField()
+        levelName.text = this.levelName
+        levelName.verticalAlign = egret.VerticalAlign.MIDDLE
+        levelName.textAlign = egret.HorizontalAlign.CENTER
+
+        if (this.type == TrainType.TRAIN) {
+            let flagBg = Util.createBitmapByName('flagBg_png')
+            this.addChild(flagBg)
+    
+            // 等级
+            let flagText = new egret.TextField()
+            flagText.text = this.flag
+            flagText.width = flagBg.width
+            flagText.height = flagBg.height + 10
+            flagText.textAlign = egret.HorizontalAlign.CENTER
+            flagText.verticalAlign = egret.VerticalAlign.MIDDLE
+            flagText.size = 28
+            this.addChild(flagText)
+    
+            levelName.stroke = 6
+            levelName.strokeColor = Config.COLOR_MAINCOLOR
+            levelName.size = 80
+            levelName.x = flagBg.width + 20
+            levelName.height = flagBg.height + 10
+        } else {
+            let flagBg = Util.createBitmapByName('flagBg_blank_png')
+            this.addChild(flagBg)
+    
+            levelName.size = 60
+            levelName.width = flagBg.width
+            levelName.height = flagBg.height - 10
+        }
+        this.addChild(levelName)
     }
 }

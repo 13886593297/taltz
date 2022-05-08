@@ -41,7 +41,7 @@ class VProgress extends eui.Group {
         process_text.anchorOffsetX = 50
         process_text.anchorOffsetY = 25
         process_text.rotation = 90
-        process_text.textColor = 0x36b134
+        process_text.textColor = Config.COLOR_MAINCOLOR
         this.addChild(process_text)
         this.process_text = process_text
     }

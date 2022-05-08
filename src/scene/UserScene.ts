@@ -8,6 +8,7 @@ class UserScene extends Scene {
 
     public init() {
         super.setBackground()
+        this.close_btn = 'close_yellow_png'
         Util.setTitle('个人中心')
 
         let shareGroup = new eui.Group()
