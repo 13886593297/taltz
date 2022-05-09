@@ -94,8 +94,8 @@ class PeachScene extends Scene {
 
         // 头像
         let avatar = Util.setUserImg(this.userInfo.avatar, 108)
-        avatar.x = 11
-        avatar.y = 5
+        avatar.x = 6
+        avatar.y = 4
         avatarGroup.addChild(avatar)
 
         // 积分文字
@@ -238,7 +238,10 @@ class PeachScene extends Scene {
         let peachArr = [
             { bg: 'peach1_png', x: 580, y: this.stage.stageHeight - 524, zIndex: 2 },
             { bg: 'peach2_png', x: 245, y: this.stage.stageHeight - 464, zIndex: 2 },
-            { bg: 'peach3_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 5 },
+            { bg: 'peach1_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 5 },
+            { bg: 'orange1_png', x: 580, y: this.stage.stageHeight - 524, zIndex: 2 },
+            { bg: 'orange2_png', x: 245, y: this.stage.stageHeight - 464, zIndex: 2 },
+            { bg: 'orange1_png', x: 360, y: this.stage.stageHeight - 604, zIndex: 5 },
         ]
 
         let pArr = []  // 创建出来的桃子数组
@@ -254,7 +257,7 @@ class PeachScene extends Scene {
 
         // 根据info显示对应的桃子
         this.info.peach.forEach((item) => {
-            let peach = pArr[item.position - 1]
+            let peach = item.num % 2 == 1 ? pArr[item.position - 1] : pArr[item.position + 3 - 1]
             this.count++
             this.peachAni(peach, item)
         })
@@ -280,7 +283,7 @@ class PeachScene extends Scene {
 
         // 摘桃子提示
         this.addChild(this.peachText)
-        this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫桃子', this.peachText)
+        this.showTip(390, this.stage.stageHeight - 174, '摘取你的功夫水果', this.peachText)
         if (this.count <= 0) {
             this.peachText.visible = false
         }

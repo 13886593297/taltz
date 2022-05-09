@@ -132,7 +132,7 @@ class TeamUser extends eui.Group {
         // 头像
         let avatar = new egret.Bitmap()
         avatar.width = avatar.height = 112
-        avatar.x = this.type == UserPositionType.LEFT ? 170 : 3
+        avatar.x = this.type == UserPositionType.LEFT ? 173 : 3
         avatar.y = 3
         this.addChild(avatar)
         this.avatar = avatar
