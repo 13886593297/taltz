@@ -12,8 +12,8 @@ enum ShareType {
 
 const EquipmentConfigs = [
     { id: 0, icon: '', bg: '', name: '搜索结果', type: 0, qaids: 51 },
-    { id: 1, icon: '', bg: 'equip_bg_1_png', name: '最新内容', type: 15, qaids: '51' },
-    { id: 2, icon: '', bg: 'equip_bg_2_png', name: '疾病档案', type: 16, qaids: '49' },
-    { id: 3, icon: '', bg: 'equip_bg_3_png', name: '产品资料', type: 17, qaids: '46, 48, 50, 51' },
-    { id: 4, icon: '', bg: 'equip_bg_4_png', name: '竞品分析', type: 18, qaids: '47' }
+    { id: 1, icon: '', bg: 'equip_bg_1_png', name: '最新内容', type: [15, 11], qaids: '51' },
+    { id: 2, icon: '', bg: 'equip_bg_2_png', name: '疾病档案', type: [16, 12], qaids: '49' },
+    { id: 3, icon: '', bg: 'equip_bg_3_png', name: '产品资料', type: [17, 13], qaids: '46, 48, 50, 51' },
+    { id: 4, icon: '', bg: 'equip_bg_4_png', name: '竞品分析', type: [18, 14], qaids: '47' }
 ]

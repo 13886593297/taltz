@@ -21,12 +21,12 @@ class EquipmentScene extends Scene {
             }
             let bg: egret.Bitmap = Util.createBitmapByName(config.bg)
             this.addChild(bg)
-            if (config.type % 2 != 0) {
+            if (config.type[0] % 2 != 0) {
                 bg.x = this.stage.stageWidth / 2 - bg.width - 30
             } else {
                 bg.x = this.stage.stageWidth / 2 + 30
             }
-            if (config.type < 17) {
+            if (config.type[0] < 17) {
                 bg.y = y
             } else {
                 bg.y = y + bg.height

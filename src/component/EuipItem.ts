@@ -8,28 +8,29 @@ class EquipItem extends eui.Group {
     }
 
     private init() {
-        let listBg: egret.Bitmap
+        let bg_name = ''
         if (this.data.url.endsWith('pdf')) {
-            listBg = Util.createBitmapByName('equip_bg_pdf_png')
+            bg_name = this.data.catid > 14 ? 'equip_bg_pdf_png' : 'equip_bg_alm_pdf_png'
         } else {
-            listBg = Util.createBitmapByName('equip_bg_mp4_png')
+            bg_name = this.data.catid > 14 ? 'equip_bg_mp4_png' : 'equip_bg_alm_mp4_png'
         }
+        let listBg: egret.Bitmap = Util.createBitmapByName(bg_name)
         this.width = listBg.width
         this.height = listBg.height
         this.addChild(listBg)
 
         let title = new egret.TextField()
-        if (this.data.title.length >= 13) {
-            title.text = this.data.title.substr(0, 11) + '...'
+        if (this.data.title.length >= 11) {
+            title.text = this.data.title.substr(0, 9) + '...'
         } else {
             title.text = this.data.title
         }
 
         title.size = 30
-        title.width = 380
+        title.width = 300
         title.textColor = 0xffffff
-        title.x = 70
-        title.y = 18
+        title.x = 90
+        title.y = 26
         this.addChild(title)
 
         let time = new egret.TextField()
@@ -41,7 +42,7 @@ class EquipItem extends eui.Group {
             time.text = y + '年' + m + '月' + d + '日'
         }
         time.textColor = 0xffffff
-        time.x = 420
+        time.x = 500
         time.y = 75
         time.size = 16
         this.addChild(time)
