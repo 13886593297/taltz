@@ -25,7 +25,7 @@ class EquipList extends Scene {
     }
 
     private changeTypeList(config) {
-        Http.getInstance().post(Url.HTTP_EQUIP_LIST, { catid: config.type }, data => {
+        Http.getInstance().post(Url.HTTP_EQUIP_LIST, { catid: JSON.stringify(config.type) }, data => {
             var group = new eui.Group()
             group.width = this.stage.stageWidth
             this.addChild(group)
