@@ -9,10 +9,20 @@ class EquipItem extends eui.Group {
 
     private init() {
         let bg_name = ''
-        if (this.data.url.endsWith('pdf')) {
-            bg_name = this.data.catid > 14 ? 'equip_bg_pdf_png' : 'equip_bg_alm_pdf_png'
+        const env = location.origin.indexOf('-q') != -1 ? 'qa' : 'prd'
+        const { catid } = this.data
+        if (env == 'qa') {
+            if (this.data.url.endsWith('pdf')) {
+                bg_name = catid >= 3175 && catid <= 3178  ? 'equip_bg_pdf_png' : 'equip_bg_alm_pdf_png'
+            } else {
+                bg_name = catid >= 3175 && catid <= 3178 ? 'equip_bg_mp4_png' : 'equip_bg_alm_mp4_png'
+            }
         } else {
-            bg_name = this.data.catid > 14 ? 'equip_bg_mp4_png' : 'equip_bg_alm_mp4_png'
+            if (this.data.url.endsWith('pdf')) {
+                bg_name = catid > 14 ? 'equip_bg_pdf_png' : 'equip_bg_alm_pdf_png'
+            } else {
+                bg_name = catid > 14 ? 'equip_bg_mp4_png' : 'equip_bg_alm_mp4_png'
+            }
         }
         let listBg: egret.Bitmap = Util.createBitmapByName(bg_name)
         this.width = listBg.width
