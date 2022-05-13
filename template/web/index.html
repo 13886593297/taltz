@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>净阶战队</title>
+    <title>水果战队</title>
     <meta name="viewport"
         content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -142,7 +142,7 @@
         var token = getRequest['token'];
         var teamName = localStorage.getItem('teamName');
         if (teamName) {
-            document.title = "净阶战队-" + teamName;
+            document.title = "水果战队-" + teamName;
         }
 
         var loadScript = function (list, callback) {
@@ -286,8 +286,8 @@
 
         function onMenuShareAppMessage(title, desc, link, imgurl, callback) {
             wx.onMenuShareAppMessage({
-                title: title || '净阶战队',
-                desc: desc || '净阶战队-默认测试战队',
+                title: title || '水果战队',
+                desc: desc || '水果战队-默认测试战队',
                 link: link || origin,
                 imgUrl: origin + '/games/resource/assets/share.jpg',
                 trigger: function (res) {
@@ -304,7 +304,7 @@
 
         function onMenuShareTimeline(title, link, imgUrl, callback) {
             wx.onMenuShareTimeline({
-                title: title || '净阶战队邀请您！',
+                title: title || '水果战队邀请您！',
                 link: link || origin,
                 imgUrl: imgUrl || origin + '/games/resource/assets/share.jpg',
                 trigger: function (res) {

@@ -13,20 +13,21 @@ class EquipmentScene extends Scene {
         let title = Util.createBitmapByName('equip_title_png')
         title.y = 20
         this.addChild(title)
+        const env = location.origin.indexOf('-q') != -1 ? 'qa' : 'prd'
 
         let y = 370
         for (let config of EquipmentConfigs) {
-            if (config.type == 0) {
-                continue
+            if (env == 'qa') {
+                config.type = config.qaType
             }
             let bg: egret.Bitmap = Util.createBitmapByName(config.bg)
             this.addChild(bg)
-            if (config.type[0] % 2 != 0) {
+            if (config.id % 2 != 0) {
                 bg.x = this.stage.stageWidth / 2 - bg.width - 30
             } else {
                 bg.x = this.stage.stageWidth / 2 + 30
             }
-            if (config.type[0] < 17) {
+            if (config.id < 3) {
                 bg.y = y
             } else {
                 bg.y = y + bg.height

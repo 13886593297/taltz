@@ -75,7 +75,7 @@ class RuleText extends eui.Group {
             , { text: "a.每一关卡含10道随机习题，完成10题并点击提交后，可查看本次训练的正确率；\n" }
             , { text: "b.正确率达到100%，才可通关并解锁下一关。要知道，训练可没有捷径能走！\n" }
             , { text: "c.答题过程中可收藏题目，在“训练场-我的收藏”中可查看。\n\n\n" }
-            , { text: "**本平台规则由拓咨品牌组制定，并拥有最终解释权" }
+            , { text: "**本平台规则由水果品牌组制定，并拥有最终解释权" }
         ]
         this.addChild(text)
         this.width = text.textWidth
